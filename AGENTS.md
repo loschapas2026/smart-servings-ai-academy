@@ -28,3 +28,5 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+- Plan prices live only in src/lib/plans.ts (with tests in plans.test.ts); UI reads from there so prices change in one place.

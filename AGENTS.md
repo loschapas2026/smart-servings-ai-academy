@@ -31,5 +31,6 @@ use the editor.
 
 - Plan prices live only in src/lib/plans.ts (with tests in plans.test.ts); UI reads from there so prices change in one place.
 - Single active session: each window stores a session id (localStorage) claimed in profiles.active_session_id; SessionGuard in __root signs out windows that lost the claim — keeps account sharing blocked.
-- Access to content is enforced by RLS via has_active_subscription(); admins use has_role(). Payments provider will later write subscriptions/payments.
+- Access to content is enforced by RLS via has_active_subscription(); admins use has_role().
+- Payments run through the built-in Stripe integration: the webhook at /api/public/payments/webhook is the only writer of subscription status, and every subscriptions/payments row carries `environment` ('sandbox' | 'live') so test purchases never count as real revenue. Reads must filter by the environment the build's client token points at (readPaymentsEnv()).
 - WhatsApp notifications: every message goes through the `notifications` queue (dedupe_key for idempotency) and is sent by src/lib/notify/engine.server.ts via the Twilio connector; an hourly cron at /api/public/jobs/notifications creates due-date/meeting reminders and drains the queue; Twilio status callbacks hit /api/public/twilio/status (secret token in URL).

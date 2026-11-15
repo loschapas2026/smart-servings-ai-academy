@@ -113,7 +113,7 @@ function Subscribers() {
   );
 }
 
-const EMPTY = { type: "video" as "video" | "artigo" | "prompt" | "download", title: "", summary: "", body: "", video_url: "", file_url: "", category: "" };
+const EMPTY = { type: "video" as "video" | "artigo" | "prompt" | "download", title: "", summary: "", body: "", video_url: "", file_url: "", category: "", thumbnail_url: "", duration: "", position: 0 };
 
 function Contents() {
   const qc = useQueryClient();
@@ -124,7 +124,7 @@ function Contents() {
   });
   const save = async (e: React.FormEvent) => {
     e.preventDefault();
-    const { error } = await supabase.from("contents").insert({ ...f, video_url: f.video_url || null, file_url: f.file_url || null });
+    const { error } = await supabase.from("contents").insert({ ...f, video_url: f.video_url || null, file_url: f.file_url || null, thumbnail_url: f.thumbnail_url || null, duration: f.duration || null });
     if (error) { toast.error(error.message); return; }
     toast.success("Conteúdo publicado."); setF(EMPTY); qc.invalidateQueries();
   };
@@ -139,9 +139,16 @@ function Contents() {
           <option value="video">Vídeo</option><option value="artigo">Artigo</option><option value="prompt">Prompt</option><option value="download">Download</option>
         </select>
         <input className={inp} placeholder="Título" required value={f.title} onChange={(e) => setF({ ...f, title: e.target.value })} />
-        <input className={inp} placeholder="Categoria (ex: Cardápio)" value={f.category} onChange={(e) => setF({ ...f, category: e.target.value })} />
+        <input className={inp} placeholder={f.type === "video" ? "Módulo (ex: Fundamentos)" : "Categoria (ex: Cardápio)"} value={f.category} onChange={(e) => setF({ ...f, category: e.target.value })} />
         <input className={inp} placeholder="Resumo" value={f.summary} onChange={(e) => setF({ ...f, summary: e.target.value })} />
-        {f.type === "video" && <input className={inp} placeholder="Link de incorporação YouTube/Vimeo" value={f.video_url} onChange={(e) => setF({ ...f, video_url: e.target.value })} />}
+        {f.type === "video" && <>
+          <input className={inp} placeholder="Link do vídeo (YouTube ou Vimeo)" value={f.video_url} onChange={(e) => setF({ ...f, video_url: e.target.value })} />
+          <div className="flex gap-2">
+            <input className={inp} placeholder="Duração (ex: 12:30)" value={f.duration} onChange={(e) => setF({ ...f, duration: e.target.value })} />
+            <input className={inp} type="number" placeholder="Ordem" value={f.position} onChange={(e) => setF({ ...f, position: Number(e.target.value) })} />
+          </div>
+          <input className={inp} placeholder="Link da capa (opcional)" value={f.thumbnail_url} onChange={(e) => setF({ ...f, thumbnail_url: e.target.value })} />
+        </>}
         {f.type === "download" && <input className={inp} placeholder="Link do arquivo" value={f.file_url} onChange={(e) => setF({ ...f, file_url: e.target.value })} />}
         <textarea className={inp} rows={6} placeholder={f.type === "prompt" ? "Texto do prompt" : "Texto"} value={f.body} onChange={(e) => setF({ ...f, body: e.target.value })} />
         <button className="w-full rounded-full bg-primary py-3 font-bold text-primary-foreground">Publicar</button>

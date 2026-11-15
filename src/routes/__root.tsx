@@ -10,6 +10,8 @@ import {
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 
+import { Toaster } from "@/components/ui/sonner";
+import { SessionGuard } from "@/components/SessionGuard";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
@@ -127,6 +129,8 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
+      <SessionGuard />
+      <Toaster theme="dark" position="top-center" />
     </QueryClientProvider>
   );
 }

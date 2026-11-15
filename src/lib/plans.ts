@@ -16,3 +16,9 @@ export const perMonth = (p: Plan) => Math.round((p.total / p.months) * 100) / 10
 
 export const brl = (v: number) =>
   v.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+
+export const periodEnd = (p: Plan, from = new Date()) => {
+  const d = new Date(from);
+  d.setMonth(d.getMonth() + p.months);
+  return d;
+};

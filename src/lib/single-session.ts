@@ -12,7 +12,7 @@ export function ensureClaimed() {
   if (localStorage.getItem(KEY)) return claiming ?? Promise.resolve();
   const sid = crypto.randomUUID();
   localStorage.setItem(KEY, sid);
-  claiming = supabase.rpc("claim_session", { _session: sid }).then(() => { claiming = null; });
+  claiming = Promise.resolve(supabase.rpc("claim_session", { _session: sid })).then(() => { claiming = null; });
   return claiming;
 }
 

@@ -1,5 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import type { Stripe } from "stripe";
 import type { StripeEnv } from "@/lib/stripe";
 
 type CheckoutResult = { clientSecret: string } | { error: string };
@@ -45,6 +46,13 @@ async function resolveOrCreateCustomer(
   return created.id;
 }
 
+async function productName(stripe: any, stripePrice: any): Promise<string> {
+  const productId = typeof stripePrice.product === "string" ? stripePrice.product : stripePrice.product?.id;
+  if (!productId) return "Acesso RAIOX";
+  const product = await stripe.products.retrieve(productId);
+  return product.name || "Acesso RAIOX";
+}
+
 export const createCheckoutSession = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((data: { priceId: string; environment: StripeEnv; returnUrl: string }) => {
@@ -84,26 +92,31 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
 
       const { data: { user } } = await supabase.auth.getUser();
       const email = user?.email ?? undefined;
-
       const customerId = await resolveOrCreateCustomer(stripe, { email, userId });
 
-      const session = await stripe.checkout.sessions.create({
+      const base: Stripe.Checkout.SessionCreateParams = {
         line_items: [{ price: stripePrice.id, quantity: 1 }],
         mode: isRecurring ? "subscription" : "payment",
         ui_mode: "embedded_page",
         return_url: data.returnUrl,
         customer: customerId,
-        // Seller is in Brazil: Stripe calculates and collects tax at checkout,
-        // while the seller handles registration, filing and remittance.
-        automatic_tax: { enabled: true },
         metadata: { userId, priceId: data.priceId },
         ...(isRecurring && { subscription_data: { metadata: { userId, priceId: data.priceId } } }),
-        ...(!isRecurring && {
-          payment_intent_data: {
-            description: isRecurring ? "" : await productName(stripe, stripePrice),
-          },
-        }),
-      });
+        ...(!isRecurring && { payment_intent_data: { description: await productName(stripe, stripePrice) } }),
+      };
+
+      // Seller is in Brazil: Stripe calculates and collects tax at checkout
+      // while the seller handles filing. On a sandbox that is not claimed yet
+      // tax is not switched on, so fall back to a plain checkout instead of
+      // leaving the customer without a payment form.
+      let session;
+      try {
+        session = await stripe.checkout.sessions.create({ ...base, automatic_tax: { enabled: true } });
+      } catch (taxError) {
+        const reason = getStripeErrorMessage(taxError);
+        if (!/stripe_tax_inactive|Stripe Tax is not supported/i.test(reason)) throw taxError;
+        session = await stripe.checkout.sessions.create(base);
+      }
 
       return { clientSecret: session.client_secret ?? "" };
     } catch (error) {
@@ -111,13 +124,6 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
       return { error: getStripeErrorMessage(error) };
     }
   });
-
-async function productName(stripe: any, stripePrice: any): Promise<string> {
-  const productId = typeof stripePrice.product === "string" ? stripePrice.product : stripePrice.product?.id;
-  if (!productId) return "Acesso RAIOX";
-  const product = await stripe.products.retrieve(productId);
-  return product.name || "Acesso RAIOX";
-}
 
 export const createPortalSession = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])

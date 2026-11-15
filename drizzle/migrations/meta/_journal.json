@@ -1,5 +1,20 @@
 {
   "version": "7",
   "dialect": "postgresql",
-  "entries": []
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1794760802647,
+      "tag": "0000_raiox_core",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1794760822124,
+      "tag": "0001_profile_email",
+      "breakpoints": true
+    }
+  ]
 }

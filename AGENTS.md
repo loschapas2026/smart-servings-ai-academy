@@ -30,3 +30,5 @@ use the editor.
 <!-- LOVABLE:END -->
 
 - Plan prices live only in src/lib/plans.ts (with tests in plans.test.ts); UI reads from there so prices change in one place.
+- Single active session: each window stores a session id (localStorage) claimed in profiles.active_session_id; SessionGuard in __root signs out windows that lost the claim — keeps account sharing blocked.
+- Access to content is enforced by RLS via has_active_subscription(); admins use has_role(). Payments provider will later write subscriptions/payments.

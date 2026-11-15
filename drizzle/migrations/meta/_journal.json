@@ -15,6 +15,13 @@
       "when": 1794760822124,
       "tag": "0001_profile_email",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1794761117773,
+      "tag": "0002_lesson_fields",
+      "breakpoints": true
     }
   ]
 }

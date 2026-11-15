@@ -1,6 +1,13 @@
-import { PLANS, perMonth, brl } from "@/lib/plans";
+import { Link } from "@tanstack/react-router";
+import { PLANS, perMonth, brl, type Plan } from "@/lib/plans";
 
-export function PlanCards() {
+interface Props {
+  signedIn: boolean;
+  active: boolean;
+  onChoose: (plan: Plan) => void;
+}
+
+export function PlanCards({ signedIn, active, onChoose }: Props) {
   return (
     <div className="grid gap-5 md:grid-cols-3">
       {PLANS.map((p) => (
@@ -11,11 +18,29 @@ export function PlanCards() {
           <h3 className="text-lg">{p.name}</h3>
           <p className="mt-4 font-display text-4xl font-bold">{brl(perMonth(p))}<span className="text-base font-normal text-muted-foreground">/mês</span></p>
           <p className="mt-1 text-sm text-muted-foreground">
-            {p.months === 1 ? "cobrado todo mês" : `${brl(p.total)} a cada ${p.months} meses`}
+            {p.months === 1
+              ? "renova todo mês"
+              : p.recurring
+                ? `${brl(p.total)} uma vez por ano`
+                : `${brl(p.total)} em pagamento único`}
           </p>
-          <button disabled className="mt-6 w-full rounded-full border border-primary py-3 font-bold text-primary opacity-70">
-            Em breve
-          </button>
+          <p className="mt-1 text-sm text-muted-foreground">
+            {p.recurring ? "Acesso enquanto a cobrança estiver em dia." : `Acesso por ${p.months} meses, sem renovação automática.`}
+          </p>
+
+          {active ? (
+            <Link to="/financeiro" className="mt-6 block w-full rounded-full border border-primary py-3 text-center font-bold text-primary">
+              Assinatura ativa
+            </Link>
+          ) : !signedIn ? (
+            <Link to="/auth" className="mt-6 block w-full rounded-full border border-primary py-3 text-center font-bold text-primary">
+              Entrar para assinar
+            </Link>
+          ) : (
+            <button onClick={() => onChoose(p)} className="mt-6 w-full rounded-full bg-primary py-3 font-bold text-primary-foreground transition-opacity hover:opacity-90">
+              Assinar {p.name.toLowerCase()}
+            </button>
+          )}
         </div>
       ))}
     </div>

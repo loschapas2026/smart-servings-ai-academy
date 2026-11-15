@@ -29,3 +29,14 @@ export function getStripe(): Promise<Stripe | null> {
 export function getStripeEnvironment(): StripeEnv {
   return paymentsEnvironment();
 }
+
+// Reads (account, financial portal) must never break the whole app when the
+// build has no token yet — they fall back to the test environment, which is
+// the same one the banner tells the builder to finish.
+export function readPaymentsEnv(): StripeEnv {
+  try {
+    return paymentsEnvironment();
+  } catch {
+    return 'sandbox';
+  }
+}

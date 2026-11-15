@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as PlanosRouteImport } from './routes/planos'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as AuthenticatedFinanceiroRouteImport } from './routes/_authenticated/financeiro'
 import { Route as AuthenticatedPainelRouteImport } from './routes/_authenticated/painel'
 import { Route as AuthenticatedConteudoIdRouteImport } from './routes/_authenticated/conteudo.$id'
@@ -36,6 +37,11 @@ const PlanosRoute = PlanosRouteImport.update({
   path: '/planos',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedFinanceiroRoute = AuthenticatedFinanceiroRouteImport.update({
   id: '/financeiro',
   path: '/financeiro',
@@ -56,6 +62,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/planos': typeof PlanosRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/financeiro': typeof AuthenticatedFinanceiroRoute
   '/painel': typeof AuthenticatedPainelRoute
   '/conteudo/$id': typeof AuthenticatedConteudoIdRoute
@@ -64,6 +71,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/planos': typeof PlanosRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/financeiro': typeof AuthenticatedFinanceiroRoute
   '/painel': typeof AuthenticatedPainelRoute
   '/conteudo/$id': typeof AuthenticatedConteudoIdRoute
@@ -74,6 +82,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/planos': typeof PlanosRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/_authenticated/financeiro': typeof AuthenticatedFinanceiroRoute
   '/_authenticated/painel': typeof AuthenticatedPainelRoute
   '/_authenticated/conteudo/$id': typeof AuthenticatedConteudoIdRoute
@@ -81,15 +90,29 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/auth' | '/planos' | '/financeiro' | '/painel' | '/conteudo/$id'
+    | '/'
+    | '/auth'
+    | '/planos'
+    | '/admin'
+    | '/financeiro'
+    | '/painel'
+    | '/conteudo/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/planos' | '/financeiro' | '/painel' | '/conteudo/$id'
+  to:
+    | '/'
+    | '/auth'
+    | '/planos'
+    | '/admin'
+    | '/financeiro'
+    | '/painel'
+    | '/conteudo/$id'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
     | '/planos'
+    | '/_authenticated/admin'
     | '/_authenticated/financeiro'
     | '/_authenticated/painel'
     | '/_authenticated/conteudo/$id'
@@ -132,6 +155,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlanosRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/financeiro': {
       id: '/_authenticated/financeiro'
       path: '/financeiro'
@@ -157,12 +187,14 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
   AuthenticatedFinanceiroRoute: typeof AuthenticatedFinanceiroRoute
   AuthenticatedPainelRoute: typeof AuthenticatedPainelRoute
   AuthenticatedConteudoIdRoute: typeof AuthenticatedConteudoIdRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
   AuthenticatedFinanceiroRoute: AuthenticatedFinanceiroRoute,
   AuthenticatedPainelRoute: AuthenticatedPainelRoute,
   AuthenticatedConteudoIdRoute: AuthenticatedConteudoIdRoute,

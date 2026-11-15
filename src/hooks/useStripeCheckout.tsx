@@ -3,7 +3,6 @@ import { StripeEmbeddedCheckout } from "@/components/StripeEmbeddedCheckout";
 
 interface CheckoutOptions {
   priceId: string;
-  userId: string;
   returnUrl?: string;
 }
 

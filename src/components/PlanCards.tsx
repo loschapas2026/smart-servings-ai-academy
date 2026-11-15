@@ -2,12 +2,12 @@ import { Link } from "@tanstack/react-router";
 import { PLANS, perMonth, brl, type Plan } from "@/lib/plans";
 
 interface Props {
-  signedIn: boolean;
-  active: boolean;
-  onChoose: (plan: Plan) => void;
+  signedIn?: boolean;
+  active?: boolean;
+  onChoose?: (plan: Plan) => void;
 }
 
-export function PlanCards({ signedIn, active, onChoose }: Props) {
+export function PlanCards({ signedIn = false, active = false, onChoose }: Props) {
   return (
     <div className="grid gap-5 md:grid-cols-3">
       {PLANS.map((p) => (
@@ -32,14 +32,18 @@ export function PlanCards({ signedIn, active, onChoose }: Props) {
             <Link to="/financeiro" className="mt-6 block w-full rounded-full border border-primary py-3 text-center font-bold text-primary">
               Assinatura ativa
             </Link>
-          ) : !signedIn ? (
+          ) : onChoose && signedIn ? (
+            <button onClick={() => onChoose(p)} className="mt-6 w-full rounded-full bg-primary py-3 font-bold text-primary-foreground transition-opacity hover:opacity-90">
+              Assinar {p.name.toLowerCase()}
+            </button>
+          ) : onChoose ? (
             <Link to="/auth" className="mt-6 block w-full rounded-full border border-primary py-3 text-center font-bold text-primary">
               Entrar para assinar
             </Link>
           ) : (
-            <button onClick={() => onChoose(p)} className="mt-6 w-full rounded-full bg-primary py-3 font-bold text-primary-foreground transition-opacity hover:opacity-90">
+            <Link to="/planos" className="mt-6 block w-full rounded-full border border-primary py-3 text-center font-bold text-primary">
               Assinar {p.name.toLowerCase()}
-            </button>
+            </Link>
           )}
         </div>
       ))}

@@ -2,7 +2,7 @@ import { loadStripe, type Stripe } from "@stripe/stripe-js";
 
 export type StripeEnv = 'sandbox' | 'live';
 
-const clientToken = import.meta.env.VITE_PAYMENTS_CLIENT_TOKEN;
+const clientToken = import.meta.env["VITE_PAYMENTS_CLIENT_TOKEN"];
 
 // Derive the environment from the token PREFIX, never from its mere presence.
 // A missing or unrecognized token means the build shipped before go-live

@@ -12,9 +12,8 @@ import { readPaymentsEnv } from "@/lib/stripe";
 
 export const Route = createFileRoute("/_authenticated/financeiro")({
   head: () => ({ meta: [{ title: "Financeiro — RAIOX" }, { name: "description", content: "Sua assinatura e pagamentos." }] }),
-  validateSearch: (search: Record<string, unknown>): { checkout?: string } => ({
-    checkout: typeof search.checkout === "string" ? search.checkout : undefined,
-  }),
+  validateSearch: (search: Record<string, unknown>): { checkout?: string } =>
+    typeof search["checkout"] === "string" ? { checkout: search["checkout"] } : {},
   component: Financeiro,
 });
 

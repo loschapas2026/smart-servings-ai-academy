@@ -30,7 +30,6 @@ function Planos() {
     setPlan(p);
     openCheckout({
       priceId: p.priceId,
-      userId: session.user.id,
       returnUrl: `${window.location.origin}/financeiro?checkout=ok`,
     });
   };

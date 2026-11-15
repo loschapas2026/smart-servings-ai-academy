@@ -12,7 +12,7 @@ const PRICE_ID_RE = /^[a-zA-Z0-9_-]+$/;
 // (portal, dashboards) resolvable without depending on Session metadata.
 async function resolveOrCreateCustomer(
   stripe: any,
-  options: { email?: string; userId?: string },
+  options: { email?: string | undefined; userId?: string | undefined },
 ): Promise<string> {
   // userId is interpolated into a Stripe Search query string below; reject
   // anything that could break out of the quoted value.
@@ -78,8 +78,8 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
 
       // Human-readable price id -> Stripe price via lookup_keys.
       const prices = await stripe.prices.list({ lookup_keys: [data.priceId] });
-      if (!prices.data.length) return { error: "Plano não encontrado no catálogo de pagamentos." };
       const stripePrice = prices.data[0];
+      if (!stripePrice) return { error: "Plano não encontrado no catálogo de pagamentos." };
       const isRecurring = stripePrice.type === "recurring";
 
       const { data: { user } } = await supabase.auth.getUser();

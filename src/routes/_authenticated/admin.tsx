@@ -6,6 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { AppShell } from "@/components/AppShell";
 import { useAccount } from "@/hooks/useAccount";
 import { PLANS, brl, periodEnd } from "@/lib/plans";
+import { readPaymentsEnv } from "@/lib/stripe";
 import { WhatsAppPanel } from "@/components/admin/WhatsAppPanel";
 
 export const Route = createFileRoute("/_authenticated/admin")({
@@ -74,9 +75,10 @@ function Subscribers() {
   const qc = useQueryClient();
   const activate = async (userId: string, planId: string) => {
     const plan = PLANS.find((p) => p.id === planId)!;
-    const { error } = await supabase.from("subscriptions").upsert({ user_id: userId, plan: plan.id, status: "ativa", current_period_end: periodEnd(plan).toISOString(), updated_at: new Date().toISOString() }, { onConflict: "user_id" });
+    const env = readPaymentsEnv();
+    const { error } = await supabase.from("subscriptions").upsert({ user_id: userId, plan: plan.id, status: "ativa", current_period_end: periodEnd(plan).toISOString(), environment: env, updated_at: new Date().toISOString() }, { onConflict: "user_id" });
     if (error) { toast.error(error.message); return; }
-    await supabase.from("payments").insert({ user_id: userId, amount: plan.total, description: `Plano ${plan.name} (manual)`, status: "pago" });
+    await supabase.from("payments").insert({ user_id: userId, amount: plan.total, description: `Plano ${plan.name} (manual)`, status: "pago", environment: env });
     toast.success("Acesso liberado."); qc.invalidateQueries();
   };
   const setStatus = async (userId: string, status: "cancelada" | "inadimplente") => {

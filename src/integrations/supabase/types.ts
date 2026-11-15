@@ -14,16 +14,190 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      content_progress: {
+        Row: {
+          completed_at: string
+          content_id: string
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string
+          content_id: string
+          user_id: string
+        }
+        Update: {
+          completed_at?: string
+          content_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "content_progress_content_id_fkey"
+            columns: ["content_id"]
+            isOneToOne: false
+            referencedRelation: "contents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      contents: {
+        Row: {
+          body: string | null
+          category: string | null
+          created_at: string
+          file_url: string | null
+          id: string
+          published: boolean
+          summary: string | null
+          title: string
+          type: Database["public"]["Enums"]["content_type"]
+          video_url: string | null
+        }
+        Insert: {
+          body?: string | null
+          category?: string | null
+          created_at?: string
+          file_url?: string | null
+          id?: string
+          published?: boolean
+          summary?: string | null
+          title: string
+          type: Database["public"]["Enums"]["content_type"]
+          video_url?: string | null
+        }
+        Update: {
+          body?: string | null
+          category?: string | null
+          created_at?: string
+          file_url?: string | null
+          id?: string
+          published?: boolean
+          summary?: string | null
+          title?: string
+          type?: Database["public"]["Enums"]["content_type"]
+          video_url?: string | null
+        }
+        Relationships: []
+      }
+      payments: {
+        Row: {
+          amount: number
+          description: string | null
+          id: string
+          paid_at: string
+          status: string
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          description?: string | null
+          id?: string
+          paid_at?: string
+          status?: string
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          description?: string | null
+          id?: string
+          paid_at?: string
+          status?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          active_session_id: string | null
+          created_at: string
+          full_name: string | null
+          id: string
+          restaurant_name: string | null
+        }
+        Insert: {
+          active_session_id?: string | null
+          created_at?: string
+          full_name?: string | null
+          id: string
+          restaurant_name?: string | null
+        }
+        Update: {
+          active_session_id?: string | null
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          restaurant_name?: string | null
+        }
+        Relationships: []
+      }
+      subscriptions: {
+        Row: {
+          created_at: string
+          current_period_end: string | null
+          id: string
+          plan: string
+          status: Database["public"]["Enums"]["sub_status"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          current_period_end?: string | null
+          id?: string
+          plan: string
+          status?: Database["public"]["Enums"]["sub_status"]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          current_period_end?: string | null
+          id?: string
+          plan?: string
+          status?: Database["public"]["Enums"]["sub_status"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      claim_session: { Args: { _session: string }; Returns: undefined }
+      has_active_subscription: { Args: { _user_id: string }; Returns: boolean }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      is_current_session: { Args: { _session: string }; Returns: boolean }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user"
+      content_type: "video" | "artigo" | "prompt" | "download"
+      sub_status: "ativa" | "pendente" | "cancelada" | "inadimplente"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +324,10 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user"],
+      content_type: ["video", "artigo", "prompt", "download"],
+      sub_status: ["ativa", "pendente", "cancelada", "inadimplente"],
+    },
   },
 } as const

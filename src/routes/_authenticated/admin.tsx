@@ -43,7 +43,9 @@ function useAdminData() {
         supabase.from("subscriptions").select("*"),
         supabase.from("payments").select("*"),
       ]);
-      return { profiles: p.data ?? [], subs: s.data ?? [], pays: pay.data ?? [] };
+      const ids = new Set((p.data ?? []).map((x) => x.id));
+      // Ignore records of accounts that no longer exist
+      return { profiles: p.data ?? [], subs: (s.data ?? []).filter((x) => ids.has(x.user_id)), pays: (pay.data ?? []).filter((x) => ids.has(x.user_id)) };
     },
   });
 }

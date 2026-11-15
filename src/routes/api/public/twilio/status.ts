@@ -20,10 +20,12 @@ export const Route = createFileRoute("/api/public/twilio/status")({
         const s = nextStatus(row.status, twStatus);
         if (s) {
           const now = new Date().toISOString();
-          const patch: Record<string, string> = { status: s };
-          if (s === "entregue") patch.delivered_at = now;
-          if (s === "lido") patch.read_at = now;
-          if (s === "falhou") patch.error = `Twilio: ${form.get("ErrorCode") ?? twStatus}`;
+          const patch = {
+            status: s as "enviado" | "entregue" | "lido" | "falhou",
+            ...(s === "entregue" ? { delivered_at: now } : {}),
+            ...(s === "lido" ? { read_at: now } : {}),
+            ...(s === "falhou" ? { error: `Twilio: ${form.get("ErrorCode") ?? twStatus}` } : {}),
+          };
           const { error: e2 } = await supabaseAdmin.from("notifications").update(patch).eq("id", row.id);
           if (e2) return new Response("db error", { status: 500 });
         }

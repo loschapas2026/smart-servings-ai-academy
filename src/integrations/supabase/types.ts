@@ -110,6 +110,7 @@ export type Database = {
         Row: {
           active_session_id: string | null
           created_at: string
+          email: string | null
           full_name: string | null
           id: string
           restaurant_name: string | null
@@ -117,6 +118,7 @@ export type Database = {
         Insert: {
           active_session_id?: string | null
           created_at?: string
+          email?: string | null
           full_name?: string | null
           id: string
           restaurant_name?: string | null
@@ -124,6 +126,7 @@ export type Database = {
         Update: {
           active_session_id?: string | null
           created_at?: string
+          email?: string | null
           full_name?: string | null
           id?: string
           restaurant_name?: string | null

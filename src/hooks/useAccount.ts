@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import type { Session } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
+import { readPaymentsEnv } from "@/lib/stripe";
 
 export function useSession() {
   const [session, setSession] = useState<Session | null>(null);

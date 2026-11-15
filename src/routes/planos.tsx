@@ -1,6 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { PlanCards } from "@/components/PlanCards";
+import { useAccount, useSession } from "@/hooks/useAccount";
+import { useStripeCheckout } from "@/hooks/useStripeCheckout";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { brl, perMonth, type Plan } from "@/lib/plans";
 
 export const Route = createFileRoute("/planos")({
   head: () => ({
@@ -15,14 +20,40 @@ export const Route = createFileRoute("/planos")({
 });
 
 function Planos() {
+  const { session } = useSession();
+  const { data: acc } = useAccount();
+  const { openCheckout, closeCheckout, isOpen, checkoutElement } = useStripeCheckout();
+  const [plan, setPlan] = useState<Plan | null>(null);
+
+  const choose = (p: Plan) => {
+    if (!session?.user) return;
+    setPlan(p);
+    openCheckout({
+      priceId: p.priceId,
+      returnUrl: `${window.location.origin}/financeiro?checkout=ok`,
+    });
+  };
+
   return (
     <main className="min-h-screen">
       <SiteHeader />
       <section className="mx-auto max-w-6xl px-5 pt-36 pb-24">
         <h1 className="text-4xl md:text-6xl">Planos</h1>
         <p className="mt-3 mb-12 text-muted-foreground">Acesso completo em todos os planos. Quanto mais tempo, menor o valor por mês.</p>
-        <PlanCards />
+        <PlanCards signedIn={!!session} active={!!acc?.active} onChoose={choose} />
       </section>
+
+      <Dialog open={isOpen} onOpenChange={(open) => { if (!open) { closeCheckout(); setPlan(null); } }}>
+        <DialogContent className="max-w-lg">
+          <DialogHeader>
+            <DialogTitle>{plan ? `Assinar o plano ${plan.name}` : "Assinar"}</DialogTitle>
+            <DialogDescription>
+              {plan ? `${brl(plan.total)} — ${brl(perMonth(plan))} por mês. Acesso liberado assim que o pagamento for aprovado.` : ""}
+            </DialogDescription>
+          </DialogHeader>
+          {checkoutElement}
+        </DialogContent>
+      </Dialog>
     </main>
   );
 }

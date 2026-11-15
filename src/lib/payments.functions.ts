@@ -100,6 +100,8 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
         ui_mode: "embedded_page",
         return_url: data.returnUrl,
         customer: customerId,
+        // Prices are set in BRL; don't show visitors a converted currency.
+        adaptive_pricing: { enabled: false },
         metadata: { userId, priceId: data.priceId },
         ...(isRecurring && { subscription_data: { metadata: { userId, priceId: data.priceId } } }),
         ...(!isRecurring && { payment_intent_data: { description: await productName(stripe, stripePrice) } }),

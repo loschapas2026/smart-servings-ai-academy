@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { AppShell } from "@/components/AppShell";
 import { useAccount } from "@/hooks/useAccount";
 import { PLANS, brl } from "@/lib/plans";
+import { WhatsAppSettings } from "@/components/WhatsAppSettings";
 
 export const Route = createFileRoute("/_authenticated/financeiro")({
   head: () => ({ meta: [{ title: "Financeiro — RAIOX" }, { name: "description", content: "Sua assinatura e pagamentos." }] }),
@@ -34,6 +35,7 @@ function Financeiro() {
         <Link to="/planos" className="rounded-full border border-primary px-5 py-2 text-sm font-bold text-primary">{sub ? "Mudar de plano" : "Assinar agora"}</Link>
         <span className="rounded-full border px-5 py-2 text-sm text-muted-foreground">Trocar cartão e cancelar: em breve</span>
       </div>
+      <WhatsAppSettings />
       <h2 className="mt-12 text-xl">Histórico de pagamentos</h2>
       <div className="mt-4 overflow-hidden rounded-2xl border">
         {pays.length === 0 ? <p className="p-6 text-muted-foreground">Nenhum pagamento ainda.</p> : (

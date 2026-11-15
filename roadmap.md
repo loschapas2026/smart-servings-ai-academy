@@ -6,3 +6,4 @@
 - [x] Subscriber area
 - [x] Financial portal (card change/cancel waits on payments)
 - [x] Admin panel (manual plan release until payments)
+- [ ] WhatsApp notifications: structure done; waiting for user to connect new Twilio account + WhatsApp sender number

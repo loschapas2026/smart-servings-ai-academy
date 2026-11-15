@@ -88,6 +88,90 @@ export type Database = {
         }
         Relationships: []
       }
+      live_meetings: {
+        Row: {
+          announced_at: string | null
+          created_at: string
+          id: string
+          link: string | null
+          reminder_sent_at: string | null
+          starts_at: string
+          title: string
+        }
+        Insert: {
+          announced_at?: string | null
+          created_at?: string
+          id?: string
+          link?: string | null
+          reminder_sent_at?: string | null
+          starts_at: string
+          title: string
+        }
+        Update: {
+          announced_at?: string | null
+          created_at?: string
+          id?: string
+          link?: string | null
+          reminder_sent_at?: string | null
+          starts_at?: string
+          title?: string
+        }
+        Relationships: []
+      }
+      notifications: {
+        Row: {
+          attempts: number
+          body: string
+          created_at: string
+          dedupe_key: string | null
+          delivered_at: string | null
+          error: string | null
+          id: string
+          read_at: string | null
+          scheduled_for: string
+          sent_at: string | null
+          status: Database["public"]["Enums"]["notification_status"]
+          to_phone: string
+          twilio_sid: string | null
+          type: Database["public"]["Enums"]["notification_type"]
+          user_id: string
+        }
+        Insert: {
+          attempts?: number
+          body: string
+          created_at?: string
+          dedupe_key?: string | null
+          delivered_at?: string | null
+          error?: string | null
+          id?: string
+          read_at?: string | null
+          scheduled_for?: string
+          sent_at?: string | null
+          status?: Database["public"]["Enums"]["notification_status"]
+          to_phone: string
+          twilio_sid?: string | null
+          type: Database["public"]["Enums"]["notification_type"]
+          user_id: string
+        }
+        Update: {
+          attempts?: number
+          body?: string
+          created_at?: string
+          dedupe_key?: string | null
+          delivered_at?: string | null
+          error?: string | null
+          id?: string
+          read_at?: string | null
+          scheduled_for?: string
+          sent_at?: string | null
+          status?: Database["public"]["Enums"]["notification_status"]
+          to_phone?: string
+          twilio_sid?: string | null
+          type?: Database["public"]["Enums"]["notification_type"]
+          user_id?: string
+        }
+        Relationships: []
+      }
       payments: {
         Row: {
           amount: number
@@ -122,7 +206,9 @@ export type Database = {
           email: string | null
           full_name: string | null
           id: string
+          phone: string | null
           restaurant_name: string | null
+          whatsapp_opt_in: boolean
         }
         Insert: {
           active_session_id?: string | null
@@ -130,7 +216,9 @@ export type Database = {
           email?: string | null
           full_name?: string | null
           id: string
+          phone?: string | null
           restaurant_name?: string | null
+          whatsapp_opt_in?: boolean
         }
         Update: {
           active_session_id?: string | null
@@ -138,7 +226,9 @@ export type Database = {
           email?: string | null
           full_name?: string | null
           id?: string
+          phone?: string | null
           restaurant_name?: string | null
+          whatsapp_opt_in?: boolean
         }
         Relationships: []
       }
@@ -209,6 +299,14 @@ export type Database = {
     Enums: {
       app_role: "admin" | "user"
       content_type: "video" | "artigo" | "prompt" | "download"
+      notification_status:
+        | "pendente"
+        | "enviando"
+        | "enviado"
+        | "entregue"
+        | "lido"
+        | "falhou"
+      notification_type: "vencimento" | "reuniao" | "aviso" | "pagamento"
       sub_status: "ativa" | "pendente" | "cancelada" | "inadimplente"
     }
     CompositeTypes: {
@@ -339,6 +437,15 @@ export const Constants = {
     Enums: {
       app_role: ["admin", "user"],
       content_type: ["video", "artigo", "prompt", "download"],
+      notification_status: [
+        "pendente",
+        "enviando",
+        "enviado",
+        "entregue",
+        "lido",
+        "falhou",
+      ],
+      notification_type: ["vencimento", "reuniao", "aviso", "pagamento"],
       sub_status: ["ativa", "pendente", "cancelada", "inadimplente"],
     },
   },

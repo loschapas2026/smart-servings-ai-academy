@@ -17,6 +17,8 @@ import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/
 import { Route as AuthenticatedFinanceiroRouteImport } from './routes/_authenticated/financeiro'
 import { Route as AuthenticatedPainelRouteImport } from './routes/_authenticated/painel'
 import { Route as AuthenticatedConteudoIdRouteImport } from './routes/_authenticated/conteudo.$id'
+import { Route as ApiPublicJobsNotificationsRouteImport } from './routes/api/public/jobs/notifications'
+import { Route as ApiPublicTwilioStatusRouteImport } from './routes/api/public/twilio/status'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -57,6 +59,17 @@ const AuthenticatedConteudoIdRoute = AuthenticatedConteudoIdRouteImport.update({
   path: '/conteudo/$id',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const ApiPublicJobsNotificationsRoute =
+  ApiPublicJobsNotificationsRouteImport.update({
+    id: '/api/public/jobs/notifications',
+    path: '/api/public/jobs/notifications',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiPublicTwilioStatusRoute = ApiPublicTwilioStatusRouteImport.update({
+  id: '/api/public/twilio/status',
+  path: '/api/public/twilio/status',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -66,6 +79,8 @@ export interface FileRoutesByFullPath {
   '/financeiro': typeof AuthenticatedFinanceiroRoute
   '/painel': typeof AuthenticatedPainelRoute
   '/conteudo/$id': typeof AuthenticatedConteudoIdRoute
+  '/api/public/jobs/notifications': typeof ApiPublicJobsNotificationsRoute
+  '/api/public/twilio/status': typeof ApiPublicTwilioStatusRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -75,6 +90,8 @@ export interface FileRoutesByTo {
   '/financeiro': typeof AuthenticatedFinanceiroRoute
   '/painel': typeof AuthenticatedPainelRoute
   '/conteudo/$id': typeof AuthenticatedConteudoIdRoute
+  '/api/public/jobs/notifications': typeof ApiPublicJobsNotificationsRoute
+  '/api/public/twilio/status': typeof ApiPublicTwilioStatusRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -86,6 +103,8 @@ export interface FileRoutesById {
   '/_authenticated/financeiro': typeof AuthenticatedFinanceiroRoute
   '/_authenticated/painel': typeof AuthenticatedPainelRoute
   '/_authenticated/conteudo/$id': typeof AuthenticatedConteudoIdRoute
+  '/api/public/jobs/notifications': typeof ApiPublicJobsNotificationsRoute
+  '/api/public/twilio/status': typeof ApiPublicTwilioStatusRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -97,6 +116,8 @@ export interface FileRouteTypes {
     | '/financeiro'
     | '/painel'
     | '/conteudo/$id'
+    | '/api/public/jobs/notifications'
+    | '/api/public/twilio/status'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -106,6 +127,8 @@ export interface FileRouteTypes {
     | '/financeiro'
     | '/painel'
     | '/conteudo/$id'
+    | '/api/public/jobs/notifications'
+    | '/api/public/twilio/status'
   id:
     | '__root__'
     | '/'
@@ -116,6 +139,8 @@ export interface FileRouteTypes {
     | '/_authenticated/financeiro'
     | '/_authenticated/painel'
     | '/_authenticated/conteudo/$id'
+    | '/api/public/jobs/notifications'
+    | '/api/public/twilio/status'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -123,6 +148,8 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
   PlanosRoute: typeof PlanosRoute
+  ApiPublicJobsNotificationsRoute: typeof ApiPublicJobsNotificationsRoute
+  ApiPublicTwilioStatusRoute: typeof ApiPublicTwilioStatusRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -183,6 +210,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedConteudoIdRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/api/public/jobs/notifications': {
+      id: '/api/public/jobs/notifications'
+      path: '/api/public/jobs/notifications'
+      fullPath: '/api/public/jobs/notifications'
+      preLoaderRoute: typeof ApiPublicJobsNotificationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/twilio/status': {
+      id: '/api/public/twilio/status'
+      path: '/api/public/twilio/status'
+      fullPath: '/api/public/twilio/status'
+      preLoaderRoute: typeof ApiPublicTwilioStatusRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -208,6 +249,8 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
   PlanosRoute: PlanosRoute,
+  ApiPublicJobsNotificationsRoute: ApiPublicJobsNotificationsRoute,
+  ApiPublicTwilioStatusRoute: ApiPublicTwilioStatusRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -6,6 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { AppShell } from "@/components/AppShell";
 import { useAccount } from "@/hooks/useAccount";
 import { PLANS, brl, periodEnd } from "@/lib/plans";
+import { WhatsAppPanel } from "@/components/admin/WhatsAppPanel";
 
 export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({ meta: [{ title: "Admin — RAIOX" }, { name: "description", content: "Painel administrativo RAIOX." }] }),
@@ -16,20 +17,20 @@ const inp = "w-full rounded-xl border bg-input/40 px-4 py-2.5 text-sm outline-no
 
 function Admin() {
   const { data: acc, isLoading } = useAccount();
-  const [tab, setTab] = useState<"geral" | "assinantes" | "conteudo">("geral");
+  const [tab, setTab] = useState<"geral" | "assinantes" | "conteudo" | "whatsapp">("geral");
   if (isLoading) return <AppShell>{null}</AppShell>;
   if (!acc?.isAdmin) return <AppShell><p className="text-muted-foreground">Acesso restrito à equipe do Clube do SUIT.</p></AppShell>;
   return (
     <AppShell>
       <h1 className="text-3xl md:text-4xl">Admin</h1>
-      <div className="mt-6 flex gap-2">
-        {(["geral", "assinantes", "conteudo"] as const).map((t) => (
+      <div className="mt-6 flex flex-wrap gap-2">
+        {(["geral", "assinantes", "conteudo", "whatsapp"] as const).map((t) => (
           <button key={t} onClick={() => setTab(t)} className={`rounded-full border px-4 py-1.5 text-sm capitalize ${tab === t ? "border-primary text-primary" : "text-muted-foreground"}`}>
-            {t === "geral" ? "Visão geral" : t === "conteudo" ? "Conteúdo" : "Assinantes"}
+            {t === "geral" ? "Visão geral" : t === "conteudo" ? "Conteúdo" : t === "whatsapp" ? "WhatsApp" : "Assinantes"}
           </button>
         ))}
       </div>
-      <div className="mt-8">{tab === "geral" ? <Overview /> : tab === "assinantes" ? <Subscribers /> : <Contents />}</div>
+      <div className="mt-8">{tab === "geral" ? <Overview /> : tab === "assinantes" ? <Subscribers /> : tab === "whatsapp" ? <WhatsAppPanel /> : <Contents />}</div>
     </AppShell>
   );
 }
@@ -39,7 +40,7 @@ function useAdminData() {
     queryKey: ["admin-data"],
     queryFn: async () => {
       const [p, s, pay] = await Promise.all([
-        supabase.from("profiles").select("id,full_name,restaurant_name,email,created_at").order("created_at", { ascending: false }),
+        supabase.from("profiles").select("id,full_name,restaurant_name,email,phone,created_at").order("created_at", { ascending: false }),
         supabase.from("subscriptions").select("*"),
         supabase.from("payments").select("*"),
       ]);
@@ -91,7 +92,7 @@ function Subscribers() {
           const s = data.subs.find((x) => x.user_id === p.id);
           return (
             <tr key={p.id} className="border-t align-top">
-              <td className="p-4"><p className="font-bold">{p.full_name ?? "—"}</p><p className="text-muted-foreground">{p.email}</p><p className="text-xs text-muted-foreground">{p.restaurant_name}</p></td>
+              <td className="p-4"><p className="font-bold">{p.full_name ?? "—"}</p><p className="text-muted-foreground">{p.email}</p><p className="text-xs text-muted-foreground">{p.restaurant_name}</p>{p.phone && <p className="font-mono text-xs text-muted-foreground">{p.phone}</p>}</td>
               <td className="p-4">{s?.plan ?? "—"}</td>
               <td className="p-4">{s?.status ?? "sem assinatura"}</td>
               <td className="p-4">{s?.current_period_end ? new Date(s.current_period_end).toLocaleDateString("pt-BR") : "—"}</td>

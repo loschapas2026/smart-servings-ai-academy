@@ -10,7 +10,13 @@ export function SessionGuard() {
   const qc = useQueryClient();
   useEffect(() => {
     let timer: ReturnType<typeof setInterval> | undefined;
+    let running = false;
     const check = async () => {
+      if (running) return;
+      running = true;
+      try { await run(); } finally { running = false; }
+    };
+    const run = async () => {
       const { data } = await supabase.auth.getSession();
       if (!data.session) return;
       await ensureClaimed();

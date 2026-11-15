@@ -2,6 +2,9 @@
 - [x] Visual identity, home page, plans page (Mensal 69,90 / Semestral 59,90 / Anual 49,90 per month)
 - [x] Lovable Cloud enabled
 - [x] Payments (Stripe) enabled in test mode: catalog, checkout, webhook, billing portal
+- [x] Test purchase verified: monthly checkout with test card, records written, access unlocked, financial page reads them back
+- [x] Webhook handler verified locally with signed test notifications (subscription, payment, duplicate delivery, overdue)
+- [ ] Publish the app so the payment notification endpoint is reachable (currently "not found" on preview and published sites)
 - [ ] Payments: go live (claim account + verify) — user action in the Payments tab
 - [x] Sign-up/login + one active session per user
 - [x] Subscriber area

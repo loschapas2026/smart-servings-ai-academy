@@ -18,6 +18,7 @@ import { Route as AuthenticatedFinanceiroRouteImport } from './routes/_authentic
 import { Route as AuthenticatedPainelRouteImport } from './routes/_authenticated/painel'
 import { Route as AuthenticatedConteudoIdRouteImport } from './routes/_authenticated/conteudo.$id'
 import { Route as ApiPublicJobsNotificationsRouteImport } from './routes/api/public/jobs/notifications'
+import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
 import { Route as ApiPublicTwilioStatusRouteImport } from './routes/api/public/twilio/status'
 
 const IndexRoute = IndexRouteImport.update({
@@ -65,6 +66,12 @@ const ApiPublicJobsNotificationsRoute =
     path: '/api/public/jobs/notifications',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiPublicPaymentsWebhookRoute =
+  ApiPublicPaymentsWebhookRouteImport.update({
+    id: '/api/public/payments/webhook',
+    path: '/api/public/payments/webhook',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiPublicTwilioStatusRoute = ApiPublicTwilioStatusRouteImport.update({
   id: '/api/public/twilio/status',
   path: '/api/public/twilio/status',
@@ -80,6 +87,7 @@ export interface FileRoutesByFullPath {
   '/painel': typeof AuthenticatedPainelRoute
   '/conteudo/$id': typeof AuthenticatedConteudoIdRoute
   '/api/public/jobs/notifications': typeof ApiPublicJobsNotificationsRoute
+  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/api/public/twilio/status': typeof ApiPublicTwilioStatusRoute
 }
 export interface FileRoutesByTo {
@@ -91,6 +99,7 @@ export interface FileRoutesByTo {
   '/painel': typeof AuthenticatedPainelRoute
   '/conteudo/$id': typeof AuthenticatedConteudoIdRoute
   '/api/public/jobs/notifications': typeof ApiPublicJobsNotificationsRoute
+  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/api/public/twilio/status': typeof ApiPublicTwilioStatusRoute
 }
 export interface FileRoutesById {
@@ -104,6 +113,7 @@ export interface FileRoutesById {
   '/_authenticated/painel': typeof AuthenticatedPainelRoute
   '/_authenticated/conteudo/$id': typeof AuthenticatedConteudoIdRoute
   '/api/public/jobs/notifications': typeof ApiPublicJobsNotificationsRoute
+  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/api/public/twilio/status': typeof ApiPublicTwilioStatusRoute
 }
 export interface FileRouteTypes {
@@ -117,6 +127,7 @@ export interface FileRouteTypes {
     | '/painel'
     | '/conteudo/$id'
     | '/api/public/jobs/notifications'
+    | '/api/public/payments/webhook'
     | '/api/public/twilio/status'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -128,6 +139,7 @@ export interface FileRouteTypes {
     | '/painel'
     | '/conteudo/$id'
     | '/api/public/jobs/notifications'
+    | '/api/public/payments/webhook'
     | '/api/public/twilio/status'
   id:
     | '__root__'
@@ -140,6 +152,7 @@ export interface FileRouteTypes {
     | '/_authenticated/painel'
     | '/_authenticated/conteudo/$id'
     | '/api/public/jobs/notifications'
+    | '/api/public/payments/webhook'
     | '/api/public/twilio/status'
   fileRoutesById: FileRoutesById
 }
@@ -149,6 +162,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   PlanosRoute: typeof PlanosRoute
   ApiPublicJobsNotificationsRoute: typeof ApiPublicJobsNotificationsRoute
+  ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
   ApiPublicTwilioStatusRoute: typeof ApiPublicTwilioStatusRoute
 }
 
@@ -217,6 +231,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicJobsNotificationsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/payments/webhook': {
+      id: '/api/public/payments/webhook'
+      path: '/api/public/payments/webhook'
+      fullPath: '/api/public/payments/webhook'
+      preLoaderRoute: typeof ApiPublicPaymentsWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/twilio/status': {
       id: '/api/public/twilio/status'
       path: '/api/public/twilio/status'
@@ -250,6 +271,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   PlanosRoute: PlanosRoute,
   ApiPublicJobsNotificationsRoute: ApiPublicJobsNotificationsRoute,
+  ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
   ApiPublicTwilioStatusRoute: ApiPublicTwilioStatusRoute,
 }
 export const routeTree = rootRouteImport

@@ -72,7 +72,7 @@ function Subscribers() {
   const activate = async (userId: string, planId: string) => {
     const plan = PLANS.find((p) => p.id === planId)!;
     const { error } = await supabase.from("subscriptions").upsert({ user_id: userId, plan: plan.id, status: "ativa", current_period_end: periodEnd(plan).toISOString(), updated_at: new Date().toISOString() }, { onConflict: "user_id" });
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     await supabase.from("payments").insert({ user_id: userId, amount: plan.total, description: `Plano ${plan.name} (manual)`, status: "pago" });
     toast.success("Acesso liberado."); qc.invalidateQueries();
   };
@@ -125,7 +125,7 @@ function Contents() {
   const save = async (e: React.FormEvent) => {
     e.preventDefault();
     const { error } = await supabase.from("contents").insert({ ...f, video_url: f.video_url || null, file_url: f.file_url || null });
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success("Conteúdo publicado."); setF(EMPTY); qc.invalidateQueries();
   };
   const update = async (id: string, patch: { published?: boolean }) => { await supabase.from("contents").update(patch).eq("id", id); qc.invalidateQueries(); };

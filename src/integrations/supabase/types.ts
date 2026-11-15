@@ -45,10 +45,13 @@ export type Database = {
           body: string | null
           category: string | null
           created_at: string
+          duration: string | null
           file_url: string | null
           id: string
+          position: number
           published: boolean
           summary: string | null
+          thumbnail_url: string | null
           title: string
           type: Database["public"]["Enums"]["content_type"]
           video_url: string | null
@@ -57,10 +60,13 @@ export type Database = {
           body?: string | null
           category?: string | null
           created_at?: string
+          duration?: string | null
           file_url?: string | null
           id?: string
+          position?: number
           published?: boolean
           summary?: string | null
+          thumbnail_url?: string | null
           title: string
           type: Database["public"]["Enums"]["content_type"]
           video_url?: string | null
@@ -69,10 +75,13 @@ export type Database = {
           body?: string | null
           category?: string | null
           created_at?: string
+          duration?: string | null
           file_url?: string | null
           id?: string
+          position?: number
           published?: boolean
           summary?: string | null
+          thumbnail_url?: string | null
           title?: string
           type?: Database["public"]["Enums"]["content_type"]
           video_url?: string | null

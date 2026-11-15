@@ -17,7 +17,7 @@ export function SessionGuard() {
       if (!(await stillCurrent())) {
         resetLocalSession();
         qc.clear();
-        await supabase.auth.signOut();
+        await supabase.auth.signOut({ scope: "local" });
         toast.error("Sua conta foi acessada em outro dispositivo. Esta sessão foi encerrada.");
         navigate({ to: "/auth", replace: true });
       }

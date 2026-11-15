@@ -39,5 +39,5 @@ export function nextStatus(current: string, twilio: string): string | null {
   if (!s) return null;
   if (current === "falhou" || current === "lido") return null;
   if (s === "falhou") return s;
-  return RANK[s] > RANK[current] ? s : null;
+  return (RANK[s] ?? 0) > (RANK[current] ?? 0) ? s : null;
 }

@@ -21,7 +21,7 @@ const input = "w-full rounded-xl border bg-input/40 px-4 py-3 outline-none focus
 function AuthPage() {
   const navigate = useNavigate();
   const [mode, setMode] = useState<"in" | "up">("in");
-  const [f, setF] = useState({ name: "", restaurant: "", email: "", password: "" });
+  const [f, setF] = useState({ name: "", restaurant: "", phone: "", email: "", password: "" });
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
@@ -38,7 +38,7 @@ function AuthPage() {
     } else {
       const { error } = await supabase.auth.signUp({
         email: f.email, password: f.password,
-        options: { emailRedirectTo: window.location.origin, data: { full_name: f.name, restaurant_name: f.restaurant } },
+        options: { emailRedirectTo: window.location.origin, data: { full_name: f.name, restaurant_name: f.restaurant, phone: f.phone } },
       });
       if (error) toast.error(error.message);
       else toast.success("Conta criada! Confira seu e-mail para confirmar o cadastro.");
@@ -61,6 +61,7 @@ function AuthPage() {
           {mode === "up" && <>
             <input className={input} placeholder="Seu nome" required value={f.name} onChange={(e) => setF({ ...f, name: e.target.value })} />
             <input className={input} placeholder="Nome do restaurante" value={f.restaurant} onChange={(e) => setF({ ...f, restaurant: e.target.value })} />
+            <input className={input} type="tel" placeholder="WhatsApp com DDD" value={f.phone} onChange={(e) => setF({ ...f, phone: e.target.value })} />
           </>}
           <input className={input} type="email" placeholder="E-mail" required value={f.email} onChange={(e) => setF({ ...f, email: e.target.value })} />
           <input className={input} type="password" placeholder="Senha" minLength={6} required value={f.password} onChange={(e) => setF({ ...f, password: e.target.value })} />

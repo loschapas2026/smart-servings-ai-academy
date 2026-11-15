@@ -7,7 +7,7 @@ export type Plan = {
 };
 
 export const PLANS: Plan[] = [
-  { id: "mensal", name: "Mensal", months: 1, total: 79.9 },
+  { id: "mensal", name: "Mensal", months: 1, total: 69.9 },
   { id: "semestral", name: "Semestral", months: 6, total: 359.4, highlight: true },
   { id: "anual", name: "Anual", months: 12, total: 598.8 },
 ];

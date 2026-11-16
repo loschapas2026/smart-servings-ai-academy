@@ -32,7 +32,7 @@ describe("briefOf", () => {
     expect(briefOf({ pain: "Fila de entrega cresce no pico", business: "Pizza do Engenheiro", area: "entregas" })).toBe(
       "Dor descrita pelo assinante: Fila de entrega cresce no pico\nNegócio: Pizza do Engenheiro\nÁrea que dói hoje: entregas",
     );
-    expect(briefOf({ pain: "Fila de entrega cresce no pico", business: "  ", area: undefined })).toBe(
+    expect(briefOf({ pain: "Fila de entrega cresce no pico", business: "  " })).toBe(
       "Dor descrita pelo assinante: Fila de entrega cresce no pico",
     );
   });

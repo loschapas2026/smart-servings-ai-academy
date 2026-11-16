@@ -18,6 +18,13 @@ export const PLANS: Plan[] = [
   { id: "anual", name: "Anual", months: 12, total: 598.8, priceId: "raiox_anual", recurring: true },
 ];
 
+/** Cota de adesão: cobrada uma única vez, junto com a primeira mensalidade. */
+export const ADHESION = { priceId: "raiox_adesao", total: 399.9 } as const;
+
+/** Valor da primeira cobrança: plano + adesão (se ainda não pagou a adesão). */
+export const firstCharge = (p: Plan, adhesionPaid = false) =>
+  Math.round((p.total + (adhesionPaid ? 0 : ADHESION.total)) * 100) / 100;
+
 export const planByPriceId = (priceId?: string | null): Plan | undefined =>
   PLANS.find((p) => p.priceId === priceId);
 

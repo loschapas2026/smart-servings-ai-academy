@@ -72,10 +72,10 @@ function Painel() {
       <section className="mt-10 grid gap-3 md:grid-cols-3">
         {[
           { n: "1", t: "Assista às aulas", d: "Entenda o que a IA já faz em restaurantes de verdade.", to: "/painel" as const, hash: "aulas" },
-          { n: "2", t: "Copie o prompt inicial", d: "Ele cria a base do seu sistema: nome, cores, acessos e integrações.", to: "/prompts" as const },
-          { n: "3", t: "Escolha o próximo bloco", d: "Estoque, entregas, financeiro… um prompt por vez, testando cada etapa.", to: "/prompts" as const },
+          { n: "2", t: "Copie o prompt inicial", d: "Ele cria a base do seu sistema: nome, cores, acessos e integrações.", to: "/prompts" as const, hash: undefined },
+          { n: "3", t: "Escolha o próximo bloco", d: "Estoque, entregas, financeiro… um prompt por vez, testando cada etapa.", to: "/prompts" as const, hash: undefined },
         ].map((s) => (
-          <Link key={s.n} to={s.to} hash={s.hash} className="group flex gap-4 rounded-2xl border bg-card p-5 transition hover:border-primary">
+          <Link key={s.n} to={s.to} {...(s.hash ? { hash: s.hash } : {})} className="group flex gap-4 rounded-2xl border bg-card p-5 transition hover:border-primary">
             <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary font-display text-lg text-primary-foreground">{s.n}</span>
             <div><p className="font-bold group-hover:text-primary">{s.t}</p><p className="mt-1 text-sm text-muted-foreground">{s.d}</p></div>
           </Link>

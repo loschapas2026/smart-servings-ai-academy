@@ -45,10 +45,11 @@ export const promptsQuery = {
     (
       await supabase
         .from("contents")
-        .select("id,title,summary,body,category,thumbnail_url")
+        .select("id,title,summary,body,category,thumbnail_url,position")
         .eq("type", "prompt")
         .eq("published", true)
         .order("category")
+        .order("position")
         .order("created_at")
     ).data ?? ([] as Prompt[]),
 };

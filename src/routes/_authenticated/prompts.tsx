@@ -22,6 +22,7 @@ export const Route = createFileRoute("/_authenticated/prompts")({
 });
 
 type Prompt = {
+  thumbnail_url: string | null;
   id: string;
   title: string;
   summary: string | null;
@@ -42,7 +43,7 @@ export const promptsQuery = {
     (
       await supabase
         .from("contents")
-        .select("id,title,summary,body,category")
+        .select("id,title,summary,body,category,thumbnail_url")
         .eq("type", "prompt")
         .eq("published", true)
         .order("category")
@@ -202,8 +203,20 @@ function PromptCard({ p, used }: { p: Prompt; used: boolean }) {
     await qc.invalidateQueries({ queryKey: ["progress"] });
   };
 
+  const img = useQuery({
+    queryKey: ["prompt-img", p.thumbnail_url],
+    enabled: !!p.thumbnail_url,
+    staleTime: 50 * 60 * 1000,
+    queryFn: async () => (await supabase.storage.from("prompt-images").createSignedUrl(p.thumbnail_url!, 3600)).data?.signedUrl ?? null,
+  });
+
   return (
-    <article className="flex flex-col rounded-2xl border bg-card p-5">
+    <article className="flex flex-col overflow-hidden rounded-2xl border bg-card p-5">
+      {img.data && (
+        <a href={img.data} target="_blank" rel="noreferrer" className="-mx-5 -mt-5 mb-5 block border-b">
+          <img src={img.data} alt={`Resultado do prompt: ${p.title}`} className="aspect-video w-full object-cover object-top transition hover:opacity-90" loading="lazy" />
+        </a>
+      )}
       <div className="flex items-start gap-3">
         <div className="mr-auto">
           <h3 className="font-display text-base leading-snug">{p.title}</h3>

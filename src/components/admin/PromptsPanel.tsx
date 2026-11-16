@@ -15,6 +15,7 @@ export function PromptsPanel() {
   const [raw, setRaw] = useState("");
   const [f, setF] = useState(EMPTY);
   const [busy, setBusy] = useState(false);
+  const [file, setFile] = useState<File | null>(null);
   const list = useQuery({
     queryKey: ["admin-prompts"],
     queryFn: async () => (await supabase.from("contents").select("id,title,category,published,created_at").eq("type", "prompt").order("created_at", { ascending: false })).data ?? [],
@@ -27,10 +28,17 @@ export function PromptsPanel() {
   };
   const save = async (published: boolean) => {
     if (!f.title.trim() || !f.body.trim()) { toast.error("Preencha título e prompt."); return; }
-    const { error } = await supabase.from("contents").insert({ type: "prompt", title: f.title.trim(), summary: f.summary.trim(), body: f.body, category: f.stage, published });
+    let thumbnail_url: string | null = null;
+    if (file) {
+      const path = `${crypto.randomUUID()}.${file.name.split(".").pop() || "png"}`;
+      const up = await supabase.storage.from("prompt-images").upload(path, file, { contentType: file.type });
+      if (up.error) { toast.error("Falha ao enviar imagem: " + up.error.message); return; }
+      thumbnail_url = path;
+    }
+    const { error } = await supabase.from("contents").insert({ type: "prompt", title: f.title.trim(), summary: f.summary.trim(), body: f.body, category: f.stage, published, thumbnail_url });
     if (error) { toast.error(error.message); return; }
     toast.success(published ? "Publicado na página Prompts." : "Salvo como rascunho.");
-    setF(EMPTY); setRaw(""); qc.invalidateQueries();
+    setF(EMPTY); setRaw(""); setFile(null); qc.invalidateQueries();
   };
   const toggle = async (id: string, published: boolean) => { await supabase.from("contents").update({ published }).eq("id", id); qc.invalidateQueries(); };
   const remove = async (id: string) => { if (!confirm("Excluir este prompt?")) return; await supabase.from("contents").delete().eq("id", id); qc.invalidateQueries(); };
@@ -53,6 +61,11 @@ export function PromptsPanel() {
             {PROMPT_STAGES.map((s) => <option key={s.id} value={s.label}>{s.label}</option>)}
           </select>
           <textarea value={f.body} onChange={(e) => setF({ ...f, body: e.target.value })} rows={12} className={`${inp} font-mono`} placeholder="Prompt com [CAMPOS] para o assinante preencher" />
+          <label className="block rounded-xl border border-dashed p-4 text-sm text-muted-foreground">
+            <span className="font-bold text-foreground">Imagem do resultado</span> (print do sistema pronto — chama atenção na página)
+            <input type="file" accept="image/*" onChange={(e) => setFile(e.target.files?.[0] ?? null)} className="mt-2 block w-full text-xs" />
+            {file && <img src={URL.createObjectURL(file)} alt="Prévia" className="mt-3 max-h-40 rounded-lg border" />}
+          </label>
           {fields.length > 0 && <p className="text-xs text-muted-foreground">Campos para preencher: {fields.join(", ")}</p>}
           <div className="flex flex-wrap gap-2">
             <button onClick={() => save(true)} className="rounded-full bg-primary px-5 py-2 text-sm font-bold text-primary-foreground">Publicar</button>

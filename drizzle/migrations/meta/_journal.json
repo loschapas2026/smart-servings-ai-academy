@@ -36,6 +36,20 @@
       "when": 1794766573524,
       "tag": "0004_add_payments_provider_fields",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1794843221007,
+      "tag": "0005_prompt_images_policies",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1794843233251,
+      "tag": "0006_prompt_images_read",
+      "breakpoints": true
     }
   ]
 }

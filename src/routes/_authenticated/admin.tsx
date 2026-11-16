@@ -8,6 +8,7 @@ import { useAccount } from "@/hooks/useAccount";
 import { PLANS, brl, periodEnd } from "@/lib/plans";
 import { readPaymentsEnv } from "@/lib/stripe";
 import { WhatsAppPanel } from "@/components/admin/WhatsAppPanel";
+import { PromptsPanel } from "@/components/admin/PromptsPanel";
 
 export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({ meta: [{ title: "Admin — RAIOX" }, { name: "description", content: "Painel administrativo RAIOX." }] }),
@@ -18,20 +19,20 @@ const inp = "w-full rounded-xl border bg-input/40 px-4 py-2.5 text-sm outline-no
 
 function Admin() {
   const { data: acc, isLoading } = useAccount();
-  const [tab, setTab] = useState<"geral" | "assinantes" | "conteudo" | "whatsapp">("geral");
+  const [tab, setTab] = useState<"geral" | "assinantes" | "conteudo" | "prompts" | "whatsapp">("geral");
   if (isLoading) return <AppShell>{null}</AppShell>;
   if (!acc?.isAdmin) return <AppShell><p className="text-muted-foreground">Acesso restrito à equipe do Clube do SUIT.</p></AppShell>;
   return (
     <AppShell>
       <h1 className="text-3xl md:text-4xl">Admin</h1>
       <div className="mt-6 flex flex-wrap gap-2">
-        {(["geral", "assinantes", "conteudo", "whatsapp"] as const).map((t) => (
+        {(["geral", "assinantes", "conteudo", "prompts", "whatsapp"] as const).map((t) => (
           <button key={t} onClick={() => setTab(t)} className={`rounded-full border px-4 py-1.5 text-sm capitalize ${tab === t ? "border-primary text-primary" : "text-muted-foreground"}`}>
-            {t === "geral" ? "Visão geral" : t === "conteudo" ? "Conteúdo" : t === "whatsapp" ? "WhatsApp" : "Assinantes"}
+            {t === "geral" ? "Visão geral" : t === "conteudo" ? "Conteúdo" : t === "whatsapp" ? "WhatsApp" : t === "prompts" ? "Prompts" : "Assinantes"}
           </button>
         ))}
       </div>
-      <div className="mt-8">{tab === "geral" ? <Overview /> : tab === "assinantes" ? <Subscribers /> : tab === "whatsapp" ? <WhatsAppPanel /> : <Contents />}</div>
+      <div className="mt-8">{tab === "geral" ? <Overview /> : tab === "assinantes" ? <Subscribers /> : tab === "whatsapp" ? <WhatsAppPanel /> : tab === "prompts" ? <PromptsPanel /> : <Contents />}</div>
     </AppShell>
   );
 }

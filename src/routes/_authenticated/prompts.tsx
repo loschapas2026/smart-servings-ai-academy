@@ -103,8 +103,8 @@ function Prompts() {
       <p className="font-mono text-xs uppercase tracking-[0.3em] text-primary">Biblioteca RAIOX</p>
       <h1 className="mt-2 text-3xl md:text-5xl">Prompts para criação de sistemas</h1>
       <p className="mt-4 max-w-3xl text-lg text-muted-foreground">
-        Vinte e seis prompts prontos para tirar uma ideia do papel com inteligência artificial: do briefing ao
-        lançamento. Copie, preencha o que está entre colchetes e cole na sua IA.
+        Prompts prontos para tirar uma ideia do papel com inteligência artificial: do briefing ao lançamento. Copie,
+        preencha o que está entre colchetes e cole na sua IA.
       </p>
 
       <div className="mt-8 grid gap-3 md:grid-cols-2">

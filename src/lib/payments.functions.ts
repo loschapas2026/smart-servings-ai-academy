@@ -98,7 +98,10 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
         .eq("environment", data.environment);
       let adhesionLine: { price: string; quantity: number } | null = null;
       if (!paidBefore) {
-        const adhesion = (await stripe.prices.list({ lookup_keys: ["raiox_adesao"] })).data[0];
+        const { adhesionTier } = await import("@/lib/plans");
+        const { data: members } = await supabase.rpc("adhesion_members_count", { _env: data.environment });
+        const { tier } = adhesionTier(members ?? 0);
+        const adhesion = (await stripe.prices.list({ lookup_keys: [tier.priceId] })).data[0];
         if (!adhesion) return { error: "Cota de adesão não encontrada no catálogo de pagamentos." };
         adhesionLine = { price: adhesion.id, quantity: 1 };
       }

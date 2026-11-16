@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
-import { PLANS, ADHESION, perMonth, brl, type Plan } from "@/lib/plans";
+import { PLANS, ADHESION_TIERS, perMonth, brl, type Plan } from "@/lib/plans";
+import { useAdhesion } from "@/hooks/useAdhesion";
 
 interface Props {
   signedIn?: boolean;
@@ -7,14 +8,39 @@ interface Props {
   onChoose?: (plan: Plan) => void;
 }
 
+function AdhesionBox() {
+  const { tier, next, left } = useAdhesion();
+  const pctTaken = left === null ? 100 : Math.round(((100 - left) / 100) * 100);
+  return (
+    <div className="mb-6 rounded-2xl border-2 border-primary bg-primary/5 p-5 shadow-glow">
+      <div className="flex flex-wrap items-center gap-2">
+        <p className="font-mono text-xs uppercase text-primary">Passo 1 · Cota de adesão</p>
+        <span className="rounded-full bg-primary px-3 py-0.5 font-mono text-[10px] font-bold text-primary-foreground animate-pulse">LOTE {tier.lote} · PREÇO SOBE</span>
+      </div>
+      <p className="mt-2 font-display text-3xl font-bold md:text-4xl">{brl(tier.total)} <span className="text-base font-normal text-muted-foreground">pagamento único de entrada</span></p>
+      {left !== null && next && (
+        <>
+          <p className="mt-2 text-lg font-bold text-primary">Restam só {left} vagas neste valor. Depois sobe para {brl(next.total)}.</p>
+          <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-secondary"><div className="h-full bg-primary" style={{ width: `${pctTaken}%` }} /></div>
+        </>
+      )}
+      <div className="mt-4 grid grid-cols-3 gap-2 text-center">
+        {ADHESION_TIERS.map((t) => (
+          <div key={t.lote} className={`rounded-xl border p-2 ${t.lote === tier.lote ? "border-primary bg-primary/10" : t.lote < tier.lote ? "opacity-40 line-through" : "opacity-70"}`}>
+            <p className="font-mono text-[10px] uppercase text-muted-foreground">{t.lote === 1 ? "100 primeiros" : t.lote === 2 ? "+100 seguintes" : "depois"}</p>
+            <p className="font-display text-lg font-bold">{brl(t.total)}</p>
+          </div>
+        ))}
+      </div>
+      <p className="mt-3 text-sm text-muted-foreground">Garanta o menor valor agora: a adesão é cobrada uma vez só, junto com a primeira mensalidade. Depois você paga apenas o plano escolhido abaixo.</p>
+    </div>
+  );
+}
+
 export function PlanCards({ signedIn = false, active = false, onChoose }: Props) {
   return (
     <div>
-    <div className="mb-6 rounded-2xl border border-primary/40 bg-primary/5 p-5">
-      <p className="font-mono text-xs uppercase text-primary">Passo 1 · Cota de adesão</p>
-      <p className="mt-1 font-display text-2xl font-bold">{brl(ADHESION.total)} <span className="text-base font-normal text-muted-foreground">pagamento único de entrada</span></p>
-      <p className="mt-1 text-sm text-muted-foreground">Cobrada uma vez só, junto com a primeira mensalidade. Depois você paga apenas o plano escolhido abaixo.</p>
-    </div>
+    <AdhesionBox />
     <p className="mb-4 font-mono text-xs uppercase text-muted-foreground">Passo 2 · Escolha sua mensalidade</p>
     <div className="grid gap-5 md:grid-cols-3">
       {PLANS.map((p) => (

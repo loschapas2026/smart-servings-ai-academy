@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { PLANS, perMonth, planByPriceId, ADHESION, firstCharge } from "./plans";
+import { PLANS, perMonth, planByPriceId, adhesionTier, firstCharge } from "./plans";
 
 describe("planos RAIOX", () => {
   it("semestral sai a R$ 59,90 por mês", () => {
@@ -22,9 +22,18 @@ describe("planos RAIOX", () => {
     expect(planByPriceId("raiox_anual")?.id).toBe("anual");
     expect(planByPriceId("raiox_inexistente")).toBeUndefined();
   });
-  it("cota de adesão é R$ 399,90 e entra só na primeira cobrança", () => {
-    expect(ADHESION.total).toBe(399.9);
-    expect(firstCharge(PLANS[0]!)).toBe(469.8);
-    expect(firstCharge(PLANS[0]!, true)).toBe(69.9);
+  it("adesão: 100 primeiros R$ 399, próximos 100 R$ 599, depois R$ 999", () => {
+    expect(adhesionTier(0).tier.total).toBe(399);
+    expect(adhesionTier(0).left).toBe(100);
+    expect(adhesionTier(99).tier.total).toBe(399);
+    expect(adhesionTier(100).tier.total).toBe(599);
+    expect(adhesionTier(199).tier.total).toBe(599);
+    expect(adhesionTier(200).tier.total).toBe(999);
+    expect(adhesionTier(5000).left).toBeNull();
+    expect(adhesionTier(100).tier.priceId).toBe("raiox_adesao_lote2");
+  });
+  it("adesão entra só na primeira cobrança", () => {
+    expect(firstCharge(PLANS[0]!, 399)).toBe(468.9);
+    expect(firstCharge(PLANS[0]!)).toBe(69.9);
   });
 });

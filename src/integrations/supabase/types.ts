@@ -336,6 +336,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      adhesion_members_count: { Args: { _env: string }; Returns: number }
       claim_session: { Args: { _session: string }; Returns: undefined }
       has_active_subscription: { Args: { _user_id: string }; Returns: boolean }
       has_role: {

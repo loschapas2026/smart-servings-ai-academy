@@ -35,5 +35,6 @@ export const briefOf = (p: { pain: string; business?: string; area?: string }): 
     `Dor descrita pelo assinante: ${p.pain}`,
     business ? `Negócio: ${business}` : "",
     area ? `Área que dói hoje: ${area}` : "",
+    "Contexto obrigatório: o assinante é cliente Suitable; a solução deve consultar a Suitable API como fonte oficial dos dados operacionais.",
   ].filter(Boolean).join("\n");
 };

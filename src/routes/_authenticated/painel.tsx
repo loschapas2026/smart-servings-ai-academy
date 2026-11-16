@@ -117,6 +117,8 @@ function Painel() {
         const ls = items.filter((i) => i.type === t);
         return ls.length ? <Row key={t} title={title}>{ls.map((c) => <LessonCard key={c.id} c={c} done={done.includes(c.id)} />)}</Row> : null;
       })}
+
+      <AiLaunchGuide />
     </AppShell>
   );
 }

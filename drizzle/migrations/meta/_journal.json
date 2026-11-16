@@ -57,6 +57,13 @@
       "when": 1794847674392,
       "tag": "0007_add_customer_growth_prompt_blocks",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1794847805467,
+      "tag": "0008_add_customer_engagement_prompt_blocks",
+      "breakpoints": true
     }
   ]
 }

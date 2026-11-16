@@ -59,11 +59,3 @@ export const generalizePrompt = createServerFn({ method: "POST" })
     if (!out) throw new Error("A IA não devolveu o prompt.");
     return JSON.parse(out) as { title: string; summary: string; stage: string; body: string };
   });
-    if (res.status === 429) throw new Error("Muitas solicitações. Tente em instantes.");
-    if (res.status === 402) throw new Error("Créditos de IA esgotados.");
-    if (!res.ok) throw new Error("A IA não respondeu. Tente de novo.");
-    const j: any = await res.json();
-    const args = j.choices?.[0]?.message?.tool_calls?.[0]?.function?.arguments;
-    if (!args) throw new Error("A IA não devolveu o prompt.");
-    return JSON.parse(args) as { title: string; summary: string; stage: string; body: string };
-  });

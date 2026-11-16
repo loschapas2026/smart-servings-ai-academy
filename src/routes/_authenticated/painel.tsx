@@ -10,15 +10,15 @@ import { AiLaunchGuide } from "@/components/AiLaunchGuide";
 export const Route = createFileRoute("/_authenticated/painel")({
   head: () => ({
     meta: [
-      { title: "Radar IA e seus conteúdos — RAIOX" },
+      { title: "Aulas, prompts e Radar IA — RAIOX" },
       {
         name: "description",
-        content: "Entenda os tipos de IA, escolha por onde começar e construa sua primeira solução com Lovable, prompts e automação.",
+        content: "Assista às videoaulas, copie os prompts prontos e use o Radar IA para escolher por onde começar.",
       },
-      { property: "og:title", content: "Radar IA e seus conteúdos — RAIOX" },
+      { property: "og:title", content: "Aulas, prompts e Radar IA — RAIOX" },
       {
         property: "og:description",
-        content: "Um guia visual para escolher sua primeira ferramenta de IA e tirar um sistema do papel.",
+        content: "Videoaulas com casos reais, prompts prontos para copiar e um guia para escolher sua ferramenta de IA.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

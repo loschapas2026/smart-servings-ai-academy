@@ -173,9 +173,9 @@ export function AiLaunchGuide() {
               </span>
               <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary">Radar IA · Guia 01</span>
             </div>
-            <h1 id="radar-ia-title" className="mt-5 max-w-3xl text-3xl leading-tight md:text-5xl">
+            <h2 id="radar-ia-title" className="mt-5 max-w-3xl text-3xl leading-tight md:text-5xl">
               A IA certa para sair da ideia e chegar ao <span className="text-primary">sistema no ar.</span>
-            </h1>
+            </h2>
             <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
               Nem toda IA faz a mesma coisa. Entenda o mapa, escolha sua ferramenta e comece pela infraestrutura que
               entrega uma primeira versão sem exigir conhecimento técnico.

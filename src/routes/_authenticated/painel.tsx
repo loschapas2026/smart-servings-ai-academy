@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { AppShell } from "@/components/AppShell";
-import { LessonCard, Row } from "@/components/LessonCard";
+import { LessonCard, Row, CategoryCard } from "@/components/LessonCard";
 import { useAccount } from "@/hooks/useAccount";
 import { usePromptCategories } from "@/hooks/usePromptCategories";
 import { AiLaunchGuide } from "@/components/AiLaunchGuide";
@@ -110,11 +110,9 @@ function Painel() {
           </div>
           <Link to="/prompts" className="rounded-full border border-primary px-5 py-2 text-sm font-bold text-primary">Abrir biblioteca →</Link>
         </div>
-        {promptGroups.map(([cat, ls]) => (
-          <Row key={cat} title={cat} subtitle={`${ls.length} prompts`}>
-            {ls.map((c) => <LessonCard key={c.id} c={c} done={done.includes(c.id)} />)}
-          </Row>
-        ))}
+        <Row title="Escolha uma categoria" subtitle={`${prompts.length} prompts no total`}>
+          {promptGroups.map(([cat, ls], i) => <CategoryCard key={cat} label={cat} count={ls.length} cover={ls.find((x) => x.thumbnail_url) ?? ls[0]!} n={i + 1} />)}
+        </Row>
       </section>
 
       {others.map(({ t, title }) => {

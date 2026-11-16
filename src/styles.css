@@ -71,6 +71,7 @@
   h1, h2, h3 { font-family: var(--font-display); letter-spacing: -0.02em; }
 }
 
+@utility no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; &::-webkit-scrollbar { display: none; } }
 @utility shadow-glow { box-shadow: var(--shadow-glow); }
 @utility bg-fade { background-image: var(--gradient-fade); }
 @utility scanlines {

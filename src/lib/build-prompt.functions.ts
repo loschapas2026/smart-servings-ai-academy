@@ -28,7 +28,7 @@ export const buildPromptFromPain = createServerFn({ method: "POST" })
       context.supabase.rpc("has_role", { _user_id: context.userId, _role: "admin" }),
       context.supabase.rpc("has_active_subscription", { _user_id: context.userId }),
     ]);
-    if (!isAdmin && !active) throw new new Error("Assinatura ativa necessária para criar seu prompt.");
+    if (!isAdmin && !active) throw new Error("Assinatura ativa necessária para criar seu prompt.");
     const brief = [
       `Dor descrita pelo assinante: ${data.pain}`,
       data.business ? `Negócio: ${data.business}` : "",

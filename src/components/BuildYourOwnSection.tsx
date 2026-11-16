@@ -133,12 +133,12 @@ export function BuildYourOwnSection() {
           <div className="rounded-2xl border bg-background/60 p-6">
             {out ? (
               <>
-                <div className="flex flex-wrap items-start gap-3">
-                  <div className="mr-auto">
+                <div className="flex items-start gap-3">
+                  <div className="mr-auto min-w-0">
                     <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary">Seu prompt está pronto</p>
                     <h3 className="mt-1 text-lg leading-tight">{out.title}</h3>
                   </div>
-                  <button onClick={copy} className="inline-flex items-center gap-2 rounded-full border border-primary px-4 py-2 text-sm font-bold text-primary">
+                  <button onClick={copy} className="inline-flex shrink-0 items-center gap-2 rounded-full border border-primary px-4 py-2 text-sm font-bold text-primary">
                     {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
                     {copied ? "Copiado" : "Copiar"}
                   </button>

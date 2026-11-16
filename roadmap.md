@@ -1,4 +1,7 @@
 # RAIOX roadmap
+- [x] Mapear todos os módulos, regras e telas de Salva Gerente - RP e Los Chapas - Site, incluindo o histórico de criação
+- [x] Transformar os módulos em prompts generalizados, com campos entre colchetes, instruções de uso e imagens de referência
+- [x] Cadastrar e revisar a coleção completa na biblioteca RAIOX, sem apagar os prompts criados pela equipe
 - [x] Visual identity, home page, plans page (Mensal 69,90 / Semestral 59,90 / Anual 49,90 per month)
 - [x] Lovable Cloud enabled
 - [x] Payments (Stripe) enabled in test mode: catalog, checkout, webhook, billing portal
@@ -8,7 +11,7 @@
 - [ ] Payments: go live (claim account + verify) — user action in the Payments tab
 - [x] Sign-up/login + one active session per user
 - [x] Subscriber area
-- [x] Prompts para criação de sistemas: library page in the subscriber area (26 prompts in 6 stages, search, stage filter, copy, mark as used)
+- [x] Prompts para criação de sistemas: library page in the subscriber area (74 prompts, business tracks, search, stage filter, copy, mark as used)
 - [x] Prompts page: summary panel beside each prompt (what it covers, fields to fill, size), derived from the prompt text
 - [x] Financial portal (card change/cancel now via the billing portal)
 - [x] Admin panel (manual plan release + provider-managed subscriptions)

@@ -50,6 +50,48 @@
       "when": 1794843233251,
       "tag": "0006_prompt_images_read",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1794847674392,
+      "tag": "0007_add_customer_growth_prompt_blocks",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1794847805467,
+      "tag": "0008_add_customer_engagement_prompt_blocks",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1794847852322,
+      "tag": "0009_add_inventory_operations_prompt_blocks",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1794847889400,
+      "tag": "0010_add_kitchen_delivery_prompt_blocks",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1794847934868,
+      "tag": "0011_add_finance_integrations_quality_prompt_blocks",
+      "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1794847959891,
+      "tag": "0012_complete_existing_prompt_covers",
+      "breakpoints": true
     }
   ]
 }

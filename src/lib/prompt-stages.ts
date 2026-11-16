@@ -19,6 +19,51 @@ export const PROMPT_STAGES: PromptStage[] = [
     description: "Antes de escrever qualquer código: entender o problema, quem usa e o que o sistema precisa fazer.",
   },
   {
+    id: "site-vendas",
+    label: "Site e vendas",
+    description: "Vitrine digital, cardápios, produtos, unidades e caminhos para o cliente pedir e entrar em contato.",
+  },
+  {
+    id: "reservas-eventos",
+    label: "Reservas e eventos",
+    description: "Reservas, capacidade, eventos, inscrições e ações especiais com regras e painel de acompanhamento.",
+  },
+  {
+    id: "promocoes-fidelidade",
+    label: "Promoções e fidelidade",
+    description: "Cupons, roleta, clube de clientes, cashback e experiências que fazem o cliente voltar.",
+  },
+  {
+    id: "clientes-campanhas",
+    label: "Clientes e campanhas",
+    description: "Cadastro único, segmentação, WhatsApp, aniversários, réguas de relacionamento e medição de resultados.",
+  },
+  {
+    id: "estoque-compras",
+    label: "Estoque e compras",
+    description: "Produtos, fornecedores, contagens, sugestões, cotações, pedidos de compra e entrada de notas.",
+  },
+  {
+    id: "producao-equipe",
+    label: "Produção e equipe",
+    description: "Cozinha, linha de produção, escalas, folgas, ausências e dimensionamento da operação.",
+  },
+  {
+    id: "entregas-motoboys",
+    label: "Entregas e motoboys",
+    description: "Fila, despacho, rotas, fretes, chave Pix e fechamento diário dos entregadores.",
+  },
+  {
+    id: "financeiro-admin",
+    label: "Financeiro e administrativo",
+    description: "Contas a pagar, recorrências, folha, holerites, relatórios e visão gerencial.",
+  },
+  {
+    id: "integracoes-automacoes",
+    label: "Integrações e automações",
+    description: "Suitable, WhatsApp, Telegram, rotinas agendadas e conexões seguras com outros serviços.",
+  },
+  {
     id: "regras",
     label: "Regras e dados",
     description: "O que o sistema guarda, quem pode fazer o quê e as decisões que ele toma sozinho.",

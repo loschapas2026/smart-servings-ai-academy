@@ -299,7 +299,10 @@ function PromptSummaryPanel({ p }: { p: Prompt }) {
           <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-primary">O que ter em mãos</p>
           <p className="mt-1 text-sm text-muted-foreground">
             {s.fields.length} {s.fields.length === 1 ? "campo" : "campos"} para preencher:{" "}
-            {s.fields.slice(0, 4).join(", ")}
+            {s.fields
+              .slice(0, 4)
+              .map((f) => (f.length > 26 ? `${f.slice(0, 25)}…` : f))
+              .join(", ")}
             {s.fields.length > 4 ? ` e +${s.fields.length - 4}` : ""}.
           </p>
         </div>

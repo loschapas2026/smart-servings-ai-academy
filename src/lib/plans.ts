@@ -18,12 +18,23 @@ export const PLANS: Plan[] = [
   { id: "anual", name: "Anual", months: 12, total: 598.8, priceId: "raiox_anual", recurring: true },
 ];
 
-/** Cota de adesão: cobrada uma única vez, junto com a primeira mensalidade. */
-export const ADHESION = { priceId: "raiox_adesao", total: 399.9 } as const;
+/** Cota de adesão por lote: sobe conforme os membros entram. Cobrada uma vez, na primeira compra. */
+export const ADHESION_TIERS = [
+  { lote: 1, upTo: 100, total: 399, priceId: "raiox_adesao" },
+  { lote: 2, upTo: 200, total: 599, priceId: "raiox_adesao_lote2" },
+  { lote: 3, upTo: Infinity, total: 999, priceId: "raiox_adesao_lote3" },
+] as const;
+export type AdhesionTier = (typeof ADHESION_TIERS)[number];
 
-/** Valor da primeira cobrança: plano + adesão (se ainda não pagou a adesão). */
-export const firstCharge = (p: Plan, adhesionPaid = false) =>
-  Math.round((p.total + (adhesionPaid ? 0 : ADHESION.total)) * 100) / 100;
+/** Lote vigente dado quantos membros já pagaram, e quantas vagas restam nele. */
+export const adhesionTier = (members: number) => {
+  const tier = ADHESION_TIERS.find((t) => members < t.upTo) ?? ADHESION_TIERS[2];
+  const next = ADHESION_TIERS.find((t) => t.lote === tier.lote + 1);
+  return { tier, next, left: Number.isFinite(tier.upTo) ? tier.upTo - members : null };
+};
+
+/** Valor da primeira cobrança: plano + adesão do lote (0 se já pagou a adesão). */
+export const firstCharge = (p: Plan, adhesion = 0) => Math.round((p.total + adhesion) * 100) / 100;
 
 export const planByPriceId = (priceId?: string | null): Plan | undefined =>
   PLANS.find((p) => p.priceId === priceId);

@@ -22,6 +22,7 @@ export const Route = createFileRoute("/_authenticated/prompts")({
 });
 
 type Prompt = {
+  thumbnail_url: string | null;
   id: string;
   title: string;
   summary: string | null;

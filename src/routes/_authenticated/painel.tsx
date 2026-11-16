@@ -40,7 +40,6 @@ function Painel() {
   const next = videos.find((v) => !done.includes(v.id)) ?? videos[0];
   const pct = videos.length ? Math.round((videos.filter((v) => done.includes(v.id)).length / videos.length) * 100) : 0;
   const others = [
-    { t: "prompt", title: "Biblioteca de prompts" },
     { t: "artigo", title: "Artigos" },
     { t: "download", title: "Materiais para baixar" },
   ];

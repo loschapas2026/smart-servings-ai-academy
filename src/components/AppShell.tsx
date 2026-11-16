@@ -23,6 +23,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-2 px-5 py-3">
           <Link to="/painel" className="mr-auto"><Logo className="text-xl" /></Link>
           <Link to="/painel" className={link} activeProps={active}>Conteúdo</Link>
+          <Link to="/prompts" className={link} activeProps={active}>Prompts</Link>
           <Link to="/financeiro" className={link} activeProps={active}>Financeiro</Link>
           {data?.isAdmin && <Link to="/admin" className={link} activeProps={active}>Admin</Link>}
           <button onClick={signOut} className={link}>Sair</button>

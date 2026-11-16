@@ -1,6 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
-import { briefOf, validatePain } from "@/lib/build-prompt";
+import { briefOf, validatePain, withSuitableApi } from "@/lib/build-prompt";
 
 const SYSTEM = `Você é o engenheiro de prompts do RAIOX, um clube para donos de restaurante e pequenos negócios que querem automatizar a própria operação com IA.
 O assinante descreveu a dor dele. Transforme isso num prompt completo, pronto para colar no Lovable e construir o sistema.
@@ -11,7 +11,9 @@ Regras:
 - Deixe campos entre colchetes em MAIÚSCULAS para o que falta saber, ex: [NOME DO NEGÓCIO], [CIDADE], [CARDÁPIO PRINCIPAL].
 - Se a dor for vaga, feche com um bloco "Perguntas antes de construir" com 5 a 8 perguntas objetivas.
 - Nunca escreva senha, chave de API ou token no prompt. Segredo fica só no servidor.
-- Se ele citar Suitable, SUIT ou WhatsApp, trate como integração que já existe no negócio.
+- O público inicial é exclusivamente de clientes Suitable. A Suitable API é sempre a fonte oficial dos dados operacionais, mesmo quando a dor não citar o Suitable.
+- Nunca proponha cadastro manual, planilha ou banco paralelo como substituto dos dados disponíveis na Suitable API. Não invente endpoints: exija a consulta à documentação e aos acessos habilitados na conta do cliente.
+- Se ele citar WhatsApp, trate como integração que já existe no negócio.
 - O texto final é um prompt de trabalho, não um artigo: imperativo, direto, sem marketing.`;
 
 export type BuiltPrompt = { title: string; summary: string; body: string };
@@ -65,5 +67,6 @@ export const buildPromptFromPain = createServerFn({ method: "POST" })
       }
     }
     if (!out) throw new Error("A IA não devolveu o prompt.");
-    return JSON.parse(out) as BuiltPrompt;
+    const parsed = JSON.parse(out) as BuiltPrompt;
+    return { ...parsed, body: withSuitableApi(parsed.body) };
   });

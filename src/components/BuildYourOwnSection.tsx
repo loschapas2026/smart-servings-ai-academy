@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { toast } from "sonner";
-import { ArrowRight, Check, Copy, RefreshCw, Sparkles, Target, Wrench } from "lucide-react";
+import { ArrowRight, Check, Copy, DatabaseZap, RefreshCw, Sparkles, Target, Wrench } from "lucide-react";
 import { buildPromptFromPain, type BuiltPrompt } from "@/lib/build-prompt.functions";
 import { PAIN_MAX, PAIN_MIN } from "@/lib/build-prompt";
 
@@ -74,7 +74,7 @@ export function BuildYourOwnSection() {
           <span className="text-primary">Você cria o que precisar.</span>
         </h2>
         <p className="mt-5 max-w-2xl text-sm leading-7 text-muted-foreground md:text-base">
-          Os prompts prontos são atalhos, não o limite. Se a sua operação tem um problema que ninguém mais tem, escreva ele aqui. O RAIOX transforma a sua dor em um prompt de construção completo, com as suas telas, as suas regras e as suas integrações — pronto para colar no Lovable e sair funcionando.
+          Os prompts prontos são atalhos, não o limite. Se a sua operação tem um problema que ninguém mais tem, escreva ele aqui. O RAIOX transforma a sua dor em um prompt completo, pronto para colar no Lovable — sempre conectado aos dados reais do seu restaurante pela Suitable API.
         </p>
 
         <div className="mt-8 grid gap-3 md:grid-cols-3">
@@ -90,6 +90,18 @@ export function BuildYourOwnSection() {
               </div>
             );
           })}
+        </div>
+
+        <div className="mt-4 flex items-start gap-4 rounded-2xl border border-primary/40 bg-primary/10 p-5">
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground">
+            <DatabaseZap className="h-5 w-5" />
+          </span>
+          <div>
+            <p className="font-bold">Suitable é a fonte oficial dos dados</p>
+            <p className="mt-1 text-sm leading-6 text-muted-foreground">
+              Neste primeiro momento, o RAIOX é para clientes Suitable. Todo sistema gerado aqui já sai orientado a buscar pedidos, clientes, entregas, estoque ou financeiro na Suitable API — sem planilha paralela, sem número inventado e sem expor sua chave.
+            </p>
+          </div>
         </div>
 
         <div className="mt-8 grid gap-6 lg:grid-cols-[1fr_1fr]">

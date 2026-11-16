@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { PROMPT_STAGES } from "@/lib/prompt-stages";
+import { withSuitableApi } from "@/lib/build-prompt";
 
 const SYSTEM = `Você transforma prompts reais usados pela equipe do Clube do SUIT (criados no Lovable para os próprios negócios) em modelos reutilizáveis para donos de restaurante e pequenos negócios.
 Regras:
@@ -8,6 +9,7 @@ Regras:
 - Troque tudo que é específico (nome do negócio, cidade, produtos, preços, cores, nomes de pessoas, números, endereços) por campos entre colchetes em MAIÚSCULAS, ex: [NOME DO RESTAURANTE], [CIDADE], [PREÇO DO PLANO].
 - Reutilize o mesmo campo quando o mesmo dado aparece mais de uma vez.
 - Remova senhas, chaves, e-mails e telefones reais.
+- O público inicial é exclusivamente de clientes Suitable. Preserve e reforce a Suitable API como fonte oficial dos dados operacionais; nunca proponha cadastros paralelos ou dados fictícios para substituí-la e nunca invente endpoints.
 - Escreva em português do Brasil.
 Etapas possíveis: ${PROMPT_STAGES.map((s) => s.label).join(", ")}.`;
 
@@ -57,5 +59,6 @@ export const generalizePrompt = createServerFn({ method: "POST" })
       }
     }
     if (!out) throw new Error("A IA não devolveu o prompt.");
-    return JSON.parse(out) as { title: string; summary: string; stage: string; body: string };
+    const parsed = JSON.parse(out) as { title: string; summary: string; stage: string; body: string };
+    return { ...parsed, body: withSuitableApi(parsed.body) };
   });

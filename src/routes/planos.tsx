@@ -5,7 +5,8 @@ import { PlanCards } from "@/components/PlanCards";
 import { useAccount, useSession } from "@/hooks/useAccount";
 import { useStripeCheckout } from "@/hooks/useStripeCheckout";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { ADHESION, brl, perMonth, type Plan } from "@/lib/plans";
+import { useAdhesion } from "@/hooks/useAdhesion";
+import { brl, perMonth, type Plan } from "@/lib/plans";
 
 export const Route = createFileRoute("/planos")({
   head: () => ({
@@ -48,7 +49,7 @@ function Planos() {
           <DialogHeader>
             <DialogTitle>{plan ? `Assinar o plano ${plan.name}` : "Assinar"}</DialogTitle>
             <DialogDescription>
-              {plan ? `${brl(plan.total)} (${brl(perMonth(plan))} por mês) + cota de adesão de ${brl(ADHESION.total)} na primeira compra. Acesso liberado assim que o pagamento for aprovado.` : ""}
+              {plan ? `${brl(plan.total)} (${brl(perMonth(plan))} por mês) + cota de adesão de ${brl(adh.tier.total)} (lote ${adh.tier.lote}) na primeira compra. Acesso liberado assim que o pagamento for aprovado.` : ""}
             </DialogDescription>
           </DialogHeader>
           {checkoutElement}

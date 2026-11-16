@@ -20,7 +20,7 @@ export const Route = createFileRoute("/_authenticated/prompts")({
       },
     ],
   }),
-  validateSearch: (s: Record<string, unknown>): { cat?: string } => (typeof s.cat === "string" ? { cat: s.cat } : {}),
+  validateSearch: (s: Record<string, unknown>): { cat?: string } => (typeof s["cat"] === "string" ? { cat: s["cat"] } : {}),
   component: Prompts,
 });
 

@@ -3,6 +3,7 @@
 - [x] Home logada: Radar IA moveu para o fim da página, depois das videoaulas e dos prompts
 - [x] Home logada: bloco de videoaulas escondido por enquanto (aulas continuam no banco, só fora da tela)
 - [x] Usar as fotos do Francisco (Los Chapas) e do Wellington (engenheiro) como material visual da tela inicial, numa pegada mais de IA
+- [x] Seção "Por trás do RAIOX": Wellington identificado como Pizza do Engenheiro e a dor central escrita na tela (sistemas prontos não entregam a singularidade de cada negócio)
 - [x] Mapear todos os módulos, regras e telas de Salva Gerente - RP e Los Chapas - Site, incluindo o histórico de criação
 - [x] Transformar os módulos em prompts generalizados, com campos entre colchetes, instruções de uso e imagens de referência
 - [x] Cadastrar e revisar a coleção completa na biblioteca RAIOX, sem apagar os prompts criados pela equipe

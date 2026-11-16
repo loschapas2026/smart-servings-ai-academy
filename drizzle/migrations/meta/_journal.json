@@ -78,6 +78,13 @@
       "when": 1794847889400,
       "tag": "0010_add_kitchen_delivery_prompt_blocks",
       "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1794847934868,
+      "tag": "0011_add_finance_integrations_quality_prompt_blocks",
+      "breakpoints": true
     }
   ]
 }

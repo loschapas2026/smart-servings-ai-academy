@@ -1,5 +1,6 @@
 # RAIOX roadmap
 - [x] Home logada: guia visual dos tipos de IA, comparador de ferramentas e recomendação do Lovable com link de convite
+- [x] Home logada: Radar IA moveu para o fim da página, depois das videoaulas e dos prompts
 - [x] Mapear todos os módulos, regras e telas de Salva Gerente - RP e Los Chapas - Site, incluindo o histórico de criação
 - [x] Transformar os módulos em prompts generalizados, com campos entre colchetes, instruções de uso e imagens de referência
 - [x] Cadastrar e revisar a coleção completa na biblioteca RAIOX, sem apagar os prompts criados pela equipe

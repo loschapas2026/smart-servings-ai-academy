@@ -6,6 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { AppShell } from "@/components/AppShell";
 import { useAccount } from "@/hooks/useAccount";
 import { START_STAGE, PROMPT_STAGES, placeholdersOf, stageDescription, stageOrder } from "@/lib/prompt-stages";
+import { summarizePrompt } from "@/lib/prompt-summary";
 
 export const Route = createFileRoute("/_authenticated/prompts")({
   head: () => ({
@@ -165,9 +166,12 @@ function Prompts() {
             <span className="font-mono text-xs text-muted-foreground">{list.length} prompts</span>
           </div>
           {stageDescription(label) && <p className="mt-3 max-w-3xl text-sm text-muted-foreground">{stageDescription(label)}</p>}
-          <div className="mt-6 grid gap-5 xl:grid-cols-2">
+          <div className="mt-6 space-y-6">
             {list.map((p) => (
-              <PromptCard key={p.id} p={p} used={used.includes(p.id)} />
+              <div key={p.id} className="grid items-start gap-5 xl:grid-cols-[minmax(0,1fr)_340px]">
+                <PromptCard p={p} used={used.includes(p.id)} />
+                <PromptSummaryPanel p={p} />
+              </div>
             ))}
           </div>
         </section>

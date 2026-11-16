@@ -5,9 +5,25 @@ import { AppShell } from "@/components/AppShell";
 import { LessonCard, Row } from "@/components/LessonCard";
 import { useAccount } from "@/hooks/useAccount";
 import { thumbOf } from "@/lib/video";
+import { AiLaunchGuide } from "@/components/AiLaunchGuide";
 
 export const Route = createFileRoute("/_authenticated/painel")({
-  head: () => ({ meta: [{ title: "Painel — RAIOX" }, { name: "description", content: "Seus conteúdos RAIOX." }] }),
+  head: () => ({
+    meta: [
+      { title: "Radar IA e seus conteúdos — RAIOX" },
+      {
+        name: "description",
+        content: "Entenda os tipos de IA, escolha por onde começar e construa sua primeira solução com Lovable, prompts e automação.",
+      },
+      { property: "og:title", content: "Radar IA e seus conteúdos — RAIOX" },
+      {
+        property: "og:description",
+        content: "Um guia visual para escolher sua primeira ferramenta de IA e tirar um sistema do papel.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
+    ],
+  }),
   component: Painel,
 });
 
@@ -46,13 +62,15 @@ function Painel() {
 
   return (
     <AppShell>
+      <AiLaunchGuide />
+
       {next && (
         <section className="relative overflow-hidden rounded-3xl border">
           {thumbOf(next) && <img src={thumbOf(next)!} alt="" className="absolute inset-0 h-full w-full object-cover opacity-40" />}
           <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent" />
           <div className="relative max-w-xl p-8 md:p-12">
             <p className="font-mono text-xs uppercase tracking-[0.3em] text-primary">Olá, {acc?.profile?.full_name ?? "assinante"} · continue de onde parou</p>
-            <h1 className="mt-3 text-2xl md:text-4xl">{next.title}</h1>
+            <h2 className="mt-3 text-2xl md:text-4xl">{next.title}</h2>
             <p className="mt-2 text-muted-foreground">{next.category}</p>
             <div className="mt-6 h-1.5 w-full max-w-xs overflow-hidden rounded-full bg-secondary"><div className="h-full bg-primary" style={{ width: `${pct}%` }} /></div>
             <p className="mt-2 font-mono text-xs text-muted-foreground">{pct}% do curso concluído</p>

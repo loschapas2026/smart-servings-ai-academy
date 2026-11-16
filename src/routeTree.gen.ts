@@ -16,6 +16,7 @@ import { Route as PlanosRouteImport } from './routes/planos'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as AuthenticatedFinanceiroRouteImport } from './routes/_authenticated/financeiro'
 import { Route as AuthenticatedPainelRouteImport } from './routes/_authenticated/painel'
+import { Route as AuthenticatedPromptsRouteImport } from './routes/_authenticated/prompts'
 import { Route as AuthenticatedConteudoIdRouteImport } from './routes/_authenticated/conteudo.$id'
 import { Route as ApiPublicJobsNotificationsRouteImport } from './routes/api/public/jobs/notifications'
 import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
@@ -55,6 +56,11 @@ const AuthenticatedPainelRoute = AuthenticatedPainelRouteImport.update({
   path: '/painel',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedPromptsRoute = AuthenticatedPromptsRouteImport.update({
+  id: '/prompts',
+  path: '/prompts',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedConteudoIdRoute = AuthenticatedConteudoIdRouteImport.update({
   id: '/conteudo/$id',
   path: '/conteudo/$id',
@@ -85,6 +91,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AuthenticatedAdminRoute
   '/financeiro': typeof AuthenticatedFinanceiroRoute
   '/painel': typeof AuthenticatedPainelRoute
+  '/prompts': typeof AuthenticatedPromptsRoute
   '/conteudo/$id': typeof AuthenticatedConteudoIdRoute
   '/api/public/jobs/notifications': typeof ApiPublicJobsNotificationsRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
@@ -97,6 +104,7 @@ export interface FileRoutesByTo {
   '/admin': typeof AuthenticatedAdminRoute
   '/financeiro': typeof AuthenticatedFinanceiroRoute
   '/painel': typeof AuthenticatedPainelRoute
+  '/prompts': typeof AuthenticatedPromptsRoute
   '/conteudo/$id': typeof AuthenticatedConteudoIdRoute
   '/api/public/jobs/notifications': typeof ApiPublicJobsNotificationsRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
@@ -111,6 +119,7 @@ export interface FileRoutesById {
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/_authenticated/financeiro': typeof AuthenticatedFinanceiroRoute
   '/_authenticated/painel': typeof AuthenticatedPainelRoute
+  '/_authenticated/prompts': typeof AuthenticatedPromptsRoute
   '/_authenticated/conteudo/$id': typeof AuthenticatedConteudoIdRoute
   '/api/public/jobs/notifications': typeof ApiPublicJobsNotificationsRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
@@ -125,6 +134,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/financeiro'
     | '/painel'
+    | '/prompts'
     | '/conteudo/$id'
     | '/api/public/jobs/notifications'
     | '/api/public/payments/webhook'
@@ -137,6 +147,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/financeiro'
     | '/painel'
+    | '/prompts'
     | '/conteudo/$id'
     | '/api/public/jobs/notifications'
     | '/api/public/payments/webhook'
@@ -150,6 +161,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin'
     | '/_authenticated/financeiro'
     | '/_authenticated/painel'
+    | '/_authenticated/prompts'
     | '/_authenticated/conteudo/$id'
     | '/api/public/jobs/notifications'
     | '/api/public/payments/webhook'
@@ -217,6 +229,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedPainelRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/prompts': {
+      id: '/_authenticated/prompts'
+      path: '/prompts'
+      fullPath: '/prompts'
+      preLoaderRoute: typeof AuthenticatedPromptsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/conteudo/$id': {
       id: '/_authenticated/conteudo/$id'
       path: '/conteudo/$id'
@@ -252,6 +271,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
   AuthenticatedFinanceiroRoute: typeof AuthenticatedFinanceiroRoute
   AuthenticatedPainelRoute: typeof AuthenticatedPainelRoute
+  AuthenticatedPromptsRoute: typeof AuthenticatedPromptsRoute
   AuthenticatedConteudoIdRoute: typeof AuthenticatedConteudoIdRoute
 }
 
@@ -259,6 +279,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminRoute: AuthenticatedAdminRoute,
   AuthenticatedFinanceiroRoute: AuthenticatedFinanceiroRoute,
   AuthenticatedPainelRoute: AuthenticatedPainelRoute,
+  AuthenticatedPromptsRoute: AuthenticatedPromptsRoute,
   AuthenticatedConteudoIdRoute: AuthenticatedConteudoIdRoute,
 }
 

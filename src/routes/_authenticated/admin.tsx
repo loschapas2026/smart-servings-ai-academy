@@ -144,7 +144,7 @@ function Contents() {
           <option value="video">Vídeo</option><option value="artigo">Artigo</option><option value="prompt">Prompt</option><option value="download">Download</option>
         </select>
         <input className={inp} placeholder="Título" required value={f.title} onChange={(e) => setF({ ...f, title: e.target.value })} />
-        <input className={inp} placeholder={f.type === "video" ? "Módulo (ex: Fundamentos)" : "Categoria (ex: Cardápio)"} value={f.category} onChange={(e) => setF({ ...f, category: e.target.value })} />
+        <input className={inp} placeholder={f.type === "video" ? "Módulo (ex: Fundamentos)" : f.type === "prompt" ? "Etapa (ex: Briefing e escopo, Construção, Testes e qualidade)" : "Categoria (ex: Cardápio)"} value={f.category} onChange={(e) => setF({ ...f, category: e.target.value })} />
         <input className={inp} placeholder="Resumo" value={f.summary} onChange={(e) => setF({ ...f, summary: e.target.value })} />
         {f.type === "video" && <>
           <input className={inp} placeholder="Link do vídeo (YouTube ou Vimeo)" value={f.video_url} onChange={(e) => setF({ ...f, video_url: e.target.value })} />

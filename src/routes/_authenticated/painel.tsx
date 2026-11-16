@@ -40,7 +40,6 @@ function Painel() {
   const next = videos.find((v) => !done.includes(v.id)) ?? videos[0];
   const pct = videos.length ? Math.round((videos.filter((v) => done.includes(v.id)).length / videos.length) * 100) : 0;
   const others = [
-    { t: "prompt", title: "Biblioteca de prompts" },
     { t: "artigo", title: "Artigos" },
     { t: "download", title: "Materiais para baixar" },
   ];
@@ -71,6 +70,15 @@ function Painel() {
           </Row>
         );
       })}
+
+      <Link to="/prompts" className="mt-10 flex flex-wrap items-center gap-4 rounded-2xl border border-primary bg-card p-6 shadow-glow">
+        <div className="mr-auto">
+          <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary">Biblioteca</p>
+          <h2 className="mt-1 text-lg md:text-xl">Prompts para criação de sistemas</h2>
+          <p className="mt-1 text-sm text-muted-foreground">Do briefing ao lançamento: prompts prontos para criar seu sistema com IA.</p>
+        </div>
+        <span className="rounded-full bg-primary px-5 py-2 text-sm font-bold text-primary-foreground">Abrir biblioteca →</span>
+      </Link>
 
       {others.map(({ t, title }) => {
         const ls = items.filter((i) => i.type === t);

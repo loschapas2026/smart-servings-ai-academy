@@ -6,6 +6,7 @@ import { LessonCard, Row, CategoryCard } from "@/components/LessonCard";
 import { useAccount } from "@/hooks/useAccount";
 import { usePromptCategories } from "@/hooks/usePromptCategories";
 import { AiLaunchGuide } from "@/components/AiLaunchGuide";
+import { FoundersAiSection } from "@/components/FoundersAiSection";
 
 export const Route = createFileRoute("/_authenticated/painel")({
   head: () => ({
@@ -88,6 +89,8 @@ function Painel() {
           {promptGroups.map(([cat, ls], i) => <CategoryCard key={cat} label={cat} count={ls.length} cover={ls.find((x) => x.thumbnail_url) ?? ls[0]!} n={i + 1} />)}
         </Row>
       </section>
+
+      <FoundersAiSection />
 
       {others.map(({ t, title }) => {
         const ls = items.filter((i) => i.type === t);

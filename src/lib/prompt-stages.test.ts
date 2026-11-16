@@ -2,8 +2,9 @@ import { describe, expect, it } from "vitest";
 import { PROMPT_STAGES, placeholdersOf, stageDescription, stageOrder } from "./prompt-stages";
 
 describe("etapas da página de prompts", () => {
-  it("mostra as seis etapas na ordem de trabalho", () => {
+  it("mostra "Comece por aqui" primeiro e depois as seis etapas", () => {
     expect(PROMPT_STAGES.map((s) => s.label)).toEqual([
+      "Comece por aqui",
       "Briefing e escopo",
       "Regras e dados",
       "Telas e visual",

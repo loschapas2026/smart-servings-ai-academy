@@ -5,7 +5,14 @@ export type PromptStage = {
 };
 
 /** Etapas da página "Prompts para criação de sistemas", na ordem de trabalho. */
+export const START_STAGE = "Comece por aqui";
+
 export const PROMPT_STAGES: PromptStage[] = [
+  {
+    id: "inicio",
+    label: START_STAGE,
+    description: "O primeiro prompt de todos: logo, nome, cores, acessos e integrações. Use antes de qualquer outro.",
+  },
   {
     id: "briefing",
     label: "Briefing e escopo",

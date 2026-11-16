@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { AppShell } from "@/components/AppShell";
 import { useAccount } from "@/hooks/useAccount";
-import { PROMPT_STAGES, placeholdersOf, stageDescription, stageOrder } from "@/lib/prompt-stages";
+import { START_STAGE, PROMPT_STAGES, placeholdersOf, stageDescription, stageOrder } from "@/lib/prompt-stages";
 
 export const Route = createFileRoute("/_authenticated/prompts")({
   head: () => ({
@@ -151,7 +151,12 @@ function Prompts() {
       )}
 
       {groups.map(([label, list], gi) => (
-        <section key={label} className="mt-12">
+        <section key={label} className={label === START_STAGE ? "mt-12 rounded-3xl border-2 border-primary bg-primary/5 p-5 shadow-glow md:p-8" : "mt-12"}>
+          {label === START_STAGE && (
+            <span className="mb-4 inline-block animate-pulse rounded-full bg-primary px-4 py-1 font-mono text-xs font-bold uppercase text-primary-foreground">
+              ★ Comece por esse aqui
+            </span>
+          )}
           <div className="flex flex-wrap items-baseline gap-3 border-b pb-3">
             <h2 className="text-xl md:text-2xl">
               <span className="font-mono text-sm text-primary">{String(gi + 1).padStart(2, "0")} · </span>

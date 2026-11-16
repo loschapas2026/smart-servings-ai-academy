@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { PLANS, perMonth, brl, type Plan } from "@/lib/plans";
+import { PLANS, ADHESION, perMonth, brl, type Plan } from "@/lib/plans";
 
 interface Props {
   signedIn?: boolean;
@@ -9,6 +9,13 @@ interface Props {
 
 export function PlanCards({ signedIn = false, active = false, onChoose }: Props) {
   return (
+    <div>
+    <div className="mb-6 rounded-2xl border border-primary/40 bg-primary/5 p-5">
+      <p className="font-mono text-xs uppercase text-primary">Passo 1 · Cota de adesão</p>
+      <p className="mt-1 font-display text-2xl font-bold">{brl(ADHESION.total)} <span className="text-base font-normal text-muted-foreground">pagamento único de entrada</span></p>
+      <p className="mt-1 text-sm text-muted-foreground">Cobrada uma vez só, junto com a primeira mensalidade. Depois você paga apenas o plano escolhido abaixo.</p>
+    </div>
+    <p className="mb-4 font-mono text-xs uppercase text-muted-foreground">Passo 2 · Escolha sua mensalidade</p>
     <div className="grid gap-5 md:grid-cols-3">
       {PLANS.map((p) => (
         <div key={p.id} className={`relative rounded-2xl border bg-card p-7 ${p.highlight ? "border-primary shadow-glow" : ""}`}>
@@ -47,6 +54,7 @@ export function PlanCards({ signedIn = false, active = false, onChoose }: Props)
           )}
         </div>
       ))}
+    </div>
     </div>
   );
 }

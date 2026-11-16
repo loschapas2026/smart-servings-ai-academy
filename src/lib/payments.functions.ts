@@ -90,12 +90,25 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
       if (!stripePrice) return { error: "Plano não encontrado no catálogo de pagamentos." };
       const isRecurring = stripePrice.type === "recurring";
 
+      // Cota de adesão: cobrada uma vez só, na primeira compra desta conta.
+      const { count: paidBefore } = await supabase
+        .from("payments")
+        .select("id", { count: "exact", head: true })
+        .eq("user_id", userId)
+        .eq("environment", data.environment);
+      let adhesionLine: { price: string; quantity: number } | null = null;
+      if (!paidBefore) {
+        const adhesion = (await stripe.prices.list({ lookup_keys: ["raiox_adesao"] })).data[0];
+        if (!adhesion) return { error: "Cota de adesão não encontrada no catálogo de pagamentos." };
+        adhesionLine = { price: adhesion.id, quantity: 1 };
+      }
+
       const { data: { user } } = await supabase.auth.getUser();
       const email = user?.email ?? undefined;
       const customerId = await resolveOrCreateCustomer(stripe, { email, userId });
 
       const base: Stripe.Checkout.SessionCreateParams = {
-        line_items: [{ price: stripePrice.id, quantity: 1 }],
+        line_items: [{ price: stripePrice.id, quantity: 1 }, ...(adhesionLine ? [adhesionLine] : [])],
         mode: isRecurring ? "subscription" : "payment",
         ui_mode: "embedded_page",
         return_url: data.returnUrl,

@@ -10,15 +10,15 @@ import { AiLaunchGuide } from "@/components/AiLaunchGuide";
 export const Route = createFileRoute("/_authenticated/painel")({
   head: () => ({
     meta: [
-      { title: "Aulas, prompts e Radar IA — RAIOX" },
+      { title: "Prompts e Radar IA — RAIOX" },
       {
         name: "description",
-        content: "Assista às videoaulas, copie os prompts prontos e use o Radar IA para escolher por onde começar.",
+        content: "Copie os prompts prontos e use o Radar IA para escolher por onde começar a automatizar seu restaurante.",
       },
-      { property: "og:title", content: "Aulas, prompts e Radar IA — RAIOX" },
+      { property: "og:title", content: "Prompts e Radar IA — RAIOX" },
       {
         property: "og:description",
-        content: "Videoaulas com casos reais, prompts prontos para copiar e um guia para escolher sua ferramenta de IA.",
+        content: "Prompts prontos para copiar e um guia para escolher sua ferramenta de IA.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -46,16 +46,12 @@ function Painel() {
     <AppShell>
       <div className="mt-10 rounded-2xl border border-primary bg-card p-8 shadow-glow">
         <h1 className="text-2xl">Sua assinatura não está ativa</h1>
-        <p className="mt-2 text-muted-foreground">Escolha um plano para liberar as aulas, prompts e materiais.</p>
+        <p className="mt-2 text-muted-foreground">Escolha um plano para liberar os prompts e materiais.</p>
         <Link to="/planos" className="mt-5 inline-block rounded-full bg-primary px-6 py-3 font-bold text-primary-foreground">Ver planos</Link>
       </div>
     </AppShell>
   );
 
-  const videos = items.filter((i) => i.type === "video");
-  const modules = [...new Set(videos.map((v) => v.category || "Aulas"))];
-  const next = videos.find((v) => !done.includes(v.id)) ?? videos[0];
-  const pct = videos.length ? Math.round((videos.filter((v) => done.includes(v.id)).length / videos.length) * 100) : 0;
   const prompts = items.filter((i) => i.type === "prompt");
   const promptGroups = [...new Set(prompts.map((p) => p.category || "Sem categoria"))]
     .sort((x, y) => order(x) - order(y))
@@ -69,9 +65,9 @@ function Painel() {
     <AppShell>
       <section className="grid gap-3 md:grid-cols-3">
         {[
-          { n: "1", t: "Assista às aulas", d: "Entenda o que a IA já faz em restaurantes de verdade.", to: "/painel" as const, hash: "aulas" },
-          { n: "2", t: "Copie o prompt inicial", d: "Ele cria a base do seu sistema: nome, cores, acessos e integrações.", to: "/prompts" as const, hash: undefined },
-          { n: "3", t: "Escolha o próximo bloco", d: "Estoque, entregas, financeiro… um prompt por vez, testando cada etapa.", to: "/prompts" as const, hash: undefined },
+          { n: "1", t: "Copie o prompt inicial", d: "Ele cria a base do seu sistema: nome, cores, acessos e integrações.", to: "/prompts" as const, hash: undefined },
+          { n: "2", t: "Escolha o próximo bloco", d: "Estoque, entregas, financeiro… um prompt por vez, testando cada etapa.", to: "/prompts" as const, hash: undefined },
+          { n: "3", t: "Escolha sua ferramenta de IA", d: "Veja o Radar IA no fim da página e comece pela infraestrutura certa.", to: "/painel" as const, hash: "radar" },
         ].map((s) => (
           <Link key={s.n} to={s.to} {...(s.hash ? { hash: s.hash } : {})} className="group flex gap-4 rounded-2xl border bg-card p-5 transition hover:border-primary">
             <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary font-display text-lg text-primary-foreground">{s.n}</span>
@@ -80,30 +76,10 @@ function Painel() {
         ))}
       </section>
 
-      <section id="aulas" className="mt-12 scroll-mt-6">
-        <div className="flex flex-wrap items-end gap-3">
-          <div className="mr-auto">
-            <p className="font-mono text-xs uppercase tracking-[0.3em] text-primary">Passo 1 · Videoaulas</p>
-            <h2 className="mt-1 text-2xl md:text-3xl">Aprenda com casos reais</h2>
-          </div>
-          {videos.length > 0 && <span className="font-mono text-xs text-muted-foreground">{pct}% concluído</span>}
-          {next && <Link to="/conteudo/$id" params={{ id: next.id }} className="rounded-full bg-primary px-5 py-2 text-sm font-bold text-primary-foreground shadow-glow">▶ Continuar: {next.title.slice(0, 32)}{next.title.length > 32 ? "…" : ""}</Link>}
-        </div>
-        {modules.map((m, mi) => {
-          const ls = videos.filter((v) => (v.category || "Aulas") === m);
-          const d = ls.filter((v) => done.includes(v.id)).length;
-          return (
-            <Row key={m} title={`Módulo ${mi + 1} · ${m}`} subtitle={`${d}/${ls.length} aulas`}>
-              {ls.map((c, i) => <LessonCard key={c.id} c={c} index={i + 1} poster done={done.includes(c.id)} />)}
-            </Row>
-          );
-        })}
-      </section>
-
       <section className="mt-14">
         <div className="flex flex-wrap items-end gap-3">
           <div className="mr-auto">
-            <p className="font-mono text-xs uppercase tracking-[0.3em] text-primary">Passo 2 · Prompts</p>
+            <p className="font-mono text-xs uppercase tracking-[0.3em] text-primary">Passo 1 · Prompts</p>
             <h2 className="mt-1 text-2xl md:text-3xl">Copie, adapte e construa</h2>
           </div>
           <Link to="/prompts" className="rounded-full border border-primary px-5 py-2 text-sm font-bold text-primary">Abrir biblioteca →</Link>

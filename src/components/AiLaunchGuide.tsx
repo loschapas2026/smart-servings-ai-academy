@@ -161,7 +161,7 @@ export function AiLaunchGuide() {
   const SelectedIcon = selected.icon;
 
   return (
-    <section aria-labelledby="radar-ia-title" className="mt-16">
+    <section id="radar" aria-labelledby="radar-ia-title" className="mt-16 scroll-mt-6">
       <div className="relative overflow-hidden rounded-3xl border border-primary/60 bg-card shadow-glow">
         <div className="scanlines pointer-events-none absolute inset-0" />
         <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-primary/10 blur-3xl" />

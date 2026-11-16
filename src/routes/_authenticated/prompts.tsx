@@ -29,6 +29,7 @@ type Prompt = {
   summary: string | null;
   body: string | null;
   category: string | null;
+  position: number;
 };
 
 const RULES = [

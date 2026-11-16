@@ -1,4 +1,5 @@
 # RAIOX roadmap
+- [ ] Suitable primeiro: todo prompt gerado ou generalizado deve impor a Suitable API como fonte oficial dos dados operacionais, sem cadastros paralelos ou endpoints inventados
 - [x] Home logada: deixar claro que o assinante cria o que precisar — seção "A sua dor vira sistema" com gerador de prompt a partir da dor descrita
 - [x] Home logada: guia visual dos tipos de IA, comparador de ferramentas e recomendação do Lovable com link de convite
 - [x] Home logada: Radar IA moveu para o fim da página, depois das videoaulas e dos prompts

@@ -1,6 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
-import { briefOf, validatePain } from "@/lib/build-prompt";
+import { briefOf, validatePain, withSuitableApi } from "@/lib/build-prompt";
 
 const SYSTEM = `Você é o engenheiro de prompts do RAIOX, um clube para donos de restaurante e pequenos negócios que querem automatizar a própria operação com IA.
 O assinante descreveu a dor dele. Transforme isso num prompt completo, pronto para colar no Lovable e construir o sistema.

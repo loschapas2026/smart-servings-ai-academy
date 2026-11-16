@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { PROMPT_STAGES } from "@/lib/prompt-stages";
+import { withSuitableApi } from "@/lib/build-prompt";
 
 const SYSTEM = `Você transforma prompts reais usados pela equipe do Clube do SUIT (criados no Lovable para os próprios negócios) em modelos reutilizáveis para donos de restaurante e pequenos negócios.
 Regras:

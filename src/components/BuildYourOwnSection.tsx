@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { toast } from "sonner";
-import { ArrowRight, Check, Copy, RefreshCw, Sparkles, Target, Wrench } from "lucide-react";
+import { ArrowRight, Check, Copy, DatabaseZap, RefreshCw, Sparkles, Target, Wrench } from "lucide-react";
 import { buildPromptFromPain, type BuiltPrompt } from "@/lib/build-prompt.functions";
 import { PAIN_MAX, PAIN_MIN } from "@/lib/build-prompt";
 

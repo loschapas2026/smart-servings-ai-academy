@@ -24,6 +24,7 @@ function Planos() {
   const { session } = useSession();
   const { data: acc } = useAccount();
   const { openCheckout, closeCheckout, isOpen, checkoutElement } = useStripeCheckout();
+  const adh = useAdhesion();
   const [plan, setPlan] = useState<Plan | null>(null);
 
   const choose = (p: Plan) => {

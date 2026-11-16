@@ -31,6 +31,8 @@ const LOWER_WORDS = new Set([
   "do", "da", "de", "das", "dos", "e", "a", "o", "as", "os", "em", "com", "que", "quem", "como", "onde",
   "um", "uma", "no", "na", "nos", "nas", "para", "por", "se", "ao", "à", "às", "me", "meu", "minha",
   "seu", "sua", "seus", "suas", "dia", "sem", "ate", "até", "foi", "tem", "mas", "entre", "sobre",
+  "guie", "veja", "faça", "leia", "use", "crie", "diga", "liste", "mostre", "envie", "traga", "pense",
+  "mude", "troque", "aplique", "prove", "abra", "feche", "entregue", "responda",
 ]);
 
 /** Título escrito quase todo em maiúsculas: precisa ser reescrito para leitura. */

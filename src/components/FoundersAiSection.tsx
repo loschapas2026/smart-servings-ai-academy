@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { ArrowRight, BrainCircuit, ScanLine, Utensils, Workflow } from "lucide-react";
+import { ArrowRight, BarChart3, BrainCircuit, ScanLine, Utensils } from "lucide-react";
 import franciscoPalco from "@/assets/francisco-neto-palco.jpg.asset.json";
 import franciscoEvento from "@/assets/francisco-neto-evento.jpg.asset.json";
 import wellingtonEvento from "@/assets/wellington-morais-evento.jpg.asset.json";
@@ -18,10 +18,10 @@ const founders = [
   },
   {
     name: "Wellington Morais",
-    role: "Pizza do Engenheiro · Engenharia de sistemas",
+    role: "Pizza do Engenheiro · Delivery e números",
     marker: "02 / PIZZA DO ENGENHEIRO",
     shortMarker: "02/PIZZA ENG.",
-    icon: Workflow,
+    icon: BarChart3,
     photo: wellingtonEvento,
     alternate: wellingtonPalco,
     alt: "Wellington Morais em um evento sobre o setor de alimentação",
@@ -43,7 +43,7 @@ export function FoundersAiSection() {
             Sistemas prontos<br /><span className="text-primary">não entregam a sua singularidade.</span>
           </h2>
           <p className="mt-5 max-w-md text-sm leading-7 text-muted-foreground md:text-base">
-            Francisco vive a operação do Los Chapas. Wellington vive a da Pizza do Engenheiro. Os dois bateram no mesmo muro: sistemas que tratam todo mundo igual e não se adaptam ao que cada negócio tem de único. O RAIOX existe para virar isso a seu favor — adaptar a IA à sua rotina, ao seu cardápio e ao seu jeito de atender.
+            Francisco vive a operação do Los Chapas. Wellington toca o delivery da Pizza do Engenheiro e vive de número: pedido, ticket médio, taxa de entrega, horário de pico. Os dois bateram no mesmo muro: sistemas que tratam todo mundo igual e não se adaptam ao que cada negócio tem de único. O RAIOX existe para virar isso a seu favor — adaptar a IA à sua rotina, ao seu cardápio e ao seu jeito de atender.
           </p>
 
           <ul className="mt-6 space-y-2 text-sm text-muted-foreground">

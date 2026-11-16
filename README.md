@@ -1,14 +1,18 @@
-# Welcome to your Lovable project
+# RAiOX 
+
+Projeto clube do SUIT com Chico e WELLIGTON, vamos criar um portal para falar de intelgencia artificial, desenvolver prompt, ensinar donos de restaurante a automatizar os seus negócios, esse portal RAIOX sendo o nome com AI com outra cor, esse portal será pago tem que ter controle de acesso para pagamentos e sua recorrência, controle de pagamentos e portal financeiro do cliente, acesso único por janela não pode RAIOX - a inteligência artificial que personaliza o seu restaurante com SUIT - a dor que você tem a IA resolve. Crie o escopo geral e vamos construir
 
 This project was built with [Lovable](https://lovable.dev).
 
+**Live app**: https://smart-servings-ai-academy.lovable.app
+
 ## Build with Lovable
 
-Open your project in the [Lovable editor](https://lovable.dev) and keep building.
+Continue developing this project in the [Lovable editor](https://lovable.dev/projects/340bef0d-6c03-412e-93e9-2fd5fd5bb794).
 
 - **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: connect the project to GitHub and every change made in Lovable is committed straight to your repository.
-- **Full ownership**: this code is yours. Push to your repository and your changes sync back into Lovable, ready for your next prompt.
+- **Stay in sync**: every change made in Lovable is committed straight to this repository.
+- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
 
 ## Development
 
@@ -20,10 +24,3 @@ cd <repository-name>
 npm i
 npm run dev
 ```
-
-## Built with
-
-- TanStack Start
-- TypeScript
-- React
-- Tailwind CSS

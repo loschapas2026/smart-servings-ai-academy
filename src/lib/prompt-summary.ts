@@ -34,9 +34,10 @@ const cleanBlock = (t: string): string => {
 };
 
 const firstSentences = (body: string, max = 240): string => {
-  const flat = body.replace(/\s+/g, " ").trim();
-  if (flat.length <= max) return flat;
-  const cut = flat.slice(0, max);
+  const flat = body.replace(/\r\n/g, "\n").trim();
+  const para = (flat.split(/\n\s*\n/)[0] ?? "").replace(/\s+/g, " ").trim();
+  if (para.length <= max) return para;
+  const cut = para.slice(0, max);
   const dot = cut.lastIndexOf(". ");
   return dot > 80 ? cut.slice(0, dot + 1) : `${cut.trimEnd()}…`;
 };

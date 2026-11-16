@@ -99,6 +99,13 @@
       "when": 1794850284862,
       "tag": "0013_prompt_categories",
       "breakpoints": true
+    },
+    {
+      "idx": 14,
+      "version": "7",
+      "when": 1794850714072,
+      "tag": "0014_adhesion_member_count",
+      "breakpoints": true
     }
   ]
 }

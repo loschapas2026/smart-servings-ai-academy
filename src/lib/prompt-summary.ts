@@ -16,14 +16,14 @@ const isRunOn = (t: string) => /\.\s/.test(t);
 
 const headingOf = (line: string): string | null => {
   if (BULLET.test(line)) return null;
-  const num = line.match(/^\s*\d{1,2}[.)]\s+(\S.{1,70})$/);
-  if (num) return isRunOn(num[1]) ? null : num[1];
-  const md = line.match(/^\s*#{1,4}\s+(\S.{1,70})$/);
-  if (md) return md[1];
-  const label = line.match(/^\s{0,3}([A-Za-zÀ-ú][^:\n]{2,58}):\s*$/);
-  if (label) return label[1];
-  const caps = line.match(/^\s*([A-ZÀ-Ú][A-ZÀ-Ú0-9 ,:()/&%.]{2,58})$/);
-  if (caps) return caps[1];
+  const num = line.match(/^\s*\d{1,2}[.)]\s+(\S.{1,70})$/)?.[1];
+  if (num) return isRunOn(num) ? null : num;
+  const md = line.match(/^\s*#{1,4}\s+(\S.{1,70})$/)?.[1];
+  if (md) return md;
+  const label = line.match(/^\s{0,3}([A-Za-zÀ-ú][^:\n]{2,58}):\s*$/)?.[1];
+  if (label) return label;
+  const caps = line.match(/^\s*([A-ZÀ-Ú][A-ZÀ-Ú0-9 ,:()/&%.]{2,58})$/)?.[1];
+  if (caps) return caps;
   return null;
 };
 

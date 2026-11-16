@@ -10,6 +10,7 @@ Regras:
 - Reutilize o mesmo campo quando o mesmo dado aparece mais de uma vez.
 - Remova senhas, chaves, e-mails e telefones reais.
 - O público inicial é exclusivamente de clientes Suitable. Preserve e reforce a Suitable API como fonte oficial dos dados operacionais; nunca proponha cadastros paralelos ou dados fictícios para substituí-la e nunca invente endpoints.
+- Preserve telas, menus, rotas, fluxos, dados e permissões que já funcionam. Toda nova funcionalidade entra como módulo separado com menu próprio, banco alinhado, migrações incrementais, responsividade e atualizações pequenas, rápidas e testáveis.
 - Escreva em português do Brasil.
 Etapas possíveis: ${PROMPT_STAGES.map((s) => s.label).join(", ")}.`;
 

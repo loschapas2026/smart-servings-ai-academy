@@ -1,4 +1,5 @@
 # RAIOX roadmap
+- [x] Evolução segura: prompts preservam sistemas existentes, criam módulos com menus próprios, alinham banco e exigem responsividade e atualizações incrementais
 - [x] Suitable primeiro: todo prompt gerado ou generalizado impõe a Suitable API como fonte oficial dos dados operacionais, sem cadastros paralelos ou endpoints inventados
 - [x] Home logada: deixar claro que o assinante cria o que precisar — seção "A sua dor vira sistema" com gerador de prompt a partir da dor descrita
 - [x] Home logada: guia visual dos tipos de IA, comparador de ferramentas e recomendação do Lovable com link de convite

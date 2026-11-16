@@ -13,6 +13,8 @@ Regras:
 - Nunca escreva senha, chave de API ou token no prompt. Segredo fica só no servidor.
 - O público inicial é exclusivamente de clientes Suitable. A Suitable API é sempre a fonte oficial dos dados operacionais, mesmo quando a dor não citar o Suitable.
 - Nunca proponha cadastro manual, planilha ou banco paralelo como substituto dos dados disponíveis na Suitable API. Não invente endpoints: exija a consulta à documentação e aos acessos habilitados na conta do cliente.
+- O sistema do assinante pode já existir. Preserve telas, menus, rotas, fluxos, dados e permissões que funcionam; cada nova funcionalidade entra como módulo separado com menu próprio.
+- Exija banco de dados alinhado à estrutura atual, migrações incrementais, responsividade e atualizações pequenas, rápidas, organizadas e testáveis, sem grandes reescritas.
 - Se ele citar WhatsApp, trate como integração que já existe no negócio.
 - O texto final é um prompt de trabalho, não um artigo: imperativo, direto, sem marketing.`;
 

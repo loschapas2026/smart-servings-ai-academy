@@ -12,11 +12,22 @@ export const SUITABLE_API_REQUIREMENTS = `INTEGRAÇÃO OBRIGATÓRIA — SUITABLE
 - Trate carregamento, ausência de dados, erro e indisponibilidade da API sem apresentar números inventados.
 - O sistema deve funcionar em celular, tablet e computador.`;
 
-/** Garante a integração mesmo quando a IA omite essa exigência na resposta. */
+export const SAFE_EVOLUTION_REQUIREMENTS = `EVOLUÇÃO SEGURA DE SISTEMAS JÁ CRIADOS
+- Antes de construir, mapeie as telas, menus, rotas, componentes, permissões, tabelas e fluxos que já existem. Preserve tudo que funciona; não apague, não sobrescreva e não reescreva módulos sem necessidade.
+- Toda nova funcionalidade deve entrar como um módulo separado, acessado por um menu novo e claramente identificado. Não misture a novidade em menus ou telas existentes nem desfigure a navegação atual. Se o sistema ainda não existir, crie uma estrutura de menus preparada para receber módulos futuros.
+- Alinhe o banco de dados à estrutura atual: reutilize tabelas e campos quando fizer sentido, crie somente as estruturas necessárias, mantenha relações e permissões organizadas, faça migrações incrementais e nunca quebre ou duplique registros existentes. Não use o banco local para duplicar dados que já pertencem à Suitable API.
+- Trabalhe em atualizações pequenas, rápidas, organizadas e testáveis. Entregue uma fatia funcional por vez, mantenha nomes e componentes consistentes e evite grandes reescritas.
+- Todas as telas novas devem ser responsivas em celular, tablet e computador, mantendo a identidade visual e a navegação do sistema atual.
+- Antes de concluir cada atualização, teste o módulo novo e os fluxos antigos que podem ser afetados. Se algo existente quebrar, restaure a compatibilidade antes de seguir.`;
+
+/** Garante integração e evolução segura mesmo quando a IA omite essas exigências. */
 export const withSuitableApi = (body: string): string => {
-  const prompt = body.trim();
-  if (prompt.endsWith(SUITABLE_API_REQUIREMENTS)) return prompt;
-  return `${prompt}\n\n${SUITABLE_API_REQUIREMENTS}`;
+  const original = body.trim();
+  if (original.endsWith(SAFE_EVOLUTION_REQUIREMENTS)) return original;
+  const withIntegration = original.endsWith(SUITABLE_API_REQUIREMENTS)
+    ? original
+    : `${original}\n\n${SUITABLE_API_REQUIREMENTS}`;
+  return `${withIntegration}\n\n${SAFE_EVOLUTION_REQUIREMENTS}`;
 };
 
 /** Valida a dor escrita pelo assinante e devolve o texto limpo. */

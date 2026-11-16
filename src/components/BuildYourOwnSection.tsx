@@ -97,9 +97,9 @@ export function BuildYourOwnSection() {
             <DatabaseZap className="h-5 w-5" />
           </span>
           <div>
-            <p className="font-bold">Suitable é a fonte oficial dos dados</p>
+            <p className="font-bold">Suitable como fonte oficial, sem bagunçar seu sistema</p>
             <p className="mt-1 text-sm leading-6 text-muted-foreground">
-              Neste primeiro momento, o RAIOX é para clientes Suitable. Todo sistema gerado aqui já sai orientado a buscar pedidos, clientes, entregas, estoque ou financeiro na Suitable API — sem planilha paralela, sem número inventado e sem expor sua chave.
+              Todo sistema gerado aqui busca os dados reais na Suitable API. Cada novidade entra como um módulo com menu próprio, preservando o que já funciona, com banco alinhado, telas responsivas e atualizações pequenas, rápidas e organizadas.
             </p>
           </div>
         </div>

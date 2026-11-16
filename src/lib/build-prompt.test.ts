@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { briefOf, PAIN_MAX, PAIN_MIN, SUITABLE_API_REQUIREMENTS, validatePain, withSuitableApi } from "./build-prompt";
+import { briefOf, PAIN_MAX, PAIN_MIN, SAFE_EVOLUTION_REQUIREMENTS, SUITABLE_API_REQUIREMENTS, validatePain, withSuitableApi } from "./build-prompt";
 
 describe("validatePain", () => {
   it("aceita uma dor escrita em uma frase", () => {
@@ -55,9 +55,23 @@ describe("withSuitableApi", () => {
     expect(withSuitableApi("Prompt do restaurante")).toContain("Faça as chamadas à API somente no servidor");
   });
 
-  it("não duplica o bloco ao ser aplicada mais de uma vez", () => {
+  it("exige módulo e menu novos sem destruir o sistema atual", () => {
+    const result = withSuitableApi("Adicione uma conferência de entregas.");
+    expect(result).toContain("Toda nova funcionalidade deve entrar como um módulo separado, acessado por um menu novo");
+    expect(result).toContain("Preserve tudo que funciona; não apague, não sobrescreva e não reescreva módulos sem necessidade");
+  });
+
+  it("exige banco alinhado, responsividade e atualizações incrementais", () => {
+    const result = withSuitableApi("Adicione um painel de pedidos.");
+    expect(result).toContain("Alinhe o banco de dados à estrutura atual");
+    expect(result).toContain("responsivas em celular, tablet e computador");
+    expect(result).toContain("atualizações pequenas, rápidas, organizadas e testáveis");
+  });
+
+  it("não duplica os blocos ao ser aplicada mais de uma vez", () => {
     const once = withSuitableApi("Prompt do restaurante");
     expect(withSuitableApi(once)).toBe(once);
     expect(once.split(SUITABLE_API_REQUIREMENTS)).toHaveLength(2);
+    expect(once.split(SAFE_EVOLUTION_REQUIREMENTS)).toHaveLength(2);
   });
 });

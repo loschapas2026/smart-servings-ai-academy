@@ -1,0 +1,1 @@
+CREATE POLICY "prompt images read" ON storage.objects FOR SELECT TO authenticated USING (bucket_id = 'prompt-images' AND (public.has_role(auth.uid(), 'admin') OR public.has_active_subscription(auth.uid())));

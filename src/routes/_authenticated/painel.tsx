@@ -67,9 +67,7 @@ function Painel() {
 
   return (
     <AppShell>
-      <AiLaunchGuide />
-
-      <section className="mt-10 grid gap-3 md:grid-cols-3">
+      <section className="grid gap-3 md:grid-cols-3">
         {[
           { n: "1", t: "Assista às aulas", d: "Entenda o que a IA já faz em restaurantes de verdade.", to: "/painel" as const, hash: "aulas" },
           { n: "2", t: "Copie o prompt inicial", d: "Ele cria a base do seu sistema: nome, cores, acessos e integrações.", to: "/prompts" as const, hash: undefined },

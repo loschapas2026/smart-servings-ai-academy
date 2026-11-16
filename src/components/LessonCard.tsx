@@ -61,7 +61,26 @@ export function Row({ title, subtitle, children, action }: { title: string; subt
           <button aria-label="Avançar" onClick={() => scroll(1)} className="hidden h-8 w-8 rounded-full border text-sm hover:border-primary hover:text-primary md:block">›</button>
         </div>
       </div>
-      <div ref={ref} className="-mx-5 mt-4 flex snap-x gap-4 overflow-x-auto scroll-smooth px-5 pb-3">{children}</div>
+      <div ref={ref} className="no-scrollbar -mx-5 mt-4 flex snap-x gap-4 overflow-x-auto scroll-smooth px-5 pb-1">{children}</div>
     </section>
+  );
+}
+
+/** Cartão de categoria: capa do primeiro prompt + quantidade, abre a biblioteca já filtrada. */
+export function CategoryCard({ label, count, cover, n }: { label: string; count: number; cover: C; n: number }) {
+  const img = usePromptImage(cover);
+  return (
+    <Link to="/prompts" search={{ cat: label }} className="group w-56 shrink-0 snap-start md:w-64">
+      <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border bg-card transition group-hover:border-primary group-hover:shadow-glow">
+        {img ? <img src={img} alt="" loading="lazy" className="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
+             : <div className="flex h-full items-center justify-center bg-secondary"><Logo className="text-2xl opacity-60" /></div>}
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
+        <span className="absolute left-3 top-3 rounded bg-background/80 px-2 py-0.5 font-mono text-[10px] text-primary">{String(n).padStart(2, "0")}</span>
+        <div className="absolute inset-x-0 bottom-0 p-4">
+          <p className="font-display text-lg leading-tight group-hover:text-primary">{label}</p>
+          <p className="mt-1 font-mono text-xs text-muted-foreground">{count} prompts · ver todos →</p>
+        </div>
+      </div>
+    </Link>
   );
 }

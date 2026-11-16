@@ -20,6 +20,7 @@ export const Route = createFileRoute("/_authenticated/prompts")({
       },
     ],
   }),
+  validateSearch: (s: Record<string, unknown>): { cat?: string } => (typeof s.cat === "string" ? { cat: s.cat } : {}),
   component: Prompts,
 });
 
@@ -66,7 +67,7 @@ function Prompts() {
   });
   const { cats, order: stageOrder, describe: stageDescription } = usePromptCategories();
   const [q, setQ] = useState("");
-  const [stage, setStage] = useState<string>("Todas");
+  const [stage, setStage] = useState<string>(Route.useSearch().cat ?? "Todas");
 
   const filtered = useMemo(() => {
     const needle = q.trim().toLowerCase();

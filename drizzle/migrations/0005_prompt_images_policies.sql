@@ -1,0 +1,1 @@
+CREATE POLICY "prompt images admin write" ON storage.objects FOR ALL TO authenticated USING (bucket_id = 'prompt-images' AND public.has_role(auth.uid(), 'admin')) WITH CHECK (bucket_id = 'prompt-images' AND public.has_role(auth.uid(), 'admin'));

@@ -23,10 +23,10 @@ export const SAFE_EVOLUTION_REQUIREMENTS = `EVOLUÇÃO SEGURA DE SISTEMAS JÁ CR
 /** Garante integração e evolução segura mesmo quando a IA omite essas exigências. */
 export const withSuitableApi = (body: string): string => {
   const original = body.trim();
+  if (original.endsWith(SAFE_EVOLUTION_REQUIREMENTS)) return original;
   const withIntegration = original.endsWith(SUITABLE_API_REQUIREMENTS)
     ? original
     : `${original}\n\n${SUITABLE_API_REQUIREMENTS}`;
-  if (withIntegration.endsWith(SAFE_EVOLUTION_REQUIREMENTS)) return withIntegration;
   return `${withIntegration}\n\n${SAFE_EVOLUTION_REQUIREMENTS}`;
 };
 

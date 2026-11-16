@@ -157,7 +157,7 @@ const tools: Array<{
 
 export function AiLaunchGuide() {
   const [selectedId, setSelectedId] = useState("lovable");
-  const selected = tools.find((tool) => tool.id === selectedId) ?? tools[0];
+  const selected = tools.find((tool) => tool.id === selectedId) ?? tools[0]!;
   const SelectedIcon = selected.icon;
 
   return (

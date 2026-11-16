@@ -1,5 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import { briefOf, validatePain } from "@/lib/build-prompt";
 
 const SYSTEM = `Você é o engenheiro de prompts do RAIOX, um clube para donos de restaurante e pequenos negócios que querem automatizar a própria operação com IA.
 O assinante descreveu a dor dele. Transforme isso num prompt completo, pronto para colar no Lovable e construir o sistema.
@@ -18,9 +19,7 @@ export type BuiltPrompt = { title: string; summary: string; body: string };
 export const buildPromptFromPain = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((d: { pain: string; business?: string; area?: string }) => {
-    const pain = (d.pain ?? "").trim();
-    if (pain.length < 10) throw new Error("Escreva pelo menos uma frase sobre a sua dor.");
-    if (pain.length > 3000) throw new Error("Máximo de 3 mil caracteres. Resuma um pouco.");
+    const pain = validatePain(d.pain);
     return { pain, business: (d.business ?? "").trim().slice(0, 80), area: (d.area ?? "").trim().slice(0, 60) };
   })
   .handler(async ({ data, context }) => {
@@ -29,11 +28,7 @@ export const buildPromptFromPain = createServerFn({ method: "POST" })
       context.supabase.rpc("has_active_subscription", { _user_id: context.userId }),
     ]);
     if (!isAdmin && !active) throw new Error("Assinatura ativa necessária para criar seu prompt.");
-    const brief = [
-      `Dor descrita pelo assinante: ${data.pain}`,
-      data.business ? `Negócio: ${data.business}` : "",
-      data.area ? `Área que dói hoje: ${data.area}` : "",
-    ].filter(Boolean).join("\n");
+    const brief = briefOf(data);
 
     const res = await fetch("https://ai.gateway.lovable.dev/v1/responses", {
       method: "POST",

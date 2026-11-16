@@ -12,15 +12,15 @@ import { BuildYourOwnSection } from "@/components/BuildYourOwnSection";
 export const Route = createFileRoute("/_authenticated/painel")({
   head: () => ({
     meta: [
-      { title: "Prompts e Radar IA — RAIOX" },
+      { title: "Prompts, Radar IA e o seu próprio sistema — RAIOX" },
       {
         name: "description",
-        content: "Copie os prompts prontos e use o Radar IA para escolher por onde começar a automatizar seu restaurante.",
+        content: "Copie os prompts prontos, crie um prompt a partir da sua própria dor e use o Radar IA para escolher por onde começar.",
       },
-      { property: "og:title", content: "Prompts e Radar IA — RAIOX" },
+      { property: "og:title", content: "Prompts, Radar IA e o seu próprio sistema — RAIOX" },
       {
         property: "og:description",
-        content: "Prompts prontos para copiar e um guia para escolher sua ferramenta de IA.",
+        content: "Prompts prontos para copiar, um gerador a partir da sua dor e um guia para escolher sua ferramenta de IA.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -90,6 +90,8 @@ function Painel() {
           {promptGroups.map(([cat, ls], i) => <CategoryCard key={cat} label={cat} count={ls.length} cover={ls.find((x) => x.thumbnail_url) ?? ls[0]!} n={i + 1} />)}
         </Row>
       </section>
+
+      <BuildYourOwnSection />
 
       <FoundersAiSection />
 

@@ -69,16 +69,20 @@ export function Row({ title, subtitle, children, action }: { title: string; subt
 /** Cartão de categoria: capa do primeiro prompt + quantidade, abre a biblioteca já filtrada. */
 export function CategoryCard({ label, count, cover, n }: { label: string; count: number; cover: C; n: number }) {
   const img = usePromptImage(cover);
+  const words = label.split(" ");
+  const last = words.length > 1 ? words.pop()! : "";
   return (
-    <Link to="/prompts" search={{ cat: label }} className="group w-56 shrink-0 snap-start md:w-64">
-      <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border bg-card transition group-hover:border-primary group-hover:shadow-glow">
-        {img ? <img src={img} alt="" loading="lazy" className="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
-             : <div className="flex h-full items-center justify-center bg-secondary"><Logo className="text-2xl opacity-60" /></div>}
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
-        <span className="absolute left-3 top-3 rounded bg-background/80 px-2 py-0.5 font-mono text-[10px] text-primary">{String(n).padStart(2, "0")}</span>
-        <div className="absolute inset-x-0 bottom-0 p-4">
-          <p className="font-display text-lg leading-tight group-hover:text-primary">{label}</p>
-          <p className="mt-1 font-mono text-xs text-muted-foreground">{count} prompts · ver todos →</p>
+    <Link to="/prompts" search={{ cat: label }} className="group w-44 shrink-0 snap-start md:w-52">
+      <div className="relative aspect-[3/4] overflow-hidden rounded-2xl border border-primary/30 bg-card transition group-hover:-translate-y-1 group-hover:border-primary group-hover:shadow-glow">
+        {img ? <img src={img} alt="" loading="lazy" className="h-full w-full object-cover grayscale transition duration-500 group-hover:scale-105" />
+             : <div className="h-full w-full bg-secondary" />}
+        <div className="absolute inset-0 bg-primary/30 mix-blend-multiply" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
+        <span className="absolute right-2 top-2 rounded-md bg-background/90 px-2 py-0.5 text-[10px] font-semibold">{count} prompts</span>
+        <span className="absolute left-2 top-2 font-mono text-[10px] text-primary">{String(n).padStart(2, "0")}</span>
+        <div className="absolute inset-x-0 bottom-0 p-4 text-center">
+          <p className="text-sm leading-tight text-foreground/90">{words.join(" ")}</p>
+          {last && <p className="font-display text-xl font-black uppercase leading-none tracking-wide text-primary">{last}</p>}
         </div>
       </div>
     </Link>

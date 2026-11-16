@@ -1,7 +1,7 @@
 # RAIOX roadmap
-- [ ] Mapear todos os módulos, regras e telas de Salva Gerente - RP e Los Chapas - Site, incluindo o histórico de criação
-- [ ] Transformar os módulos em prompts generalizados, com campos entre colchetes, instruções de uso e imagens de referência
-- [ ] Cadastrar e revisar a coleção completa na biblioteca RAIOX, sem apagar os prompts criados pela equipe
+- [x] Mapear todos os módulos, regras e telas de Salva Gerente - RP e Los Chapas - Site, incluindo o histórico de criação
+- [x] Transformar os módulos em prompts generalizados, com campos entre colchetes, instruções de uso e imagens de referência
+- [x] Cadastrar e revisar a coleção completa na biblioteca RAIOX, sem apagar os prompts criados pela equipe
 - [x] Visual identity, home page, plans page (Mensal 69,90 / Semestral 59,90 / Anual 49,90 per month)
 - [x] Lovable Cloud enabled
 - [x] Payments (Stripe) enabled in test mode: catalog, checkout, webhook, billing portal

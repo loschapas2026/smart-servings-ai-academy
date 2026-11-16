@@ -20,9 +20,31 @@ function usePromptImage(c: C) {
   return direct ?? q.data ?? null;
 }
 
-export function LessonCard({ c, done, index }: { c: C; done: boolean; index?: number }) {
+export function LessonCard({ c, done, index, poster }: { c: C; done: boolean; index?: number; poster?: boolean }) {
   const promptImg = usePromptImage(c);
   const t = c.type === "prompt" ? promptImg : thumbOf(c);
+  if (poster) {
+    const words = c.title.split(" ");
+    const last = words.length > 1 ? words.pop()! : "";
+    return (
+      <Link to="/conteudo/$id" params={{ id: c.id }} className="group w-44 shrink-0 snap-start md:w-52">
+        <div className="relative aspect-[3/4] overflow-hidden rounded-2xl border border-primary/30 bg-card transition group-hover:-translate-y-1 group-hover:border-primary group-hover:shadow-glow">
+          {t ? <img src={t} alt="" loading="lazy" className="h-full w-full object-cover grayscale transition duration-500 group-hover:scale-105" />
+             : <div className="h-full w-full bg-secondary" />}
+          <div className="absolute inset-0 bg-primary/30 mix-blend-multiply" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
+          <span className="absolute right-2 top-2 rounded-md bg-background/90 px-2 py-0.5 text-[10px] font-semibold">{done ? "✓ vista" : c.duration ?? "1 aula"}</span>
+          {index && <span className="absolute left-2 top-2 font-mono text-[10px] text-primary">{String(index).padStart(2, "0")}</span>}
+          <span className="absolute inset-0 m-auto flex h-12 w-12 items-center justify-center rounded-full bg-primary text-primary-foreground opacity-0 transition group-hover:opacity-100">▶</span>
+          <div className="absolute inset-x-0 bottom-0 p-4 text-center">
+            <p className="line-clamp-2 text-sm leading-tight text-foreground/90">{words.join(" ")}</p>
+            {last && <p className="font-display text-xl font-black uppercase leading-none tracking-wide text-primary">{last}</p>}
+          </div>
+          {done && <span className="absolute inset-x-0 bottom-0 h-1 bg-primary" />}
+        </div>
+      </Link>
+    );
+  }
   const inner = (
     <>
       <div className="relative aspect-video overflow-hidden rounded-xl border bg-card transition group-hover:border-primary group-hover:shadow-glow">

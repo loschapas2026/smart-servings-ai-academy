@@ -35,7 +35,6 @@ function SuitablePage() {
     <div className="min-h-screen bg-background">
       <SiteHeader />
       <section className="relative overflow-hidden px-5 pb-20 pt-32">
-        <div className="absolute inset-0 bg-grid opacity-30" />
         <div className="relative mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-2">
           <div>
             <p className="font-mono text-xs uppercase tracking-[0.3em] text-primary">Parceria oficial</p>

@@ -1,4 +1,5 @@
 import { loadStripe, type Stripe } from "@stripe/stripe-js";
+import { envFromClientToken } from "@/lib/payments-env";
 
 export type StripeEnv = 'sandbox' | 'live';
 
@@ -8,8 +9,8 @@ const clientToken = import.meta.env["VITE_PAYMENTS_CLIENT_TOKEN"];
 // A missing or unrecognized token means the build shipped before go-live
 // finished — fail loudly instead of silently routing to live.
 function paymentsEnvironment(): StripeEnv {
-  if (clientToken?.startsWith('pk_test_')) return 'sandbox';
-  if (clientToken?.startsWith('pk_live_')) return 'live';
+  const env = envFromClientToken(clientToken);
+  if (env) return env;
   throw new Error(
     "Pagamentos ainda não estão configurados para esta versão. " +
     "Conclua a ativação dos pagamentos para liberar o checkout real.",

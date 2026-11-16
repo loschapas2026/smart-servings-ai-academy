@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import type { Stripe } from "stripe";
 import type { StripeEnv } from "@/lib/stripe";
+import { authorizePaymentsEnv, buildPaymentsEnv } from "@/lib/payments-env";
 
 type CheckoutResult = { clientSecret: string } | { error: string };
 type PortalResult = { url: string } | { error: string };
@@ -63,13 +64,18 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
   })
   .handler(async ({ data, context }): Promise<CheckoutResult> => {
     const { supabase, userId } = context;
+    // The published build decides test vs. real, not the browser: a test
+    // checkout requested from the real site must never be created.
+    const allowed = authorizePaymentsEnv(data.environment, buildPaymentsEnv());
+    if (!allowed.ok) return { error: allowed.error };
+    const environment = allowed.env;
     try {
       // Never let someone stack a second paid plan on top of a live one.
       const { data: current } = await supabase
         .from("subscriptions")
         .select("id, status, current_period_end, price_id")
         .eq("user_id", userId)
-        .eq("environment", data.environment)
+        .eq("environment", environment)
         .order("created_at", { ascending: false })
         .limit(1)
         .maybeSingle();
@@ -82,7 +88,7 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
       }
 
       const { createStripeClient, getStripeErrorMessage } = await import("@/lib/stripe.server");
-      const stripe = createStripeClient(data.environment);
+      const stripe = createStripeClient(environment);
 
       // Human-readable price id -> Stripe price via lookup_keys.
       const prices = await stripe.prices.list({ lookup_keys: [data.priceId] });
@@ -135,11 +141,14 @@ export const createPortalSession = createServerFn({ method: "POST" })
   })
   .handler(async ({ data, context }): Promise<PortalResult> => {
     const { supabase, userId } = context;
+    const allowed = authorizePaymentsEnv(data.environment, buildPaymentsEnv());
+    if (!allowed.ok) return { error: allowed.error };
+    const environment = allowed.env;
     const { data: sub } = await supabase
       .from("subscriptions")
       .select("stripe_customer_id")
       .eq("user_id", userId)
-      .eq("environment", data.environment)
+      .eq("environment", environment)
       .order("created_at", { ascending: false })
       .limit(1)
       .maybeSingle();
@@ -147,7 +156,7 @@ export const createPortalSession = createServerFn({ method: "POST" })
 
     try {
       const { createStripeClient, getStripeErrorMessage } = await import("@/lib/stripe.server");
-      const stripe = createStripeClient(data.environment);
+      const stripe = createStripeClient(environment);
       const portal = await stripe.billingPortal.sessions.create({
         customer: sub.stripe_customer_id,
         ...(data.returnUrl && { return_url: data.returnUrl }),

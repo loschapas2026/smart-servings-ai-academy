@@ -40,6 +40,11 @@ describe("summarizePrompt", () => {
     expect(s.blocks).toEqual(["Conexão com o Suitable (API do SUIT)"]);
   });
 
+  it("não confunde palavra comum com sigla", () => {
+    const s = summarizePrompt("9. ANTES DE CONSTRUIR: PERGUNTE E ME GUIE\n10. O QUE ENTREGAR NESTA BASE\n- x", null);
+    expect(s.blocks).toEqual(["Antes de Construir: Pergunte e me Guie", "O que Entregar Nesta Base"]);
+  });
+
   it("ignora lista corrida de itens numerados na mesma linha", () => {
     const s = summarizePrompt(BODY, null);
     expect(s.blocks.some((b) => b.includes("Nome, cidade"))).toBe(false);

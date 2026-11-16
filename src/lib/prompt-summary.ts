@@ -43,6 +43,15 @@ const isShouty = (t: string): boolean => {
   return upper / letters.length >= 0.5;
 };
 
+/** Siglas de verdade: curtas, sem vogal, ou conhecidas. "BASE" e "GUIE" não são siglas. */
+const ACRONYMS = new Set(["api", "suit", "mcp", "ai", "tv", "url", "uri", "cpf", "cnpj", "pix", "id", "llm", "crm", "erp", "saas", "ux", "ui", "br", "rs", "sp", "rj", "mg"]);
+const VOWELS = /[aeiouàáâãéêíóôõúy]/i;
+
+const isAcronym = (letters: string): boolean => {
+  const bare = letters.toLowerCase();
+  return letters.length <= 5 && (ACRONYMS.has(bare) || !VOWELS.test(bare));
+};
+
 /** "CONEXÃO COM O SUITABLE (API do SUIT)" -> "Conexão com o Suitable (API do SUIT)". */
 const toTitle = (t: string): string => {
   const out = t
@@ -52,7 +61,7 @@ const toTitle = (t: string): string => {
       const letters = tok.replace(/[^A-Za-zÀ-ÿ]/g, "");
       if (!letters) return tok;
       if (LOWER_WORDS.has(letters.toLowerCase())) return tok.toLowerCase();
-      if (letters.length <= 4 && tok === tok.toUpperCase()) return tok; // sigla: TV, API, SUIT
+      if (isAcronym(letters) && tok === tok.toUpperCase()) return tok; // sigla: TV, API, SUIT
       return tok.charAt(0).toUpperCase() + tok.slice(1).toLowerCase();
     })
     .join("");

@@ -268,3 +268,49 @@ function PromptCard({ p, used }: { p: Prompt; used: boolean }) {
     </article>
   );
 }
+
+function PromptSummaryPanel({ p }: { p: Prompt }) {
+  const s = useMemo(() => summarizePrompt(p.body, p.summary), [p.body, p.summary]);
+  const stage = stageDescription(p.category);
+
+  return (
+    <aside className="rounded-2xl border border-primary/30 bg-primary/[0.06] p-5 xl:sticky xl:top-6">
+      <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-primary">Resumo</p>
+      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{s.resumo}</p>
+
+      {stage && <p className="mt-3 text-xs text-muted-foreground/80">Quando usar: {stage}</p>}
+
+      {s.blocks.length > 0 && (
+        <div className="mt-5">
+          <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-primary">O que ele cobre</p>
+          <ol className="mt-2 space-y-1.5">
+            {s.blocks.map((b, i) => (
+              <li key={b} className="flex gap-2 text-sm text-muted-foreground">
+                <span className="font-mono text-[10px] text-primary">{String(i + 1).padStart(2, "0")}</span>
+                <span>{b}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      )}
+
+      {s.fields.length > 0 && (
+        <div className="mt-5">
+          <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-primary">O que ter em mãos</p>
+          <p className="mt-1 text-sm text-muted-foreground">
+            {s.fields.length} {s.fields.length === 1 ? "campo" : "campos"} para preencher:{" "}
+            {s.fields.slice(0, 4).join(", ")}
+            {s.fields.length > 4 ? ` e +${s.fields.length - 4}` : ""}.
+          </p>
+        </div>
+      )}
+
+      <div className="mt-5 border-t pt-3">
+        <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-primary">Tamanho</p>
+        <p className="mt-1 text-sm text-muted-foreground">
+          {s.lines} linhas · {s.words} palavras — {s.tip}.
+        </p>
+      </div>
+    </aside>
+  );
+}

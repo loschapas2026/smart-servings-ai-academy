@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
+import { Play } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { AppShell } from "@/components/AppShell";
 import { LessonCard, Row } from "@/components/LessonCard";
@@ -57,7 +58,7 @@ function Painel() {
             <p className="mt-2 text-muted-foreground">{next.category}</p>
             <div className="mt-6 h-1.5 w-full max-w-xs overflow-hidden rounded-full bg-secondary"><div className="h-full bg-primary" style={{ width: `${pct}%` }} /></div>
             <p className="mt-2 font-mono text-xs text-muted-foreground">{pct}% do curso concluído</p>
-            <Link to="/conteudo/$id" params={{ id: next.id }} className="mt-6 inline-block rounded-full bg-primary px-7 py-3 font-bold text-primary-foreground shadow-glow">▶ Assistir agora</Link>
+            <Link to="/conteudo/$id" params={{ id: next.id }} className="mt-6 inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3 font-bold text-primary-foreground shadow-glow"><Play className="h-4 w-4 fill-current" /> {pct > 0 ? "Continuar assistindo" : "Assistir agora"}</Link>
           </div>
         </section>
       )}

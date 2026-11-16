@@ -13,3 +13,9 @@ export function embedOf(url?: string | null) {
   if (vm) return `https://player.vimeo.com/video/${vm[1]}`;
   return url;
 }
+
+/** Adds autoplay to an embed URL, used when the viewer clicks the cover to start the lesson. */
+export function withAutoplay(embed: string) {
+  if (/[?&]autoplay=/.test(embed)) return embed;
+  return embed + (embed.includes("?") ? "&" : "?") + "autoplay=1";
+}

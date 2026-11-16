@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { Check, Clock, Play } from "lucide-react";
 import { thumbOf } from "@/lib/video";
 import { Logo } from "./Logo";
 
@@ -14,14 +15,15 @@ export function LessonCard({ c, done, index }: { c: C; done: boolean; index?: nu
            : <div className="flex h-full items-center justify-center bg-secondary"><Logo className="text-2xl opacity-60" /></div>}
         <div className="absolute inset-0 bg-fade opacity-80" />
         {c.type === "video" && (
-          <span className="absolute inset-0 m-auto flex h-12 w-12 items-center justify-center rounded-full bg-primary text-primary-foreground opacity-0 transition group-hover:opacity-100">▶</span>
+          <span className="absolute inset-0 m-auto flex h-12 w-12 items-center justify-center rounded-full bg-primary text-primary-foreground opacity-0 shadow-glow transition group-hover:opacity-100"><Play className="h-5 w-5 translate-x-0.5 fill-current" /></span>
         )}
         <span className="absolute left-3 top-3 rounded bg-background/80 px-2 py-0.5 font-mono text-[10px] text-primary">{LABEL[c.type]}{index ? ` ${String(index).padStart(2, "0")}` : ""}</span>
-        {c.duration && <span className="absolute bottom-2 right-2 rounded bg-background/80 px-2 py-0.5 font-mono text-[10px]">{c.duration}</span>}
-        {done && <span className="absolute right-3 top-3 flex h-6 w-6 items-center justify-center rounded-full bg-primary text-xs text-primary-foreground">✓</span>}
+        {c.duration && <span className="absolute bottom-2 right-2 flex items-center gap-1 rounded bg-background/80 px-2 py-0.5 font-mono text-[10px]"><Clock className="h-3 w-3" />{c.duration}</span>}
+        {done && <span className="absolute right-3 top-3 flex h-6 w-6 items-center justify-center rounded-full bg-primary text-primary-foreground"><Check className="h-3.5 w-3.5" strokeWidth={3} /></span>}
         {done && <span className="absolute inset-x-0 bottom-0 h-1 bg-primary" />}
       </div>
       <p className="mt-2 line-clamp-2 text-sm font-bold group-hover:text-primary">{c.title}</p>
+      {c.summary && <p className="mt-0.5 line-clamp-1 text-xs text-muted-foreground">{c.summary}</p>}
     </Link>
   );
 }

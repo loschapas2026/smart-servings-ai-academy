@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { AppShell } from "@/components/AppShell";
 import { LessonCard, Row } from "@/components/LessonCard";
 import { useAccount } from "@/hooks/useAccount";
-import { thumbOf } from "@/lib/video";
+import { usePromptCategories } from "@/hooks/usePromptCategories";
 import { AiLaunchGuide } from "@/components/AiLaunchGuide";
 
 export const Route = createFileRoute("/_authenticated/painel")({
@@ -36,6 +36,7 @@ function Painel() {
   const { data: acc } = useAccount();
   const canSee = acc?.active || acc?.isAdmin;
   const { data: items = [] } = useQuery({ ...contentsQuery, enabled: !!canSee });
+  const { order } = usePromptCategories();
   const { data: done = [] } = useQuery({
     queryKey: ["progress"], enabled: !!canSee,
     queryFn: async () => (await supabase.from("content_progress").select("content_id")).data?.map((d) => d.content_id) ?? [],
@@ -55,6 +56,10 @@ function Painel() {
   const modules = [...new Set(videos.map((v) => v.category || "Aulas"))];
   const next = videos.find((v) => !done.includes(v.id)) ?? videos[0];
   const pct = videos.length ? Math.round((videos.filter((v) => done.includes(v.id)).length / videos.length) * 100) : 0;
+  const prompts = items.filter((i) => i.type === "prompt");
+  const promptGroups = [...new Set(prompts.map((p) => p.category || "Sem categoria"))]
+    .sort((x, y) => order(x) - order(y))
+    .map((cat) => [cat, prompts.filter((p) => (p.category || "Sem categoria") === cat)] as const);
   const others = [
     { t: "artigo", title: "Artigos" },
     { t: "download", title: "Materiais para baixar" },
@@ -64,39 +69,53 @@ function Painel() {
     <AppShell>
       <AiLaunchGuide />
 
-      {next && (
-        <section className="relative overflow-hidden rounded-3xl border">
-          {thumbOf(next) && <img src={thumbOf(next)!} alt="" className="absolute inset-0 h-full w-full object-cover opacity-40" />}
-          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent" />
-          <div className="relative max-w-xl p-8 md:p-12">
-            <p className="font-mono text-xs uppercase tracking-[0.3em] text-primary">Olá, {acc?.profile?.full_name ?? "assinante"} · continue de onde parou</p>
-            <h2 className="mt-3 text-2xl md:text-4xl">{next.title}</h2>
-            <p className="mt-2 text-muted-foreground">{next.category}</p>
-            <div className="mt-6 h-1.5 w-full max-w-xs overflow-hidden rounded-full bg-secondary"><div className="h-full bg-primary" style={{ width: `${pct}%` }} /></div>
-            <p className="mt-2 font-mono text-xs text-muted-foreground">{pct}% do curso concluído</p>
-            <Link to="/conteudo/$id" params={{ id: next.id }} className="mt-6 inline-block rounded-full bg-primary px-7 py-3 font-bold text-primary-foreground shadow-glow">▶ Assistir agora</Link>
+      <section className="mt-10 grid gap-3 md:grid-cols-3">
+        {[
+          { n: "1", t: "Assista às aulas", d: "Entenda o que a IA já faz em restaurantes de verdade.", to: "/painel" as const, hash: "aulas" },
+          { n: "2", t: "Copie o prompt inicial", d: "Ele cria a base do seu sistema: nome, cores, acessos e integrações.", to: "/prompts" as const },
+          { n: "3", t: "Escolha o próximo bloco", d: "Estoque, entregas, financeiro… um prompt por vez, testando cada etapa.", to: "/prompts" as const },
+        ].map((s) => (
+          <Link key={s.n} to={s.to} hash={s.hash} className="group flex gap-4 rounded-2xl border bg-card p-5 transition hover:border-primary">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary font-display text-lg text-primary-foreground">{s.n}</span>
+            <div><p className="font-bold group-hover:text-primary">{s.t}</p><p className="mt-1 text-sm text-muted-foreground">{s.d}</p></div>
+          </Link>
+        ))}
+      </section>
+
+      <section id="aulas" className="mt-12 scroll-mt-6">
+        <div className="flex flex-wrap items-end gap-3">
+          <div className="mr-auto">
+            <p className="font-mono text-xs uppercase tracking-[0.3em] text-primary">Passo 1 · Videoaulas</p>
+            <h2 className="mt-1 text-2xl md:text-3xl">Aprenda com casos reais</h2>
           </div>
-        </section>
-      )}
-
-      {modules.map((m, mi) => {
-        const ls = videos.filter((v) => (v.category || "Aulas") === m);
-        const d = ls.filter((v) => done.includes(v.id)).length;
-        return (
-          <Row key={m} title={`Módulo ${mi + 1} · ${m}`} subtitle={`${d}/${ls.length} aulas`}>
-            {ls.map((c, i) => <LessonCard key={c.id} c={c} index={i + 1} done={done.includes(c.id)} />)}
-          </Row>
-        );
-      })}
-
-      <Link to="/prompts" className="mt-10 flex flex-wrap items-center gap-4 rounded-2xl border border-primary bg-card p-6 shadow-glow">
-        <div className="mr-auto">
-          <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary">Biblioteca</p>
-          <h2 className="mt-1 text-lg md:text-xl">Prompts para criação de sistemas</h2>
-          <p className="mt-1 text-sm text-muted-foreground">Do briefing ao lançamento: prompts prontos para criar seu sistema com IA.</p>
+          {videos.length > 0 && <span className="font-mono text-xs text-muted-foreground">{pct}% concluído</span>}
+          {next && <Link to="/conteudo/$id" params={{ id: next.id }} className="rounded-full bg-primary px-5 py-2 text-sm font-bold text-primary-foreground shadow-glow">▶ Continuar: {next.title.slice(0, 32)}{next.title.length > 32 ? "…" : ""}</Link>}
         </div>
-        <span className="rounded-full bg-primary px-5 py-2 text-sm font-bold text-primary-foreground">Abrir biblioteca →</span>
-      </Link>
+        {modules.map((m, mi) => {
+          const ls = videos.filter((v) => (v.category || "Aulas") === m);
+          const d = ls.filter((v) => done.includes(v.id)).length;
+          return (
+            <Row key={m} title={`Módulo ${mi + 1} · ${m}`} subtitle={`${d}/${ls.length} aulas`}>
+              {ls.map((c, i) => <LessonCard key={c.id} c={c} index={i + 1} done={done.includes(c.id)} />)}
+            </Row>
+          );
+        })}
+      </section>
+
+      <section className="mt-14">
+        <div className="flex flex-wrap items-end gap-3">
+          <div className="mr-auto">
+            <p className="font-mono text-xs uppercase tracking-[0.3em] text-primary">Passo 2 · Prompts</p>
+            <h2 className="mt-1 text-2xl md:text-3xl">Copie, adapte e construa</h2>
+          </div>
+          <Link to="/prompts" className="rounded-full border border-primary px-5 py-2 text-sm font-bold text-primary">Abrir biblioteca →</Link>
+        </div>
+        {promptGroups.map(([cat, ls]) => (
+          <Row key={cat} title={cat} subtitle={`${ls.length} prompts`}>
+            {ls.map((c) => <LessonCard key={c.id} c={c} done={done.includes(c.id)} />)}
+          </Row>
+        ))}
+      </section>
 
       {others.map(({ t, title }) => {
         const ls = items.filter((i) => i.type === t);

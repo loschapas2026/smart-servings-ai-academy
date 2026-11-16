@@ -23,7 +23,8 @@ describe("etapas da página de prompts", () => {
   });
 
   it("etapa fora da lista vem depois das conhecidas", () => {
-    expect(stageOrder("Briefing e escopo")).toBe(0);
+    expect(stageOrder("Comece por aqui")).toBe(0);
+    expect(stageOrder("Briefing e escopo")).toBe(1);
     expect(stageOrder("Lançar e evoluir")).toBe(PROMPT_STAGES.length - 1);
     expect(stageOrder("Categoria avulsa")).toBe(PROMPT_STAGES.length);
     expect(stageOrder(null)).toBe(PROMPT_STAGES.length);

@@ -8,9 +8,9 @@ import wellingtonPalco from "@/assets/wellington-morais-palco.jpg.asset.json";
 const founders = [
   {
     name: "Francisco Neto",
-    role: "Los Chapas · Operação",
-    marker: "01 / OPERAÇÃO REAL",
-    shortMarker: "01/OPERAÇÃO",
+    role: "Los Chapas · Operação de restaurante",
+    marker: "01 / LOS CHAPAS",
+    shortMarker: "01/LOS CHAPAS",
     icon: Utensils,
     photo: franciscoPalco,
     alternate: franciscoEvento,
@@ -18,9 +18,9 @@ const founders = [
   },
   {
     name: "Wellington Morais",
-    role: "Engenharia · Sistemas",
-    marker: "02 / ENGENHARIA",
-    shortMarker: "02/ENGENHARIA",
+    role: "Pizza do Engenheiro · Engenharia de sistemas",
+    marker: "02 / PIZZA DO ENGENHEIRO",
+    shortMarker: "02/PIZZA ENG.",
     icon: Workflow,
     photo: wellingtonEvento,
     alternate: wellingtonPalco,
@@ -40,18 +40,33 @@ export function FoundersAiSection() {
             <BrainCircuit className="h-3.5 w-3.5" /> Por trás do RAIOX
           </div>
           <h2 id="founders-title" className="mt-5 text-2xl leading-tight md:text-4xl">
-            A dor é real.<br /><span className="text-primary">A solução também.</span>
+            Sistemas prontos<br /><span className="text-primary">não entregam a sua singularidade.</span>
           </h2>
           <p className="mt-5 max-w-md text-sm leading-7 text-muted-foreground md:text-base">
-            Francisco traz a vivência do Los Chapas. Wellington traz a engenharia. O RAIOX transforma esse encontro em prompts para você construir sistemas que fazem sentido na rotina do seu restaurante.
+            Francisco vive a operação do Los Chapas. Wellington vive a da Pizza do Engenheiro. Os dois bateram no mesmo muro: sistemas que tratam todo mundo igual e não se adaptam ao que cada negócio tem de único. O RAIOX existe para virar isso a seu favor — adaptar a IA à sua rotina, ao seu cardápio e ao seu jeito de atender.
           </p>
 
+          <ul className="mt-6 space-y-2 text-sm text-muted-foreground">
+            <li className="flex items-start gap-2">
+              <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+              Cada restaurante tem rotina, cardápio e atendimento próprios.
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+              Sistema pronto entrega todo mundo do mesmo jeito.
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+              Aqui você adapta a IA ao que só o seu negócio tem.
+            </li>
+          </ul>
+
           <div className="mt-6 flex flex-wrap items-center gap-2 font-mono text-[10px] uppercase tracking-wider">
-            <span className="rounded-md border px-2.5 py-1.5 text-muted-foreground">Vivência</span>
+            <span className="rounded-md border px-2.5 py-1.5 text-muted-foreground">Los Chapas</span>
             <span className="text-primary">+</span>
-            <span className="rounded-md border px-2.5 py-1.5 text-muted-foreground">Engenharia</span>
+            <span className="rounded-md border px-2.5 py-1.5 text-muted-foreground">Pizza do Engenheiro</span>
             <span className="text-primary">=</span>
-            <span className="rounded-md border border-primary/40 bg-primary/10 px-2.5 py-1.5 text-primary">IA aplicável</span>
+            <span className="rounded-md border border-primary/40 bg-primary/10 px-2.5 py-1.5 text-primary">IA sob medida</span>
           </div>
 
           <Link to="/prompts" className="mt-7 inline-flex items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-bold text-primary-foreground transition hover:opacity-90">
@@ -94,7 +109,7 @@ export function FoundersAiSection() {
 
                   <div className="absolute bottom-0 left-0 right-0 p-3 md:p-5">
                     <div className="mb-2 hidden items-center gap-1.5 font-mono text-[8px] uppercase tracking-[0.18em] text-primary md:flex md:text-[10px]">
-                      <ScanLine className="h-3 w-3" /> Perfil identificado
+                      <ScanLine className="h-3 w-3" /> Dor identificada
                     </div>
                     <h3 className="text-sm leading-tight md:text-xl">{founder.name}</h3>
                     <p className="mt-1 text-[10px] text-muted-foreground md:text-sm">{founder.role}</p>

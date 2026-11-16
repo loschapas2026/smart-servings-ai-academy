@@ -3,6 +3,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { toast } from "sonner";
 import { ArrowRight, Check, Copy, RefreshCw, Sparkles, Target, Wrench } from "lucide-react";
 import { buildPromptFromPain, type BuiltPrompt } from "@/lib/build-prompt.functions";
+import { PAIN_MAX, PAIN_MIN } from "@/lib/build-prompt";
 
 const inp = "w-full rounded-xl border bg-input/40 px-4 py-2.5 text-sm outline-none focus:border-primary";
 
@@ -101,7 +102,7 @@ export function BuildYourOwnSection() {
               value={pain}
               onChange={(e) => setPain(e.target.value)}
               rows={5}
-              maxLength={3000}
+              maxLength={PAIN_MAX}
               className={`${inp} mt-4`}
               placeholder="Ex: toda sexta eu perco pedido porque o motoboy sai sem conferir a rota e eu só descubro quando o cliente liga reclamando."
             />
@@ -112,7 +113,7 @@ export function BuildYourOwnSection() {
             <div className="mt-4 flex flex-wrap items-center gap-3">
               <button
                 onClick={generate}
-                disabled={busy || pain.trim().length < 10}
+                disabled={busy || pain.trim().length < PAIN_MIN}
                 className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground transition hover:opacity-90 disabled:opacity-50"
               >
                 {busy ? <RefreshCw className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}
@@ -125,7 +126,7 @@ export function BuildYourOwnSection() {
               )}
             </div>
             <p className="mt-3 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-              {pain.trim().length}/3000 caracteres
+              {pain.trim().length}/{PAIN_MAX} caracteres
             </p>
           </div>
 

@@ -7,6 +7,7 @@ import { useAccount } from "@/hooks/useAccount";
 import { usePromptCategories } from "@/hooks/usePromptCategories";
 import { AiLaunchGuide } from "@/components/AiLaunchGuide";
 import { FoundersAiSection } from "@/components/FoundersAiSection";
+import { BuildYourOwnSection } from "@/components/BuildYourOwnSection";
 
 export const Route = createFileRoute("/_authenticated/painel")({
   head: () => ({
@@ -67,7 +68,7 @@ function Painel() {
       <section className="grid gap-3 md:grid-cols-3">
         {[
           { n: "1", t: "Copie o prompt inicial", d: "Ele cria a base do seu sistema: nome, cores, acessos e integrações.", to: "/prompts" as const, hash: undefined },
-          { n: "2", t: "Escolha o próximo bloco", d: "Estoque, entregas, financeiro… um prompt por vez, testando cada etapa.", to: "/prompts" as const, hash: undefined },
+          { n: "2", t: "Crie a partir da sua dor", d: "O que dói no seu negócio vira sistema: descreva e receba o prompt do seu.", to: "/painel" as const, hash: "sua-dor" },
           { n: "3", t: "Escolha sua ferramenta de IA", d: "Veja o Radar IA no fim da página e comece pela infraestrutura certa.", to: "/painel" as const, hash: "radar" },
         ].map((s) => (
           <Link key={s.n} to={s.to} {...(s.hash ? { hash: s.hash } : {})} className="group flex gap-4 rounded-2xl border bg-card p-5 transition hover:border-primary">

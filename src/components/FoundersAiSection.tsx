@@ -8,9 +8,9 @@ import wellingtonPalco from "@/assets/wellington-morais-palco.jpg.asset.json";
 const founders = [
   {
     name: "Francisco Neto",
-    role: "Los Chapas · Operação",
-    marker: "01 / OPERAÇÃO REAL",
-    shortMarker: "01/OPERAÇÃO",
+    role: "Los Chapas · Operação de restaurante",
+    marker: "01 / LOS CHAPAS",
+    shortMarker: "01/LOS CHAPAS",
     icon: Utensils,
     photo: franciscoPalco,
     alternate: franciscoEvento,
@@ -18,9 +18,9 @@ const founders = [
   },
   {
     name: "Wellington Morais",
-    role: "Engenharia · Sistemas",
-    marker: "02 / ENGENHARIA",
-    shortMarker: "02/ENGENHARIA",
+    role: "Pizza do Engenheiro · Engenharia de sistemas",
+    marker: "02 / PIZZA DO ENGENHEIRO",
+    shortMarker: "02/PIZZA ENG.",
     icon: Workflow,
     photo: wellingtonEvento,
     alternate: wellingtonPalco,

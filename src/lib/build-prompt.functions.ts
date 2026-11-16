@@ -34,10 +34,10 @@ export const buildPromptFromPain = createServerFn({ method: "POST" })
       method: "POST",
       headers: { "Lovable-API-Key": process.env["LOVABLE_API_KEY"] ?? "", "Content-Type": "application/json", "X-Lovable-AIG-SDK": "fetch" },
       body: JSON.stringify({
-        model: "openai/gpt-6-astra",
+        // gpt-6-luna: modelo de baixo custo do gateway (~0,003 crédito/chamada, ~100x mais barato que o astra)
+        model: "openai/gpt-6-luna",
         stream: true,
         store: false,
-        reasoning: { effort: "low" },
         instructions: SYSTEM,
         input: brief,
         text: { format: { type: "json_schema", name: "prompt", strict: true, schema: {

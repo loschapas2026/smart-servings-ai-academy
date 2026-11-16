@@ -96,7 +96,7 @@ function Painel() {
           const d = ls.filter((v) => done.includes(v.id)).length;
           return (
             <Row key={m} title={`Módulo ${mi + 1} · ${m}`} subtitle={`${d}/${ls.length} aulas`}>
-              {ls.map((c, i) => <LessonCard key={c.id} c={c} index={i + 1} done={done.includes(c.id)} />)}
+              {ls.map((c, i) => <LessonCard key={c.id} c={c} index={i + 1} poster done={done.includes(c.id)} />)}
             </Row>
           );
         })}

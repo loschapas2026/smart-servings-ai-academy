@@ -20,21 +20,45 @@ export const generalizePrompt = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     const { data: isAdmin } = await context.supabase.rpc("has_role", { _user_id: context.userId, _role: "admin" });
     if (!isAdmin) throw new Error("Acesso restrito");
-    const res = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+    const stages = PROMPT_STAGES.map((s) => s.label);
+    const res = await fetch("https://ai.gateway.lovable.dev/v1/responses", {
       method: "POST",
-      headers: { Authorization: `Bearer ${process.env.LOVABLE_API_KEY}`, "Content-Type": "application/json" },
+      headers: { "Lovable-API-Key": process.env.LOVABLE_API_KEY ?? "", "Content-Type": "application/json", "X-Lovable-AIG-SDK": "fetch" },
       body: JSON.stringify({
-        model: "google/gemini-2.5-flash",
-        messages: [{ role: "system", content: SYSTEM }, { role: "user", content: data.raw }],
-        tools: [{ type: "function", function: { name: "save", parameters: { type: "object", properties: {
-          title: { type: "string", description: "Título curto do modelo" },
-          summary: { type: "string", description: "Quando usar, em uma frase" },
-          stage: { type: "string", enum: PROMPT_STAGES.map((s) => s.label) },
-          body: { type: "string", description: "Prompt generalizado com [CAMPOS]" },
-        }, required: ["title", "summary", "stage", "body"] } } }],
-        tool_choice: { type: "function", function: { name: "save" } },
+        model: "openai/gpt-6-astra",
+        stream: true,
+        store: false,
+        reasoning: { effort: "low" },
+        instructions: SYSTEM,
+        input: data.raw,
+        text: { format: { type: "json_schema", name: "prompt", strict: true, schema: {
+          type: "object", additionalProperties: false, required: ["title", "summary", "stage", "body"],
+          properties: {
+            title: { type: "string", description: "Título curto do modelo" },
+            summary: { type: "string", description: "Quando usar, em uma frase" },
+            stage: { type: "string", enum: stages },
+            body: { type: "string", description: "Prompt generalizado com [CAMPOS]" },
+          } } } },
       }),
     });
+    if (res.status === 429) throw new Error("Muitas solicitações. Tente em instantes.");
+    if (res.status === 402) throw new Error("Créditos de IA esgotados.");
+    if (!res.ok || !res.body) throw new Error("A IA não respondeu. Tente de novo.");
+    const reader = res.body.getReader(); const dec = new TextDecoder();
+    let buf = "", out = "";
+    for (;;) {
+      const { done, value } = await reader.read(); if (done) break;
+      buf += dec.decode(value, { stream: true });
+      const lines = buf.split("\n"); buf = lines.pop() ?? "";
+      for (const l of lines) {
+        if (!l.startsWith("data:")) continue;
+        const d = l.slice(5).trim(); if (!d || d === "[DONE]") continue;
+        try { const ev = JSON.parse(d); if (ev.type === "response.output_text.delta") out += ev.delta; } catch {}
+      }
+    }
+    if (!out) throw new Error("A IA não devolveu o prompt.");
+    return JSON.parse(out) as { title: string; summary: string; stage: string; body: string };
+  });
     if (res.status === 429) throw new Error("Muitas solicitações. Tente em instantes.");
     if (res.status === 402) throw new Error("Créditos de IA esgotados.");
     if (!res.ok) throw new Error("A IA não respondeu. Tente de novo.");

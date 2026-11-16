@@ -11,7 +11,7 @@
 - [ ] Payments: go live (claim account + verify) — user action in the Payments tab
 - [x] Sign-up/login + one active session per user
 - [x] Subscriber area
-- [x] Prompts para criação de sistemas: library page in the subscriber area (26 prompts in 6 stages, search, stage filter, copy, mark as used)
+- [x] Prompts para criação de sistemas: library page in the subscriber area (74 prompts, business tracks, search, stage filter, copy, mark as used)
 - [x] Prompts page: summary panel beside each prompt (what it covers, fields to fill, size), derived from the prompt text
 - [x] Financial portal (card change/cancel now via the billing portal)
 - [x] Admin panel (manual plan release + provider-managed subscriptions)

@@ -42,7 +42,7 @@ describe("summarizePrompt", () => {
 
   it("não confunde palavra comum com sigla", () => {
     const s = summarizePrompt("9. ANTES DE CONSTRUIR: PERGUNTE E ME GUIE\n10. O QUE ENTREGAR NESTA BASE\n- x", null);
-    expect(s.blocks).toEqual(["Antes de Construir: Pergunte e me Guie", "O que Entregar Nesta Base"]);
+    expect(s.blocks).toEqual(["Antes de Construir: Pergunte e me guie", "O que Entregar Nesta Base"]);
   });
 
   it("ignora lista corrida de itens numerados na mesma linha", () => {

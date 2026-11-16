@@ -7,7 +7,7 @@ import { PROMPT_STAGES, placeholdersOf } from "@/lib/prompt-stages";
 import { generalizePrompt } from "@/lib/prompts.functions";
 
 const inp = "w-full rounded-xl border bg-input/40 px-4 py-2.5 text-sm outline-none focus:border-primary";
-const EMPTY = { title: "", summary: "", stage: PROMPT_STAGES[0].label, body: "" };
+const EMPTY = { title: "", summary: "", stage: PROMPT_STAGES[0]!.label, body: "" };
 
 export function PromptsPanel() {
   const qc = useQueryClient();

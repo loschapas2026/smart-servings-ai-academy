@@ -23,7 +23,7 @@ export const generalizePrompt = createServerFn({ method: "POST" })
     const stages = PROMPT_STAGES.map((s) => s.label);
     const res = await fetch("https://ai.gateway.lovable.dev/v1/responses", {
       method: "POST",
-      headers: { "Lovable-API-Key": process.env.LOVABLE_API_KEY ?? "", "Content-Type": "application/json", "X-Lovable-AIG-SDK": "fetch" },
+      headers: { "Lovable-API-Key": process.env["LOVABLE_API_KEY"] ?? "", "Content-Type": "application/json", "X-Lovable-AIG-SDK": "fetch" },
       body: JSON.stringify({
         model: "openai/gpt-6-astra",
         stream: true,

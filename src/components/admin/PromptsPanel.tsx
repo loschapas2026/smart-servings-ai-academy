@@ -4,6 +4,8 @@ import { useServerFn } from "@tanstack/react-start";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { PROMPT_STAGES, placeholdersOf } from "@/lib/prompt-stages";
+import { usePromptCategories } from "@/hooks/usePromptCategories";
+import { PromptCategoriesBoard } from "./PromptCategoriesBoard";
 import { generalizePrompt } from "@/lib/prompts.functions";
 
 const inp = "w-full rounded-xl border bg-input/40 px-4 py-2.5 text-sm outline-none focus:border-primary";
@@ -12,6 +14,8 @@ const EMPTY = { title: "", summary: "", stage: PROMPT_STAGES[0]!.label, body: ""
 export function PromptsPanel() {
   const qc = useQueryClient();
   const gen = useServerFn(generalizePrompt);
+  const { cats } = usePromptCategories();
+  const [view, setView] = useState<"novo" | "categorias">("categorias");
   const [raw, setRaw] = useState("");
   const [f, setF] = useState(EMPTY);
   const [busy, setBusy] = useState(false);
@@ -44,7 +48,17 @@ export function PromptsPanel() {
   const remove = async (id: string) => { if (!confirm("Excluir este prompt?")) return; await supabase.from("contents").delete().eq("id", id); qc.invalidateQueries(); };
   const fields = placeholdersOf(f.body);
 
+  const tabs = (
+    <div className="mb-6 flex gap-2">
+      {(["categorias", "novo"] as const).map((t) => (
+        <button key={t} onClick={() => setView(t)} className={`rounded-full border px-4 py-1.5 text-sm ${view === t ? "border-primary text-primary" : "text-muted-foreground"}`}>{t === "categorias" ? "Organizar categorias" : "Adicionar prompt"}</button>
+      ))}
+    </div>
+  );
+  if (view === "categorias") return <>{tabs}<PromptCategoriesBoard /></>;
+
   return (
+    <>{tabs}
     <div className="grid gap-8 lg:grid-cols-2">
       <div className="space-y-4">
         <div className="rounded-2xl border bg-card p-6">
@@ -58,7 +72,7 @@ export function PromptsPanel() {
           <input value={f.title} onChange={(e) => setF({ ...f, title: e.target.value })} className={inp} placeholder="Título" />
           <input value={f.summary} onChange={(e) => setF({ ...f, summary: e.target.value })} className={inp} placeholder="Quando usar" />
           <select value={f.stage} onChange={(e) => setF({ ...f, stage: e.target.value })} className={inp}>
-            {PROMPT_STAGES.map((s) => <option key={s.id} value={s.label}>{s.label}</option>)}
+            {cats.map((s) => <option key={s.id} value={s.label}>{s.label}</option>)}
           </select>
           <textarea value={f.body} onChange={(e) => setF({ ...f, body: e.target.value })} rows={12} className={`${inp} font-mono`} placeholder="Prompt com [CAMPOS] para o assinante preencher" />
           <label className="block rounded-xl border border-dashed p-4 text-sm text-muted-foreground">
@@ -88,5 +102,6 @@ export function PromptsPanel() {
         </ul>
       </div>
     </div>
+    </>
   );
 }

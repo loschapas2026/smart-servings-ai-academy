@@ -5,7 +5,8 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { AppShell } from "@/components/AppShell";
 import { useAccount } from "@/hooks/useAccount";
-import { START_STAGE, PROMPT_STAGES, placeholdersOf, stageDescription, stageOrder } from "@/lib/prompt-stages";
+import { START_STAGE, placeholdersOf } from "@/lib/prompt-stages";
+import { usePromptCategories } from "@/hooks/usePromptCategories";
 import { summarizePrompt } from "@/lib/prompt-summary";
 
 export const Route = createFileRoute("/_authenticated/prompts")({
@@ -63,6 +64,7 @@ function Prompts() {
     enabled: !!canSee,
     queryFn: async () => (await supabase.from("content_progress").select("content_id")).data?.map((d) => d.content_id) ?? [],
   });
+  const { cats, order: stageOrder, describe: stageDescription } = usePromptCategories();
   const [q, setQ] = useState("");
   const [stage, setStage] = useState<string>("Todas");
 
@@ -85,7 +87,7 @@ function Prompts() {
     return [...map.entries()].sort(
       (a, b) => stageOrder(a[0]) - stageOrder(b[0]) || a[0].localeCompare(b[0], "pt-BR"),
     );
-  }, [filtered]);
+  }, [filtered, cats]);
 
   if (acc && !canSee)
     return (
@@ -100,7 +102,7 @@ function Prompts() {
       </AppShell>
     );
 
-  const chips = ["Todas", ...PROMPT_STAGES.map((s) => s.label)];
+  const chips = ["Todas", ...cats.map((s) => s.label)];
 
   return (
     <AppShell>
@@ -273,7 +275,8 @@ function PromptCard({ p, used }: { p: Prompt; used: boolean }) {
 
 function PromptSummaryPanel({ p }: { p: Prompt }) {
   const s = useMemo(() => summarizePrompt(p.body, p.summary), [p.body, p.summary]);
-  const stage = stageDescription(p.category);
+  const { describe } = usePromptCategories();
+  const stage = describe(p.category);
 
   return (
     <aside className="rounded-2xl border border-primary/30 bg-primary/[0.06] p-5 xl:sticky xl:top-6">

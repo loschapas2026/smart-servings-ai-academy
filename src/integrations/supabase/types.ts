@@ -241,6 +241,30 @@ export type Database = {
         }
         Relationships: []
       }
+      prompt_categories: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          label: string
+          position: number
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          label: string
+          position?: number
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          label?: string
+          position?: number
+        }
+        Relationships: []
+      }
       subscriptions: {
         Row: {
           cancel_at_period_end: boolean

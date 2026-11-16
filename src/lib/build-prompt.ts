@@ -12,9 +12,12 @@ export const validatePain = (pain: string | null | undefined): string => {
 };
 
 /** Monta o briefing enviado para a IA: dor + negócio + área, sem linhas vazias. */
-export const briefOf = (p: { pain: string; business?: string; area?: string }): string =>
-  [
+export const briefOf = (p: { pain: string; business?: string; area?: string }): string => {
+  const business = (p.business ?? "").trim();
+  const area = (p.area ?? "").trim();
+  return [
     `Dor descrita pelo assinante: ${p.pain}`,
-    p.business ? `Negócio: ${p.business}` : "",
-    p.area ? `Área que dói hoje: ${p.area}` : "",
+    business ? `Negócio: ${business}` : "",
+    area ? `Área que dói hoje: ${area}` : "",
   ].filter(Boolean).join("\n");
+};

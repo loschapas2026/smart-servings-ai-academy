@@ -64,6 +64,13 @@
       "when": 1794847805467,
       "tag": "0008_add_customer_engagement_prompt_blocks",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1794847852322,
+      "tag": "0009_add_inventory_operations_prompt_blocks",
+      "breakpoints": true
     }
   ]
 }

@@ -85,6 +85,13 @@
       "when": 1794847934868,
       "tag": "0011_add_finance_integrations_quality_prompt_blocks",
       "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1794847959891,
+      "tag": "0012_complete_existing_prompt_covers",
+      "breakpoints": true
     }
   ]
 }

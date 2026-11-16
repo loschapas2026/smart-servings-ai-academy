@@ -1,0 +1,2 @@
+update public.contents set thumbnail_url='blocos/integracoes-automacoes.png' where id='3069774b-2d5e-49ce-8fa8-fb864819dd57';
+update public.contents set summary='Crie uma tela de rotas com mapa, pedidos próximos e agrupamento inteligente, respeitando capacidade da cozinha, prazos e prioridade da fila.' where id='2d803f9e-106f-48a0-9de0-e96a15ad1c85';

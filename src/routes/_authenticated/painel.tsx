@@ -5,9 +5,25 @@ import { AppShell } from "@/components/AppShell";
 import { LessonCard, Row } from "@/components/LessonCard";
 import { useAccount } from "@/hooks/useAccount";
 import { thumbOf } from "@/lib/video";
+import { AiLaunchGuide } from "@/components/AiLaunchGuide";
 
 export const Route = createFileRoute("/_authenticated/painel")({
-  head: () => ({ meta: [{ title: "Painel — RAIOX" }, { name: "description", content: "Seus conteúdos RAIOX." }] }),
+  head: () => ({
+    meta: [
+      { title: "Radar IA e seus conteúdos — RAIOX" },
+      {
+        name: "description",
+        content: "Entenda os tipos de IA, escolha por onde começar e construímos sua primeira solução com Lovable, prompts e automação.",
+      },
+      { property: "og:title", content: "Radar IA e seus conteúdos — RAIOX" },
+      {
+        property: "og:description",
+        content: "Um guia visual para escolher sua primeira ferramenta de IA e tirar um sistema do papel.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
+    ],
+  }),
   component: Painel,
 });
 

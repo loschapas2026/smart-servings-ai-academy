@@ -39,6 +39,7 @@ describe("etapas da página de prompts", () => {
     expect(
       placeholdersOf("Escreva para [NOME DO PRATO] usando [INGREDIENTES] e repetir [NOME DO PRATO]"),
     ).toEqual(["NOME DO PRATO", "INGREDIENTES"]);
+    expect(placeholdersOf("Troque só o que está entre [colchetes] e [NOME DO NEGÓCIO]")).toEqual(["NOME DO NEGÓCIO"]);
     expect(placeholdersOf("")).toEqual([]);
     expect(placeholdersOf(null)).toEqual([]);
   });

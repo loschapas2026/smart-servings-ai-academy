@@ -58,5 +58,6 @@ export const stageDescription = (label: string | null | undefined): string | und
 export const placeholdersOf = (body: string | null | undefined): string[] => {
   if (!body) return [];
   const found = body.match(/\[[^\[\]\n]{1,60}\]/g) ?? [];
-  return [...new Set(found.map((f) => f.slice(1, -1).trim()).filter(Boolean))];
+  // Ignora trechos como "[colchetes]": campo de verdade é escrito em maiúsculas.
+  return [...new Set(found.map((f) => f.slice(1, -1).trim()).filter((f) => f && /[A-ZÀ-Ú]/.test(f)))];
 };

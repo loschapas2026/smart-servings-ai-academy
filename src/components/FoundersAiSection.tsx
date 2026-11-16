@@ -20,6 +20,7 @@ const founders = [
     name: "Wellington Morais",
     role: "Engenharia · Sistemas",
     marker: "02 / ENGENHARIA",
+    shortMarker: "02/ENGENHARIA",
     icon: Workflow,
     photo: wellingtonEvento,
     alternate: wellingtonPalco,
@@ -82,8 +83,9 @@ export function FoundersAiSection() {
                   <div className="scanlines pointer-events-none absolute inset-0" />
 
                   <div className="absolute left-3 right-3 top-3 flex items-center justify-between gap-2">
-                    <span className="rounded-md border border-primary/40 bg-background/80 px-2 py-1 font-mono text-[8px] uppercase tracking-wider text-primary backdrop-blur-md md:text-[10px]">
-                      {founder.marker}
+                    <span className="whitespace-nowrap rounded-md border border-primary/40 bg-background/80 px-2 py-1 font-mono text-[7px] uppercase tracking-wider text-primary backdrop-blur-md sm:text-[8px] md:text-[10px]">
+                      <span className="md:hidden">{founder.shortMarker}</span>
+                      <span className="hidden md:inline">{founder.marker}</span>
                     </span>
                     <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-primary/40 bg-background/80 text-primary backdrop-blur-md">
                       <Icon className="h-4 w-4" />
@@ -91,7 +93,7 @@ export function FoundersAiSection() {
                   </div>
 
                   <div className="absolute bottom-0 left-0 right-0 p-3 md:p-5">
-                    <div className="mb-2 flex items-center gap-1.5 font-mono text-[8px] uppercase tracking-[0.18em] text-primary md:text-[10px]">
+                    <div className="mb-2 hidden items-center gap-1.5 font-mono text-[8px] uppercase tracking-[0.18em] text-primary md:flex md:text-[10px]">
                       <ScanLine className="h-3 w-3" /> Perfil identificado
                     </div>
                     <h3 className="text-sm leading-tight md:text-xl">{founder.name}</h3>

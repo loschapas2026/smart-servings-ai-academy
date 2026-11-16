@@ -10,6 +10,7 @@ const founders = [
     name: "Francisco Neto",
     role: "Los Chapas · Operação",
     marker: "01 / OPERAÇÃO REAL",
+    shortMarker: "01/OPERAÇÃO",
     icon: Utensils,
     photo: franciscoPalco,
     alternate: franciscoEvento,

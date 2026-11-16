@@ -41,6 +41,9 @@ function Index() {
           <Link to="/planos" className="mt-8 inline-block rounded-full bg-primary px-8 py-4 font-bold text-primary-foreground shadow-glow">
             Quero entrar no RAIOX
           </Link>
+          <Link to="/suitable" className="ml-3 mt-8 inline-block rounded-full border border-primary px-8 py-4 font-bold text-primary">
+            Parceria Suitable
+          </Link>
         </div>
       </section>
 

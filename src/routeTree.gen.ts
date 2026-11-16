@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as PlanosRouteImport } from './routes/planos'
+import { Route as SuitableRouteImport } from './routes/suitable'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as AuthenticatedFinanceiroRouteImport } from './routes/_authenticated/financeiro'
 import { Route as AuthenticatedPainelRouteImport } from './routes/_authenticated/painel'
@@ -39,6 +40,11 @@ const AuthRoute = AuthRouteImport.update({
 const PlanosRoute = PlanosRouteImport.update({
   id: '/planos',
   path: '/planos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SuitableRoute = SuitableRouteImport.update({
+  id: '/suitable',
+  path: '/suitable',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
@@ -88,6 +94,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/planos': typeof PlanosRoute
+  '/suitable': typeof SuitableRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/financeiro': typeof AuthenticatedFinanceiroRoute
   '/painel': typeof AuthenticatedPainelRoute
@@ -101,6 +108,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/planos': typeof PlanosRoute
+  '/suitable': typeof SuitableRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/financeiro': typeof AuthenticatedFinanceiroRoute
   '/painel': typeof AuthenticatedPainelRoute
@@ -116,6 +124,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/planos': typeof PlanosRoute
+  '/suitable': typeof SuitableRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/_authenticated/financeiro': typeof AuthenticatedFinanceiroRoute
   '/_authenticated/painel': typeof AuthenticatedPainelRoute
@@ -131,6 +140,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/planos'
+    | '/suitable'
     | '/admin'
     | '/financeiro'
     | '/painel'
@@ -144,6 +154,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/planos'
+    | '/suitable'
     | '/admin'
     | '/financeiro'
     | '/painel'
@@ -158,6 +169,7 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/auth'
     | '/planos'
+    | '/suitable'
     | '/_authenticated/admin'
     | '/_authenticated/financeiro'
     | '/_authenticated/painel'
@@ -173,6 +185,7 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
   PlanosRoute: typeof PlanosRoute
+  SuitableRoute: typeof SuitableRoute
   ApiPublicJobsNotificationsRoute: typeof ApiPublicJobsNotificationsRoute
   ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
   ApiPublicTwilioStatusRoute: typeof ApiPublicTwilioStatusRoute
@@ -206,6 +219,13 @@ declare module '@tanstack/react-router' {
       path: '/planos'
       fullPath: '/planos'
       preLoaderRoute: typeof PlanosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/suitable': {
+      id: '/suitable'
+      path: '/suitable'
+      fullPath: '/suitable'
+      preLoaderRoute: typeof SuitableRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/admin': {
@@ -291,6 +311,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
   PlanosRoute: PlanosRoute,
+  SuitableRoute: SuitableRoute,
   ApiPublicJobsNotificationsRoute: ApiPublicJobsNotificationsRoute,
   ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
   ApiPublicTwilioStatusRoute: ApiPublicTwilioStatusRoute,

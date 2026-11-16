@@ -27,9 +27,39 @@ const headingOf = (line: string): string | null => {
   return null;
 };
 
+const LOWER_WORDS = new Set([
+  "do", "da", "de", "das", "dos", "e", "a", "o", "as", "os", "em", "com", "que", "quem", "como", "onde",
+  "um", "uma", "no", "na", "nos", "nas", "para", "por", "se", "ao", "à", "às", "me", "meu", "minha",
+  "seu", "sua", "seus", "suas", "dia", "sem", "ate", "até", "foi", "tem", "mas", "entre", "sobre",
+]);
+
+/** Título escrito quase todo em maiúsculas: precisa ser reescrito para leitura. */
+const isShouty = (t: string): boolean => {
+  const letters = t.replace(/[^A-Za-zÀ-ÿ]/g, "");
+  if (!letters) return false;
+  const upper = letters.replace(/[^A-ZÀ-Ú]/g, "").length;
+  return upper / letters.length >= 0.5;
+};
+
+/** "CONEXÃO COM O SUITABLE (API do SUIT)" -> "Conexão com o Suitable (API do SUIT)". */
+const toTitle = (t: string): string => {
+  const out = t
+    .split(/(\s+)/)
+    .map((tok) => {
+      if (/^\s+$/.test(tok)) return tok;
+      const letters = tok.replace(/[^A-Za-zÀ-ÿ]/g, "");
+      if (!letters) return tok;
+      if (LOWER_WORDS.has(letters.toLowerCase())) return tok.toLowerCase();
+      if (letters.length <= 4 && tok === tok.toUpperCase()) return tok; // sigla: TV, API, SUIT
+      return tok.charAt(0).toUpperCase() + tok.slice(1).toLowerCase();
+    })
+    .join("");
+  return out.charAt(0).toUpperCase() + out.slice(1);
+};
+
 const cleanBlock = (t: string): string => {
   let s = t.replace(/\*\*/g, "").replace(/\s+/g, " ").trim().replace(/[:.]+$/g, "").trim();
-  if (!/[a-zà-ú]/.test(s)) s = s.charAt(0) + s.slice(1).toLowerCase();
+  if (isShouty(s)) s = toTitle(s);
   return s.length > 62 ? `${s.slice(0, 59)}…` : s;
 };
 

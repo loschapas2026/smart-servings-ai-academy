@@ -26,13 +26,18 @@ const BODY = [
 describe("summarizePrompt", () => {
   it("extrai seções numeradas, rótulos e títulos de markdown", () => {
     expect(summarizePrompt(BODY, null).blocks).toEqual([
-      "Quem somos",
-      "Identidade visual",
-      "Acessos e setores",
+      "Quem Somos",
+      "Identidade Visual",
+      "Acessos e Setores",
       "Visual",
       "Aba Configuração (único lugar onde se editam áreas)",
       "Entrega final",
     ]);
+  });
+
+  it("reescreve títulos em maiúsculas sem perder as siglas", () => {
+    const s = summarizePrompt("4. CONEXÃO COM O SUITABLE (API do SUIT)\n- token no servidor", null);
+    expect(s.blocks).toEqual(["Conexão com o Suitable (API do SUIT)"]);
   });
 
   it("ignora lista corrida de itens numerados na mesma linha", () => {

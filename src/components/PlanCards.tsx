@@ -24,7 +24,7 @@ function AdhesionBox() {
           <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-secondary"><div className="h-full bg-primary" style={{ width: `${pctTaken}%` }} /></div>
         </>
       )}
-      <div className="mt-4 grid grid-cols-3 gap-2 text-center">
+      <div className="mt-4 grid grid-cols-1 gap-2 text-center sm:grid-cols-3">
         {ADHESION_TIERS.map((t) => (
           <div key={t.lote} className={`rounded-xl border p-2 ${t.lote === tier.lote ? "border-primary bg-primary/10" : t.lote < tier.lote ? "opacity-40 line-through" : "opacity-70"}`}>
             <p className="font-mono text-[10px] uppercase text-muted-foreground">{t.lote === 1 ? "100 primeiros" : t.lote === 2 ? "+100 seguintes" : "depois"}</p>

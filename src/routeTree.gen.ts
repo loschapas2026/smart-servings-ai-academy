@@ -14,6 +14,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as PlanosRouteImport } from './routes/planos'
 import { Route as SuitableRouteImport } from './routes/suitable'
+import { Route as VendasRouteImport } from './routes/vendas'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as AuthenticatedFinanceiroRouteImport } from './routes/_authenticated/financeiro'
 import { Route as AuthenticatedPainelRouteImport } from './routes/_authenticated/painel'
@@ -45,6 +46,11 @@ const PlanosRoute = PlanosRouteImport.update({
 const SuitableRoute = SuitableRouteImport.update({
   id: '/suitable',
   path: '/suitable',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VendasRoute = VendasRouteImport.update({
+  id: '/vendas',
+  path: '/vendas',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
@@ -95,6 +101,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/planos': typeof PlanosRoute
   '/suitable': typeof SuitableRoute
+  '/vendas': typeof VendasRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/financeiro': typeof AuthenticatedFinanceiroRoute
   '/painel': typeof AuthenticatedPainelRoute
@@ -109,6 +116,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/planos': typeof PlanosRoute
   '/suitable': typeof SuitableRoute
+  '/vendas': typeof VendasRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/financeiro': typeof AuthenticatedFinanceiroRoute
   '/painel': typeof AuthenticatedPainelRoute
@@ -125,6 +133,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/planos': typeof PlanosRoute
   '/suitable': typeof SuitableRoute
+  '/vendas': typeof VendasRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/_authenticated/financeiro': typeof AuthenticatedFinanceiroRoute
   '/_authenticated/painel': typeof AuthenticatedPainelRoute
@@ -141,6 +150,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/planos'
     | '/suitable'
+    | '/vendas'
     | '/admin'
     | '/financeiro'
     | '/painel'
@@ -155,6 +165,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/planos'
     | '/suitable'
+    | '/vendas'
     | '/admin'
     | '/financeiro'
     | '/painel'
@@ -170,6 +181,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/planos'
     | '/suitable'
+    | '/vendas'
     | '/_authenticated/admin'
     | '/_authenticated/financeiro'
     | '/_authenticated/painel'
@@ -186,6 +198,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   PlanosRoute: typeof PlanosRoute
   SuitableRoute: typeof SuitableRoute
+  VendasRoute: typeof VendasRoute
   ApiPublicJobsNotificationsRoute: typeof ApiPublicJobsNotificationsRoute
   ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
   ApiPublicTwilioStatusRoute: typeof ApiPublicTwilioStatusRoute
@@ -226,6 +239,13 @@ declare module '@tanstack/react-router' {
       path: '/suitable'
       fullPath: '/suitable'
       preLoaderRoute: typeof SuitableRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/vendas': {
+      id: '/vendas'
+      path: '/vendas'
+      fullPath: '/vendas'
+      preLoaderRoute: typeof VendasRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/admin': {
@@ -312,6 +332,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   PlanosRoute: PlanosRoute,
   SuitableRoute: SuitableRoute,
+  VendasRoute: VendasRoute,
   ApiPublicJobsNotificationsRoute: ApiPublicJobsNotificationsRoute,
   ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
   ApiPublicTwilioStatusRoute: ApiPublicTwilioStatusRoute,

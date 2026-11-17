@@ -25,7 +25,6 @@ import francisco from "@/assets/francisco-neto-palco.jpg.asset.json";
 import wellington from "@/assets/wellington-morais-evento.jpg.asset.json";
 import { Logo } from "@/components/Logo";
 import { PlanCards } from "@/components/PlanCards";
-import { SiteHeader } from "@/components/SiteHeader";
 import { useAdhesion } from "@/hooks/useAdhesion";
 import { brl } from "@/lib/plans";
 
@@ -156,6 +155,24 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   );
 }
 
+function SalesHeader() {
+  return (
+    <header className="absolute inset-x-0 top-0 z-20">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-5">
+        <Link to="/vendas">
+          <Logo className="text-2xl" />
+        </Link>
+        <Link
+          to="/planos"
+          className="rounded-full bg-primary px-4 py-2 text-sm font-bold text-primary-foreground shadow-glow"
+        >
+          Assinar agora
+        </Link>
+      </div>
+    </header>
+  );
+}
+
 function SalesCta({ children = "Quero resolver minha dor" }: { children?: React.ReactNode }) {
   return (
     <Link
@@ -172,7 +189,7 @@ function SalesPage() {
 
   return (
     <main className="overflow-hidden bg-background">
-      <SiteHeader />
+      <SalesHeader />
 
       <section className="relative min-h-[94vh] border-b pt-28">
         <div className="pointer-events-none absolute -right-32 top-10 h-[480px] w-[480px] rounded-full bg-primary/10 blur-3xl" />
@@ -190,12 +207,14 @@ function SalesPage() {
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
               <SalesCta>Garantir meu acesso ao RAIOX</SalesCta>
-              <Link
-                to="/suitable"
+              <a
+                href="https://suitable.com.br"
+                target="_blank"
+                rel="noreferrer"
                 className="inline-flex items-center justify-center gap-2 rounded-full border px-7 py-4 text-sm font-bold transition hover:border-primary hover:text-primary"
               >
                 Entender a parceria SUIT <ChevronRight className="h-4 w-4" />
-              </Link>
+              </a>
             </div>
             <div className="mt-8 flex flex-wrap gap-x-5 gap-y-2 text-xs text-muted-foreground">
               <span className="flex items-center gap-1.5"><Check className="h-4 w-4 text-primary" /> Acesso imediato após aprovação</span>
@@ -443,11 +462,9 @@ function SalesPage() {
       <footer className="border-t px-5 py-8">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 text-center text-sm text-muted-foreground md:flex-row md:text-left">
           <div><Logo /> <span className="ml-2">· Clube do SUIT</span></div>
-          <div className="flex gap-5">
-            <Link to="/suitable" className="hover:text-primary">Parceria Suitable</Link>
-            <Link to="/planos" className="hover:text-primary">Planos</Link>
-            <Link to="/painel" className="hover:text-primary">Área do membro</Link>
-          </div>
+          <a href="https://suitable.com.br" target="_blank" rel="noreferrer" className="hover:text-primary">
+            Suitable — o sistema por trás dos dados
+          </a>
         </div>
       </footer>
     </main>

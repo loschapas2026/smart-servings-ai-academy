@@ -3,6 +3,7 @@ import {
   Outlet,
   Link,
   createRootRouteWithContext,
+  useLocation,
   useRouter,
   HeadContent,
   Scripts,
@@ -123,13 +124,20 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
+function GlobalPaymentBanner() {
+  // The standalone sales presentation must not show internal payment notices.
+  const { pathname } = useLocation();
+  if (pathname === "/vendas") return null;
+  return <PaymentTestModeBanner />;
+}
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
   return (
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <PaymentTestModeBanner />
+      <GlobalPaymentBanner />
       <Outlet />
       <SessionGuard />
       <Toaster theme="dark" position="top-center" />

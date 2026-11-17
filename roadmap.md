@@ -1,5 +1,5 @@
 # RAIOX roadmap
-- [x] Página pública de vendas: apresentação da transformação, dores, método, entregáveis, fundadores, planos, adesão por lotes e dúvidas
+- [x] Página pública de vendas: abertura do site sem login, apresentação da transformação, dores, método, entregáveis, fundadores, planos, adesão por lotes e dúvidas
 - [x] Evolução segura: prompts preservam sistemas existentes, criam módulos com menus próprios, alinham banco e exigem responsividade e atualizações incrementais
 - [x] Suitable primeiro: todo prompt gerado ou generalizado impõe a Suitable API como fonte oficial dos dados operacionais, sem cadastros paralelos ou endpoints inventados
 - [x] Home logada: deixar claro que o assinante cria o que precisar — seção "A sua dor vira sistema" com gerador de prompt a partir da dor descrita

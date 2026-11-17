@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -76,6 +76,11 @@ function AuthPage() {
         <button onClick={() => setMode(mode === "in" ? "up" : "in")} className="mt-5 w-full text-sm text-muted-foreground hover:text-primary">
           {mode === "in" ? "Ainda não tem conta? Cadastre-se" : "Já tem conta? Entrar"}
         </button>
+        <div className="mt-6 border-t pt-5 text-center">
+          <Link to="/vendas" className="inline-flex items-center gap-2 text-sm font-bold text-primary hover:underline">
+            Ver apresentação sem login <span aria-hidden="true">→</span>
+          </Link>
+        </div>
       </div>
     </main>
   );
